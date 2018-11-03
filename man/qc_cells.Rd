@@ -4,10 +4,10 @@
 \alias{qc_cells}
 \title{Compute quality control metrics for each cell}
 \usage{
-qc_cells(ge.df, cell_cycle = NULL)
+qc_cells(ge_df, cell_cycle = NULL)
 }
 \arguments{
-\item{ge.df}{the input gene expression with a 'symbol' column and then one
+\item{ge_df}{the input gene expression with a 'symbol' column and then one
 column per cell.}
 
 \item{cell_cycle}{if non-null, either a file or data.frame to compute cell

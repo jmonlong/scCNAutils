@@ -36,7 +36,7 @@ test_that("removes duplicates", {
 })
 
 test_that("filter chromosomes", {
-  coord.df = convert_to_coord(ge.df, genes.coord)
+  coord.df = convert_to_coord(ge.df, genes.coord, chrs=unique(genes.coord$chr)[-1])
   expect_true(nrow(coord.df) < nrow(ge.df))
 })
 
