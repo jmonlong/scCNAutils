@@ -1,0 +1,18 @@
+Package: scCNAutils
+Title: Functions to analyze copy number aberrations in single-cell data
+Version: 0.0.0.9000
+Authors@R: person("Jean", "Monlong", email = "jean.monlong@gmail.com", role = c("aut", "cre"))
+Description: Functions to analyze copy number aberrations in single-cell data. A bunch of scripts and workflows to read and analyze scRNA-seq data and look at CNA-oriented signal.
+Depends: R (>= 3.4.4)
+License: MIT License + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    Matrix,
+    dplyr,
+    magrittr,
+    tidyr,
+    rlang
+Suggests:
+    testthat
+RoxygenNote: 6.1.0
