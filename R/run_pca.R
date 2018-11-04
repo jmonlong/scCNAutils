@@ -49,8 +49,8 @@ run_pca <- function(z_df, core_cells=NULL, out_pcs=100){
   sd.df = rbind(data.frame(PC=1:length(pca.o$sdev), sdev=pca.o$sdev, type='sdev'),
                 data.frame(PC=1:length(pca.o$sdev), sdev=cumsum(pca.o$sdev),
                            type='cumulative sdev'))
-  pca.o$sdev.graph = ggplot(sd.df, aes(x=PC, y=sdev, colour=type)) + geom_point() +
-    geom_line() + theme_bw() + ylab('standard deviation') +
+  pca.o$sdev.graph = ggplot(sd.df, aes(x=PC, y=sdev, colour=type)) + geom_point(na.rm=TRUE) +
+    geom_line(na.rm=TRUE) + theme_bw() + ylab('standard deviation') +
     xlim(1,min(50, length(pca.o$sdev))) + 
     theme(legend.title=element_blank(), legend.position=c(.01,.99),
           legend.justification=c(0,1)) 

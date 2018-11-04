@@ -15,7 +15,8 @@ Imports:
     rlang,
     parallel,
     ggplot2,
-    data.table
+    data.table,
+    Rtsne
 Suggests:
     testthat
 RoxygenNote: 6.1.0

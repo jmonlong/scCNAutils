@@ -19,7 +19,7 @@ qc_filter           |
 convert_to_coord    |
   |                 |
   V                 | 
-norm_ge             |
+norm_ge             | define_cycling_cells X
   |                 |
   V                 |
 bin_genes           |
@@ -34,10 +34,10 @@ smooth_movingm      |
 run_pca     <--------
   |-------------------------------
   V                              V
-comm_detection X              run_tsne X
+comm_detection X              run_tsne
   |       |_ _ _ _ _ _ _ _ _ _    |
   V                          V    V
-plot_communities X          plot_tsne X
+plot_communities X          plot_tsne
 ```
 
 ### From communities to CNA
