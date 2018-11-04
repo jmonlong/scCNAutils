@@ -25,13 +25,13 @@ norm_ge             |
 bin_genes           |
   |                 |
   V                 |
-zscore X            |
+zscore              |
   |                 |
   V                 |
 smooth_movingm      |
   |                 |
   V                 |
-run_pca X   <--------
+run_pca     <--------
   |-------------------------------
   V                              V
 comm_detection X              run_tsne X
