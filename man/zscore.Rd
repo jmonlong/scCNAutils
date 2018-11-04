@@ -11,7 +11,7 @@ zscore(ge_df, wins.th = 3, method = c("norm", "z"), normals = NULL)
 
 \item{wins.th}{the threshold to winsorize Z-score. Default is 3}
 
-\item{method}{the normalization method. Either norm or z.}
+\item{method}{the normalization method. Either 'norm' or 'z'.}
 
 \item{normals}{the cells to use as normals. If NULL (default) all cells are used as normals}
 }

@@ -1,4 +1,4 @@
-##' @title Moving-window smoothin
+##' @title Moving-window smoothing
 ##' @param df the input data.frame with coordinate columns (chr, start, end) and then
 ##' one column per cell
 ##' @param wsize the window size. Default is 3.

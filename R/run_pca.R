@@ -1,10 +1,10 @@
 ##' Cells in core_cells are used to build the principal components to which
 ##' all cells are then projected to. Usually used to reduce the effect of
-##' cell cycle in the PCA, by using only cells that don't cycle (see qc_cells)
-##' as core_cells.
+##' cell cycle in the PCA, by using only cells that don't cycle (see \code{\link{qc_cells}})
+##' as \emph{core_cells}.
 ##'
-##' The graph (sdev.graph) shows the standard deviation for the top 50 PCs. To
-##' show more/less PCs, add "xlim(1,N)" to the sdev.graph. See examples.
+##' The graph (\emph{sdev.graph}) shows the standard deviation for the top 50 PCs. To
+##' show more/less PCs, add \code{xlim(1,N)} to the \emph{sdev.graph}. See examples.
 ##' @title Run PCA
 ##' @param z_df a data.frame with z-scores for each cell
 ##' @param core_cells if non-NULL, a vector with the names of the cells to use as core

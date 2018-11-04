@@ -16,7 +16,9 @@ Imports:
     parallel,
     ggplot2,
     data.table,
-    Rtsne
+    Rtsne,
+    FNN,
+    igraph
 Suggests:
     testthat
 RoxygenNote: 6.1.0

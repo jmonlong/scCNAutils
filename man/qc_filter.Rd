@@ -2,7 +2,7 @@
 % Please edit documentation in R/qc_filter.R
 \name{qc_filter}
 \alias{qc_filter}
-\title{Filter cells based from QC results}
+\title{Filter cells based on QC results}
 \usage{
 qc_filter(ge_df, qc_df, max_mito_prop = 0.2, min_total_exp = 0)
 }
@@ -17,10 +17,10 @@ column per cell.}
 \item{min_total_exp}{the minimum total cell expression}
 }
 \value{
-ge_df with only the cells that passed the filters
+\emph{ge_df} with only the cells that passed the filters
 }
 \description{
-Filter cells based from QC results
+Filter cells based on QC results
 }
 \author{
 Jean Monlong

@@ -1,9 +1,9 @@
-##' If genes_coord is a filename, the file is expected to be a tab-delimited
+##' If \emph{genes_coord} is a filename, the file is expected to be a tab-delimited
 ##' file with four columns: 'chr', 'start', 'end', 'symbol'. The order of the
 ##' columns is not important.
 ##'
 ##' The gene names in column 'symbol' should match the gene names in the input
-##' ge_df. 
+##' \emph{ge_df}. 
 ##' @title Convert gene symbols to coordinates
 ##' @param ge_df the data.frame with gene expression and one column 'symbol'
 ##' with gene names.

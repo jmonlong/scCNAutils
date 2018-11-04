@@ -34,7 +34,7 @@ smooth_movingm      |
 run_pca     <--------
   |-------------------------------
   V                              V
-comm_detection X              run_tsne
+find_communities X            run_tsne
   |       |_ _ _ _ _ _ _ _ _ _    |
   V                          V    V
 plot_communities X          plot_tsne

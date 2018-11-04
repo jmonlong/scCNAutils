@@ -1,5 +1,5 @@
 ##' @title QC graphs
-##' @param qc_df the output data.frame from qc_cells
+##' @param qc_df the output data.frame from \code{\link{qc_cells}}
 ##' @return a list of ggplots
 ##' @author Jean Monlong
 ##' @import ggplot2

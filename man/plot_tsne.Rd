@@ -7,9 +7,9 @@
 plot_tsne(tsne_df, qc_df = NULL)
 }
 \arguments{
-\item{tsne_df}{the output data.frame from run_tsne (columns: cell, tsne1, tsne2)}
+\item{tsne_df}{the output data.frame from \code{\link{run_tsne}} (columns: cell, tsne1, tsne2)}
 
-\item{qc_df}{a data.frame with QC metrics (output from qc_cells). Default is NULL
+\item{qc_df}{a data.frame with QC metrics (output from \code{\link{qc_cells}}). Default is NULL
 (i.e. not used)}
 }
 \value{

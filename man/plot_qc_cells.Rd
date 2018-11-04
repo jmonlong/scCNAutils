@@ -7,7 +7,7 @@
 plot_qc_cells(qc_df)
 }
 \arguments{
-\item{qc_df}{the output data.frame from qc_cells}
+\item{qc_df}{the output data.frame from \code{\link{qc_cells}}}
 }
 \value{
 a list of ggplots

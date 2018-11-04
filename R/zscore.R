@@ -1,7 +1,7 @@
 ##' @title Compute Z-score
 ##' @param ge_df the inpue expression data.frame
 ##' @param wins.th the threshold to winsorize Z-score. Default is 3
-##' @param method the normalization method. Either norm or z.
+##' @param method the normalization method. Either 'norm' or 'z'.
 ##' @param normals the cells to use as normals. If NULL (default) all cells are used as normals
 ##' @return a data.frame with Z-scores.
 ##' @author Jean Monlong

@@ -24,13 +24,13 @@ a data.frame with columns 'chr', 'start', 'end' columns with genes
 coordinates (and still one column per barcode).
 }
 \description{
-If genes_coord is a filename, the file is expected to be a tab-delimited
+If \emph{genes_coord} is a filename, the file is expected to be a tab-delimited
 file with four columns: 'chr', 'start', 'end', 'symbol'. The order of the
 columns is not important.
 }
 \details{
 The gene names in column 'symbol' should match the gene names in the input
-ge_df.
+\emph{ge_df}.
 }
 \author{
 Jean Monlong

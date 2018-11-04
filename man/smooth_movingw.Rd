@@ -2,7 +2,7 @@
 % Please edit documentation in R/smooth_movingw.R
 \name{smooth_movingw}
 \alias{smooth_movingw}
-\title{Moving-window smoothin}
+\title{Moving-window smoothing}
 \usage{
 smooth_movingw(df, wsize = 3, nb_cores = 1, FUN = stats::median)
 }
@@ -20,7 +20,7 @@ one column per cell}
 a data.frame with smoothed signal.
 }
 \description{
-Moving-window smoothin
+Moving-window smoothing
 }
 \author{
 Jean Monlong

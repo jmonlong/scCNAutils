@@ -1,6 +1,6 @@
 ##' @title tSNE graphs
-##' @param tsne_df the output data.frame from run_tsne (columns: cell, tsne1, tsne2)
-##' @param qc_df a data.frame with QC metrics (output from qc_cells). Default is NULL
+##' @param tsne_df the output data.frame from \code{\link{run_tsne}} (columns: cell, tsne1, tsne2)
+##' @param qc_df a data.frame with QC metrics (output from \code{\link{qc_cells}}). Default is NULL
 ##' (i.e. not used)
 ##' @return a list of ggplot objects
 ##' @author Jean Monlong
