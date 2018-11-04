@@ -11,9 +11,9 @@ read_mtx
   |-----
   |    V
   |  qc_cells
-  |    |----------------> graph_qc_cells X
+  |    |----------------> plot_qc_cells
   V    V            |
-qc_filter X         |
+qc_filter           |
   |                 |
   V                 |
 convert_to_coord    |
@@ -37,7 +37,7 @@ run_pca X   <--------
 comm_detection X              run_tsne X
   |       |_ _ _ _ _ _ _ _ _ _    |
   V                          V    V
-graph_communities X        graph_tsne X
+plot_communities X          plot_tsne X
 ```
 
 ### From communities to CNA

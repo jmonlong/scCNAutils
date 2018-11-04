@@ -58,3 +58,14 @@ test_that("apply no filters", {
   expect_equal(ncol(df), ncol(df.filt))
 })
 
+test_that("qc graphs don't thow an error", {
+  qc.df = qc_cells(df)
+  ggp = plot_qc_cells(qc.df)
+  pdf('temp.pdf')
+  lapply(ggp, print)
+  dev.off()
+  expect_gt(length(ggp), 0)
+  file.remove('temp.pdf')
+})
+
+

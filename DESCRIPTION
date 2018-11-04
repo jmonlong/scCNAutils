@@ -14,6 +14,7 @@ Imports:
     tidyr,
     rlang,
     parallel,
+    ggplot2,
     data.table
 Suggests:
     testthat
