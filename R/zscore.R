@@ -14,8 +14,7 @@ zscore <- function(ge_df, wins.th=3, method=c('norm', 'z'), normals=NULL){
   }
   if(method[1]=='norm'){
     ge_df[,samps] = t(apply(ge_df[,samps], 1, function(x) winsor(log(x/max(mean(x[normals], na.rm=TRUE),1)), u=wins.th, l=-wins.th)))
-  }
-  if(method[1]=='z'){
+  } else if(method[1]=='z'){
     ge_df[,samps] = t(apply(ge_df[,samps], 1, function(x) winsor((x-mean(x[normals], na.rm=TRUE))/max(stats::sd(x, na.rm=TRUE),1), u=wins.th, l=-wins.th)))
   }
   ge_df
