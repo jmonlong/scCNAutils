@@ -36,7 +36,7 @@ qc_cells <- function(ge_df, cell_cycle=NULL){
     ## For each phase compute the normalized expression of genes in each cell
     med.tot = stats::median(qc.df$tot)
     ge.cc = ge_df %>% dplyr::filter(.data$symbol %in% cell_cycle$symbol) %>%
-      dplyr::mutate(symbol=NULL) %>% tidyr::gather('cell', 'ge') %>%
+      tidyr::gather('cell', 'ge', -'symbol') %>%
       merge(cell_cycle) %>%
       merge(qc.df) %>% dplyr::group_by(.data$symbol) %>%
       dplyr::mutate(ge.mean=mean(.data$ge*med.tot/.data$tot)) %>%

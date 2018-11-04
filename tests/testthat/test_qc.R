@@ -48,7 +48,7 @@ test_that("apply mito filters", {
 
 test_that("apply total filters", {
   qc.df = qc_cells(df)
-  df.filt = qc_filter(df, qc.df, min_total_exp=max(qc.df$tot)-10)
+  df.filt = qc_filter(df, qc.df, min_total_exp=mean(qc.df$tot))
   expect_gt(ncol(df), ncol(df.filt))
 })
 
@@ -69,3 +69,16 @@ test_that("qc graphs don't thow an error", {
 })
 
 
+test_that("cell cycles graphs don't throw an error", {
+  cell_cycle = data.frame(symbol=sample(df$symbol, 4),
+                          phase=rep(c('G1.S', 'G2.M'), 2),
+                          stringsAsFactors=FALSE)
+  qc.df = qc_cells(df, cell_cycle=cell_cycle)
+  cc.l = define_cycling_cells(qc.df, sd_th=.1)
+  expect_lt(length(cc.l$cells.noc), nrow(qc.df))
+  expect_gt(length(cc.l$cells.noc), 0)
+  pdf('temp.pdf')
+  lapply(cc.l$graphs, print)
+  dev.off()
+  expect_true(file.remove('temp.pdf'))
+})

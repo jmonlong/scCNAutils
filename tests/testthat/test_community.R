@@ -13,3 +13,12 @@ test_that("communities found with default", {
   expect_gt(nlevels(comm.df$community), 0)
 })
 
+test_that("communities graphs", {
+  comm.df = find_communities(pca.o)
+  ggp = plot_communities(comm.df)
+  pdf('temp.pdf')
+  lapply(ggp, print)
+  dev.off()
+  expect_true(file.remove('temp.pdf'))
+})
+
