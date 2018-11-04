@@ -12,7 +12,9 @@ Imports:
     dplyr,
     magrittr,
     tidyr,
-    rlang
+    rlang,
+    parallel,
+    data.table
 Suggests:
     testthat
 RoxygenNote: 6.1.0

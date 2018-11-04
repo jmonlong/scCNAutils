@@ -7,5 +7,5 @@ test:
 manual: scCNAutils-manual.pdf
 
 scCNAutils-manual.pdf: man/*.Rd
-	rm scCNAutils-manual.pdf
+	rm -f scCNAutils-manual.pdf
 	R CMD Rd2pdf . --no-preview -o scCNAutils-manual.pdf
