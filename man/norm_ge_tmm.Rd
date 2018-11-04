@@ -7,8 +7,7 @@
 norm_ge_tmm(ge_df, nb_cores = 1)
 }
 \arguments{
-\item{ge_df}{the input gene expression with a 'symbol' column and then one
-column per cell.}
+\item{ge_df}{the input gene expression.}
 
 \item{nb_cores}{the number of processors to use.}
 }

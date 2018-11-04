@@ -7,8 +7,7 @@
 norm_ge_total(ge_df, nb.cores = 1)
 }
 \arguments{
-\item{ge_df}{the input gene expression with a 'symbol' column and then one
-column per cell.}
+\item{ge_df}{the input gene expression}
 
 \item{nb.cores}{the number of processors to use.}
 }

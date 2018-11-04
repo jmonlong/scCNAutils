@@ -37,3 +37,24 @@ test_that("computes cell cycle score", {
   expect_true(all(!is.na(qc.df$G1.S)))
   expect_true(all(!is.na(qc.df$G2.M)))
 })
+
+test_that("apply mito filters", {
+  df$symbol[sample.int(nrow(df), 3)] = paste0('MT-', 1:3)
+  qc.df = qc_cells(df)
+  mito.prop = sort(unique(qc.df$mito/qc.df$tot))
+  df.filt = qc_filter(df, qc.df, max_mito_prop=mito.prop[2])
+  expect_gt(ncol(df), ncol(df.filt))
+})
+
+test_that("apply total filters", {
+  qc.df = qc_cells(df)
+  df.filt = qc_filter(df, qc.df, min_total_exp=max(qc.df$tot)-10)
+  expect_gt(ncol(df), ncol(df.filt))
+})
+
+test_that("apply no filters", {
+  qc.df = qc_cells(df)
+  df.filt = qc_filter(df, qc.df)
+  expect_equal(ncol(df), ncol(df.filt))
+})
+

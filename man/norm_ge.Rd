@@ -7,8 +7,7 @@
 norm_ge(ge_df, method = c("tmm", "total"), nb_cores = 1)
 }
 \arguments{
-\item{ge_df}{the input gene expression with a 'symbol' column and then one
-column per cell.}
+\item{ge_df}{the input gene expression}
 
 \item{method}{the normalization method}
 
