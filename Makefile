@@ -13,6 +13,6 @@ docs/scCNAutils-manual.pdf: man/*.Rd
 ## install mermaid with 'npm install mermaid.cli'
 flowcharts: docs/flowchart-cnasignal.png
 
-docs/flowchart-cnasignal.svg: docs/flowchart-cnasignal.mmd
+docs/flowchart-cnasignal.png: docs/flowchart-cnasignal.mmd
 	./node_modules/.bin/mmdc -i docs/flowchart-cnasignal.mmd -o docs/flowchart-cnasignal.png
 
