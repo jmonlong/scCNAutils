@@ -1,0 +1,22 @@
+graph TD
+
+CC[fa:fa-table Cell + community data.frame] --> mc>make_metacells]
+mc --> MC[fa:fa-table GE per metacell]
+mc --> MCC[fa:fa-table Metacell info]
+
+MC --> J>norm_ge]
+J --> JJ[fa:fa-table Norm. gene expression]
+JJ --> K>bin_genes]
+K --> KK[fa:fa-table Norm. bin expression]
+KK --> L>zscore]
+L --> LL[fa:fa-table Norm. bin Z-score]
+LL --> M>smooth_movingw]
+M --> MM[fa:fa-table Norm. smoothed bin Z-score]
+
+MM --> c>call_cna]
+c --> C[fa:fa-table CNA calls]
+C --> pc>plot_cna]
+pc --> PC[fa:fa-chart-bar CNA graph]
+
+classDef orange fill:#f96;
+class mc,L,M,c,pc,J,K orange

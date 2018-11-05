@@ -13,6 +13,10 @@ The internal workflow is as follow:
 
 ### From communities to CNA
 
+Plan:
+
+![](docs/flowchart-cnacalling.png)
+
 
 ## Todo
 
