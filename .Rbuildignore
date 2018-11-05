@@ -1,2 +1,3 @@
-^scCNAutils-manual\.pdf$
+^docs$
 ^Makefile$
+^node_modules$

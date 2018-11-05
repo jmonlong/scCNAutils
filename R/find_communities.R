@@ -4,6 +4,7 @@
 ##' @param k the number of nearest neighbor for the KNN graph. Default 100.
 ##' @return a data.frame with two columns: 'cell' and 'community'.
 ##' @author Jean Monlong
+##' @export
 find_communities <- function(pca_o, nb_pcs=10, k=100){
   nb_pcs = min(nb_pcs, ncol(pca_o$x))
   knn.o = FNN::get.knn(as.matrix(pca_o$x[,1:nb_pcs]), k = k)

@@ -4,6 +4,7 @@
 ##' @param nb_it the number of iterations. Default 1000.
 ##' @return a data.frame with columns: cell, tsne1, tsne2
 ##' @author Jean Monlong
+##' @export
 run_tsne <- function(pca_o, nb_pcs=10, nb_it=1000){
   nb_pcs = min(nb_pcs, ncol(pca_o$x))
   tsne.o = Rtsne::Rtsne(pca_o$x[,1:nb_pcs], pca=FALSE, max_iter=nb_it)

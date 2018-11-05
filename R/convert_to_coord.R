@@ -15,6 +15,7 @@
 ##' @return a data.frame with columns 'chr', 'start', 'end' columns with genes
 ##' coordinates (and still one column per barcode).
 ##' @author Jean Monlong
+##' @export
 convert_to_coord <- function(ge_df, genes_coord, chrs=c(1:22,"X","Y"),
                              rm_dup=TRUE){
   if(!is.data.frame(genes_coord)){

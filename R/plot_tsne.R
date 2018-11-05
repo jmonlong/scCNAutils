@@ -5,6 +5,7 @@
 ##' @return a list of ggplot objects
 ##' @author Jean Monlong
 ##' @import ggplot2
+##' @export
 plot_tsne <- function(tsne_df, qc_df=NULL){
   tsne1 = tsne2 = tot = mito = NULL
   ptalpha = .5

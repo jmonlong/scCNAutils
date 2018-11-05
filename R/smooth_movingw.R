@@ -6,6 +6,7 @@
 ##' @param FUN the function to apply to each window. Default is median.
 ##' @return a data.frame with smoothed signal.
 ##' @author Jean Monlong
+##' @export
 smooth_movingw <- function(df, wsize=3, nb_cores=1, FUN=stats::median){
   ## Function to smooth on cell (vector)
   smooth.cell <- function(vec){

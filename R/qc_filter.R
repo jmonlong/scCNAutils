@@ -6,6 +6,7 @@
 ##' @param min_total_exp the minimum total cell expression
 ##' @return \emph{ge_df} with only the cells that passed the filters
 ##' @author Jean Monlong
+##' @export
 qc_filter <- function(ge_df, qc_df, max_mito_prop=.2, min_total_exp=0){
   ## Find cells to keep
   mito.filt = qc_df$mito / qc_df$tot <= max_mito_prop

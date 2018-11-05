@@ -4,6 +4,7 @@
 ##' @param nb_cores the number of processors to use.
 ##' @return a data.frame with the normalized expression.
 ##' @author Jean Monlong
+##' @export
 norm_ge <- function(ge_df, method=c('tmm', 'total'), nb_cores=1){
   if(method[1] == 'tmm'){
     return(norm_ge_tmm(ge_df=ge_df, nb_cores=nb_cores))

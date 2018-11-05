@@ -4,16 +4,17 @@
 \alias{zscore}
 \title{Compute Z-score}
 \usage{
-zscore(ge_df, wins.th = 3, method = c("norm", "z"), normals = NULL)
+zscore(ge_df, wins_th = 3, method = c("z", "norm"), normals = NULL)
 }
 \arguments{
-\item{ge_df}{the inpue expression data.frame}
+\item{ge_df}{the input expression data.frame}
 
-\item{wins.th}{the threshold to winsorize Z-score. Default is 3}
+\item{wins_th}{the threshold to winsorize Z-score. Default is 3}
 
-\item{method}{the normalization method. Either 'norm' or 'z'.}
+\item{method}{the normalization method. Either 'z' or norm'.}
 
-\item{normals}{the cells to use as normals. If NULL (default) all cells are used as normals}
+\item{normals}{the cells to use as normals. If NULL (default) all cells are used
+as normals}
 }
 \value{
 a data.frame with Z-scores.

@@ -8,6 +8,7 @@
 ##' @return a data.frame with a 'symbol' column with gene names and one
 ##' column per barcode.
 ##' @author Jean Monlong
+##' @export
 read_mtx <- function(mtx_file='matrix.mtx', genes_file='genes.tsv',
                      barcodes_file='barcodes.tsv', path='.', rm_dup=TRUE,
                      genes_col=2){

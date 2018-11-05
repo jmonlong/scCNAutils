@@ -3,6 +3,7 @@
 ##' @return a list of ggplot2 graphs.
 ##' @author Jean Monlong
 ##' @import ggplot2
+##' @export
 plot_communities <- function(comm_df){
   community = NULL
   ggp.l = list()

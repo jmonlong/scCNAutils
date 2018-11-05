@@ -7,6 +7,7 @@
 ##' \item{graphs}{a list of ggplot2 graphs}
 ##' @author Jean Monlong
 ##' @import ggplot2
+##' @export
 define_cycling_cells <- function(qc_df, sd_th=3){
   ## Compute thresholds
   g1s.th = stats::median(qc_df$G1.S) + sd_th*stats::mad(qc_df$G1.S)

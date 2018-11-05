@@ -7,6 +7,7 @@
 ##' @author Jean Monlong
 ##' @importFrom magrittr %>%
 ##' @importFrom rlang .data
+##' @export
 bin_genes <- function(ge_df, mean_exp=3, nb_cores=1){
   cells = setdiff(colnames(ge_df), c("chr","start","end"))
   m.df = ge_df[, c('chr', 'start', 'end')]

@@ -6,39 +6,15 @@ Functions to analyze copy number aberrations in single-cell data
 
 ### From gene expression to CNA signal
 
-```
-read_mtx
-  |-----
-  |    V
-  |  qc_cells
-  |    |----------------> plot_qc_cells
-  V    V            |
-qc_filter           |
-  |                 |
-  V                 |
-convert_to_coord    |
-  |                 |
-  V                 | 
-norm_ge             | define_cycling_cells X
-  |                 |
-  V                 |
-bin_genes           |
-  |                 |
-  V                 |
-zscore              |
-  |                 |
-  V                 |
-smooth_movingm      |
-  |                 |
-  V                 |
-run_pca     <--------
-  |-------------------------------
-  V                              V
-find_communities              run_tsne
-  |       |_ _ _ _ _ _ _ _ _ _    |
-  V                          V    V
-plot_communities            plot_tsne
-```
+The `auto_cna_signal` function calls the appropriate functions to go from raw expression to communities and tSNE based on CNA signal.
+The internal workflow is as follow:
+
+![](docs/flowchart-cnasignal.png)
 
 ### From communities to CNA
 
+
+## Todo
+
+- Add QC in community graphs.
+- Add multi-samples capability and graphs.

@@ -23,6 +23,7 @@
 ##' ## Zoom in to the top 20 PCs
 ##' pca.o$sdev.graph + xlim(1,20)
 ##' }
+##' @export
 run_pca <- function(z_df, core_cells=NULL, out_pcs=100){
   cells = setdiff(colnames(z_df), c("chr","start","end", "symbol"))
   z.mat = t(as.matrix(z_df[, cells]))

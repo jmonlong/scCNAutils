@@ -10,6 +10,7 @@
 ##' @author Jean Monlong
 ##' @importFrom magrittr %>%
 ##' @importFrom rlang .data
+##' @export
 qc_cells <- function(ge_df, cell_cycle=NULL){
   cells = setdiff(colnames(ge_df), 'symbol')
   tot = colSums(ge_df[,cells])

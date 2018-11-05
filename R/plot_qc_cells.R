@@ -3,6 +3,7 @@
 ##' @return a list of ggplots
 ##' @author Jean Monlong
 ##' @import ggplot2
+##' @export
 plot_qc_cells <- function(qc_df){
   tot = zeros = mito = NULL
   ggp.l = list()
