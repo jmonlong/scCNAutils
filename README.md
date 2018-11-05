@@ -1,5 +1,7 @@
 # scCNAutils
-Functions to analyze copy number aberrations in single-cell data
+Functions to analyze copy number aberrations in single-cell data. 
+
+- [Reference manual](docs/scCNAutils-manual.pdf).
 
 ## Install
 
