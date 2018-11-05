@@ -11,6 +11,7 @@
 ##' \item{ge}{a data.frame with coordinates and gene expression for each metacell.}
 ##' \item{info}{information about which metacell correspond to which community.}
 ##' @author Jean Monlong
+##' @importFrom magrittr %>%
 ##' @export
 make_metacells <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
                            baseline_cells=NULL, nb_cores=1){
@@ -53,7 +54,7 @@ make_metacells <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
     cells.info$community = factor(cells.info$community,
                                   levels=levels(groups.df$community))
   }
-  cells.info$metacell = paste0("mc",1:nrow(cells.info))
+  cells.info$cell = paste0("mc",1:nrow(cells.info))
   cells.tm = do.call(c, cells.tm)
 
   ## Merge gene expression

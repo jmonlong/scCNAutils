@@ -18,7 +18,10 @@ Imports:
     data.table,
     Rtsne,
     FNN,
-    igraph
+    igraph,
+    RcppHMM,
+    GenomicRanges,
+    IRanges
 Suggests:
     testthat
 RoxygenNote: 6.1.0
