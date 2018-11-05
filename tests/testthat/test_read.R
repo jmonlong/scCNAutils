@@ -18,7 +18,7 @@ write.table(genes.df, file='genes.tsv', col.names=FALSE,
             row.names=FALSE, sep='\t')
 
 ## Barcodes
-barcodes = paste('barcode', 1:nb.cells)
+barcodes = paste0('barcode', 1:nb.cells)
 write.table(barcodes, file='barcodes.tsv', col.names=FALSE,
             row.names=FALSE, sep='\t')
 

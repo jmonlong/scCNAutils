@@ -2,7 +2,7 @@ context('tSNE')
 
 ## Dummy PCA
 nb.cells = 200
-cells = paste('barcode', 1:nb.cells)
+cells = paste0('barcode', 1:nb.cells)
 nb.pcs = 100
 pca.o = list(x=matrix(rnorm(nb.cells*nb.pcs), nb.cells))
 rownames(pca.o$x) = cells
@@ -20,6 +20,10 @@ comm.df = data.frame(cell=cells,
                      community=factor(sample.int(3, nb.cells, TRUE)),
                      stringsAsFactors=FALSE)
 
+## Dummy merge info
+info.df = data.frame(cell=cells,
+                     sample=paste0('s', sample.int(2, nb.cells, TRUE)),
+                     stringsAsFactors=FALSE)
 
 test_that("tSNE runs with default", {
   tsne.df = run_tsne(pca.o, nb_it=10)
@@ -28,7 +32,7 @@ test_that("tSNE runs with default", {
 
 test_that("tSNE graphs", {
   tsne.df = run_tsne(pca.o, nb_it=10)
-  graphs = plot_tsne(tsne.df, qc.df, comm.df)
+  graphs = plot_tsne(tsne.df, qc.df, comm.df, info.df)
   pdf('temp.pdf')
   lapply(graphs, print)
   dev.off()

@@ -4,7 +4,7 @@ context("QC per cell")
 nb.genes = 100
 nb.cells = 10
 mat = matrix(rpois(nb.cells*nb.genes, 1), nb.genes, nb.cells)
-colnames(mat) = paste('barcode', 1:nb.cells)
+colnames(mat) = paste0('barcode', 1:nb.cells)
 df = data.frame(symbol=paste0('gene', 1:nb.genes), stringsAsFactors=FALSE)
 df = cbind(df, mat)
 
@@ -74,6 +74,7 @@ test_that("cell cycles graphs don't throw an error", {
                           phase=rep(c('G1.S', 'G2.M'), 2),
                           stringsAsFactors=FALSE)
   qc.df = qc_cells(df, cell_cycle=cell_cycle)
+  qc.df$G1.S[1] = 100
   cc.l = define_cycling_cells(qc.df, sd_th=.1)
   expect_lt(length(cc.l$cells.noc), nrow(qc.df))
   expect_gt(length(cc.l$cells.noc), 0)

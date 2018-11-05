@@ -5,7 +5,7 @@ nb.genes = 100
 nb.cells = 10
 mat = matrix(rpois(nb.cells*nb.genes, sample.int(3, nb.cells, TRUE)),
              nb.genes, nb.cells, byrow=TRUE)
-colnames(mat) = paste('barcode', 1:nb.cells)
+colnames(mat) = paste0('barcode', 1:nb.cells)
 tot.raw = colSums(mat)
 df = data.frame(symbol=paste0('gene', 1:nb.genes), stringsAsFactors=FALSE)
 df = cbind(df, mat)

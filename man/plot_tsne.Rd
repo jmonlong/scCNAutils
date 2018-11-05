@@ -4,7 +4,7 @@
 \alias{plot_tsne}
 \title{tSNE graphs}
 \usage{
-plot_tsne(tsne_df, qc_df = NULL, comm_df = NULL)
+plot_tsne(tsne_df, qc_df = NULL, comm_df = NULL, info_df = NULL)
 }
 \arguments{
 \item{tsne_df}{the output data.frame from \code{\link{run_tsne}} (columns: cell, tsne1, tsne2)}
@@ -14,6 +14,9 @@ Default is NULL (i.e. not used)}
 
 \item{comm_df}{a data.frame with communities (output from \code{\link{find_communities}}).
 Default is NULL (i.e. not used)}
+
+\item{info_df}{a data.frame with sample merge info (output from
+\code{\link{merge_samples}}).}
 }
 \value{
 a list of ggplot objects

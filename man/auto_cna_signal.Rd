@@ -5,14 +5,14 @@
 \title{Automated pipeline to compute CNA signal from scRNA expression}
 \usage{
 auto_cna_signal(data, genes_coord, prefix = "scCNAutils_out",
-  nb_cores = 1, pause_after_qc = FALSE, max_mito_prop = 0.2,
-  min_total_exp = 0, chrs = c(1:22, "X", "Y"), cell_cycle = NULL,
-  bin_mean_exp = 3, z_wins_th = 3, smooth_wsize = 3, cc_sd_th = 3,
-  nb_pcs = 10, comm_k = 100)
+  nb_cores = 1, pause_after_qc = FALSE, sample_names = NULL,
+  max_mito_prop = 0.2, min_total_exp = 0, chrs = c(1:22, "X", "Y"),
+  cell_cycle = NULL, bin_mean_exp = 3, z_wins_th = 3,
+  smooth_wsize = 3, cc_sd_th = 3, nb_pcs = 10, comm_k = 100)
 }
 \arguments{
-\item{data}{a data.frame with gene expression of the path to the folder with the
-'matrix.mtx', 'genes.tsv' and 'barcodes.tsv' files.}
+\item{data}{a data.frame with gene expression or the path to the folder with the
+'matrix.mtx', 'genes.tsv' and 'barcodes.tsv' files. A list if multiple samples.}
 
 \item{genes_coord}{either a file name or a data.frame with coordinates
 and gene names.}
@@ -22,6 +22,8 @@ and gene names.}
 \item{nb_cores}{the number of processors to use.}
 
 \item{pause_after_qc}{pause after the QC to pick custom QC thresholds.}
+
+\item{sample_names}{the names of each sample. If NULL, tries to use data's names.}
 
 \item{max_mito_prop}{the maximum proportion of mitochondrial RNA.}
 

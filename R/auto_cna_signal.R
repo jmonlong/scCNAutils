@@ -1,12 +1,13 @@
 ##' Goes from reading raw gene counts to CNA-level signal, tSNE and community detection.
 ##' @title Automated pipeline to compute CNA signal from scRNA expression
-##' @param data a data.frame with gene expression of the path to the folder with the
-##' 'matrix.mtx', 'genes.tsv' and 'barcodes.tsv' files.
+##' @param data a data.frame with gene expression or the path to the folder with the
+##' 'matrix.mtx', 'genes.tsv' and 'barcodes.tsv' files. A list if multiple samples.
 ##' @param genes_coord either a file name or a data.frame with coordinates
 ##' and gene names.
 ##' @param prefix the prefix to use for the files created by this function (e.g. graphs).
 ##' @param nb_cores the number of processors to use.
 ##' @param pause_after_qc pause after the QC to pick custom QC thresholds.
+##' @param sample_names the names of each sample. If NULL, tries to use data's names.
 ##' @param max_mito_prop the maximum proportion of mitochondrial RNA.
 ##' @param min_total_exp the minimum total cell expression
 ##' @param chrs the chromosome names to keep. NULL to include all the chromosomes.
@@ -22,12 +23,28 @@
 ##' @author Jean Monlong
 ##' @export
 auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores=1,
-                            pause_after_qc=FALSE,
+                            pause_after_qc=FALSE, sample_names=NULL,
                             max_mito_prop=.2, min_total_exp=0, chrs=c(1:22,"X","Y"),
                             cell_cycle=NULL, bin_mean_exp=3, z_wins_th=3, smooth_wsize=3,
                             cc_sd_th=3, nb_pcs=10, comm_k=100){
   if(is.character(data) & length(data)==1){
     data = read_mtx(path=data)
+  } else if(is.character(data) & length(data) > 1){
+    if(is.null(sample_names)){
+      warning('sample_names is NULL, will try to guess sample names from data paths.')
+      sample_names = basename(data)
+    }
+    data = lapply(data, function(path) read_mtx(path=path))
+  }
+
+  info.df = NULL
+  if(is.list(data) & is.data.frame(data[[1]])){
+    if(is.null(sample_names)){
+      sample_names = names(data)
+    }
+    ms.o = merge_samples(data, sample_names=sample_names)
+    data = ms.o$ge
+    info.df = ms.o$info
   }
 
   ## QC

@@ -14,5 +14,5 @@ docs/scCNAutils-manual.pdf: man/*.Rd
 flowcharts: docs/flowchart-cnasignal.png
 
 docs/flowchart-cnasignal.png: docs/flowchart-cnasignal.mmd
-	./node_modules/.bin/mmdc -i docs/flowchart-cnasignal.mmd -o docs/flowchart-cnasignal.png
+	./node_modules/.bin/mmdc -w 1000 -i docs/flowchart-cnasignal.mmd -o docs/flowchart-cnasignal.png
 

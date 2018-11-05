@@ -1,18 +1,24 @@
 graph TD
 A[fa:fa-table Raw gene expression] --> B>read_mtx]
-B --> C[fa:fa-table GE symbol + n cells]
-C --> D>qc_cells]
-D --> E[fa:fa-table QC data.frame]
+B --> C[fa:fa-table GE: symbol, n cells]
+AA[fa:fa-table Raw gene expression] --> BB>read_mtx]
+BB --> CC[fa:fa-table GE:symbol, m cells]
+
+C --> ms>merge_samples]
+CC --> ms>merge_samples]
+ms --> MS[fa:fa-table GE: symbol, n+m cells]
+
+MS --> D>qc_cells]
+D --> E[fa:fa-table QC metrics per cell]
 E --> E1>plot_qc_cells]
 E1 --> E2[fa:fa-chart-bar QC graphs]
-E --> E3>define_cycling_cells]
-E3 --> E4[fa:fa-chart-bar Cell cycle graphs]
-E3 --> E5[fa:fa-table Non-cycling cells]
-C --> F>qc_filter]
+
+MS --> F>qc_filter]
 E --> F>qc_filter]
-F --> G[fa:fa-table GE symbol + n' cells]
+F --> G[fa:fa-table GE: symbol, n'+m' cells]
+
 G --> H>convert_to_coord]
-H --> I[fa:fa-table GE coord + n' cells]
+H --> I[fa:fa-table GE: coord, n'+m' cells]
 I --> J>norm_ge]
 J --> JJ[fa:fa-table Normalized GE]
 JJ --> K>bin_genes]
@@ -21,14 +27,26 @@ KK --> L>zscore]
 L --> LL[fa:fa-table Norm. bin Z-score]
 LL --> M>smooth_movingw]
 M --> MM[fa:fa-table Norm. smoothed bin Z-score]
+
+E --> E3>define_cycling_cells]
+E3 --> E5[fa:fa-table Non-cycling cells]
+E3 --> E4[fa:fa-chart-bar Cell cycle graphs]
+
 MM --> N>run_pca]
 E5 -.-> N
+N --> NNN[fa:fa-chart-bar PCs variance graph]
 N --> NN[fa:fa-table PCA results]
+
 NN --> O>find_communities]
 O --> OO[fa:fa-table Cell + community data.frame]
 OO --> O2>plot_communities]
 O2 --> O3[fa:fa-chart-bar Community graphs]
 E -.-> O2
+
+ms --> MS2[fa:fa-table Merge info]
+MS2 -.-> P2
+MS2 -.-> O2
+
 NN --> P>run_tsne]
 P --> PP[fa:fa-table Cell + tSNE data.frame]
 PP --> P2>plot_tsne]
@@ -36,5 +54,6 @@ P2 --> P3[fa:fa-chart-bar tSNE graphs]
 E -.-> P2
 OO -.-> P2
 
+
 classDef orange fill:#f96;
-class B,D,E1,E3,F,H,J,K,L,M,N,O,O2,P,P2 orange
+class ms,B,BB,D,E1,E3,F,H,J,K,L,M,N,O,O2,P,P2 orange

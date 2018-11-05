@@ -2,7 +2,7 @@ context('Community detection')
 
 ## Dummy PCA
 nb.cells = 200
-cells = paste('barcode', 1:nb.cells)
+cells = paste0('barcode', 1:nb.cells)
 nb.pcs = 100
 pca.o = list(x=matrix(rnorm(nb.cells, nb.pcs), nb.cells))
 rownames(pca.o$x) = cells
@@ -15,6 +15,10 @@ qc.df = data.frame(cell=cells,
                    G2.M=rnorm(nb.cells),
                    stringsAsFactors=FALSE)
 
+## Dummy merge info
+info.df = data.frame(cell=cells,
+                     sample=paste0('s', sample.int(2, nb.cells, TRUE)),
+                     stringsAsFactors=FALSE)
 
 test_that("communities found with default", {
   comm.df = find_communities(pca.o)
@@ -24,7 +28,7 @@ test_that("communities found with default", {
 
 test_that("communities graphs", {
   comm.df = find_communities(pca.o)
-  ggp = plot_communities(comm.df, qc.df)
+  ggp = plot_communities(comm.df, qc.df, info.df)
   pdf('temp.pdf')
   lapply(ggp, print)
   dev.off()

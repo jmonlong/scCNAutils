@@ -4,11 +4,13 @@
 ##' Default is NULL (i.e. not used)
 ##' @param comm_df a data.frame with communities (output from \code{\link{find_communities}}).
 ##' Default is NULL (i.e. not used)
+##' @param info_df a data.frame with sample merge info (output from
+##' \code{\link{merge_samples}}).
 ##' @return a list of ggplot objects
 ##' @author Jean Monlong
 ##' @import ggplot2
 ##' @export
-plot_tsne <- function(tsne_df, qc_df=NULL, comm_df=NULL){
+plot_tsne <- function(tsne_df, qc_df=NULL, comm_df=NULL, info_df=NULL){
   tsne1 = tsne2 = tot = mito = G1.S = G2.M = community = NULL
   ptalpha = .5
   if(nrow(tsne_df) > 1e4){
@@ -17,6 +19,15 @@ plot_tsne <- function(tsne_df, qc_df=NULL, comm_df=NULL){
   ggp.l = list()
   ggp.l$nocolor = ggplot(tsne_df, aes(tsne1, tsne2)) + geom_point(alpha=ptalpha) +
     theme_bw()
+  if(!is.null(info_df)){
+    nrows = nrow(tsne_df)
+    tsne_df = merge(tsne_df, info_df)
+    if(nrow(tsne_df) < nrows){
+      warning('Some cells in tsne_df are missing from info_df.')
+    }
+    ggp.l$sample = ggplot(tsne_df, aes(tsne1, tsne2, colour=sample)) +
+      geom_point(alpha=ptalpha) + theme_bw()
+  }
   if(!is.null(qc_df)){
     nrows = nrow(tsne_df)
     tsne_df = merge(tsne_df, qc_df)

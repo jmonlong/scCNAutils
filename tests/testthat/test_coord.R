@@ -4,7 +4,7 @@ context("Convert to coordinates")
 nb.genes = 100
 nb.cells = 10
 mat = matrix(rpois(nb.cells*nb.genes, 1), nb.genes, nb.cells)
-colnames(mat) = paste('barcode', 1:nb.cells)
+colnames(mat) = paste0('barcode', 1:nb.cells)
 ge.df = data.frame(symbol=paste0('gene', 1:nb.genes), stringsAsFactors=FALSE)
 ge.df = cbind(ge.df, mat)
 

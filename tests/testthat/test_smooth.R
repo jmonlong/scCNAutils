@@ -5,7 +5,7 @@ nb.genes = 500
 nb.cells = 10
 mat = matrix(rnorm(nb.cells*nb.genes),
              nb.genes, nb.cells, byrow=TRUE)
-colnames(mat) = paste('barcode', 1:nb.cells)
+colnames(mat) = paste0('barcode', 1:nb.cells)
 df = data.frame(chr=sample(c(1:5), nb.genes, TRUE),
                 start=sample.int(10000, nb.genes),
                 stringsAsFactors=FALSE)

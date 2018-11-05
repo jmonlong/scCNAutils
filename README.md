@@ -16,6 +16,6 @@ The internal workflow is as follow:
 
 ## Todo
 
-- Example on public data.
-- Add multi-samples capability and graphs.
-- Add meta-cell based CNA calling.
+- Add metacell-based CNA calling.
+- Try to use Seurat's functions (e.g. Louvain with gamma and UMAP).
+- Example on public cancer data.
