@@ -31,10 +31,11 @@ cnaHMM <- function(ge, trans.prob=.0001, log.mu=TRUE, max.samps=200, perChr=TRUE
     var.est = stats::var(as.numeric(ge.mat), na.rm=TRUE) # var of samples in state 1
     Sigma <- array(0, dim =c(M,M,length(N)))
     Sigma[,,2] <- Sigma[,,3] <- Sigma[,,1] <- var.est * diag(M) # Independent samples
-    HMM.o <- RcppHMM::verifyModel(list("Model" = "GHMM", "StateNames" = N,
-                                       "A" = A, "Mu" = Mu, "Sigma" = Sigma, "Pi" = Pi))
+    HMM.o <- suppressWarnings(RcppHMM::verifyModel(list("Model" = "GHMM", "StateNames" = N,
+                                                        "A" = A, "Mu" = Mu,
+                                                        "Sigma" = Sigma, "Pi" = Pi)))
     ## Find most likely states
-    coord.df$CN = RcppHMM::viterbi(HMM.o, ge.mat)
+    coord.df$CN = suppressWarnings(RcppHMM::viterbi(HMM.o, ge.mat))
     ## Other metrics
     coord.df$mean = apply(ge.mat,2,mean)
     coord.df

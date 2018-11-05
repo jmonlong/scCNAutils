@@ -62,7 +62,7 @@ make_metacells <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
   ge.mc.l = parallel::mclapply(1:length(cells.tm), function(ii){
     ge_df[,cells.tm[[ii]]] %>% as.matrix %>% apply(1,sum)
   }, mc.cores=nb_cores)
-  names(ge.mc.l) = cells.info$sample
+  names(ge.mc.l) = cells.info$cell
   ge.mc = cbind(ge.mc, as.data.frame(ge.mc.l))
   return(list(ge=ge.mc, info=cells.info))
 }

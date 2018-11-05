@@ -46,7 +46,7 @@ write.table(barcodes, file='sampleB/barcodes.tsv', col.names=FALSE,
 
 ## Coordinates
 genes.coord = data.frame(symbol=genes.df$symbol,
-                         chr=sample(c(1:22,"X","Y", 'MT'), nb.genes, TRUE),
+                         chr=sample(1:2, nb.genes, TRUE),
                          start=sample.int(10000, nb.genes),
                          stringsAsFactors=FALSE)
 genes.coord$end = genes.coord$start + 10
@@ -59,6 +59,9 @@ cell_cycle = data.frame(symbol=sample(genes.df$symbol, 4),
 
 test_that("CNA signal runs for one sample", {
   res.df = auto_cna_signal('sampleA', genes.coord, prefix='tempfortest', cell_cycle=cell_cycle)
+  load('tempfortest-coord-norm.RData')
+  res.df$community = factor(sample.int(2, nrow(res.df), TRUE))
+  cna.df = auto_cna_call(data, res.df, prefix='tempfortest')
   outfiles = list.files('.', 'tempfortest')
   expect_gt(length(outfiles), 0)
   expect_true(all(file.remove(outfiles)))
