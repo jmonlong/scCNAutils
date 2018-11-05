@@ -4,10 +4,13 @@
 \alias{plot_communities}
 \title{Community graphs}
 \usage{
-plot_communities(comm_df)
+plot_communities(comm_df, qc_df = NULL)
 }
 \arguments{
 \item{comm_df}{the output data.frame from \code{\link{find_communities}}}
+
+\item{qc_df}{a data.frame with QC metrics (output from \code{\link{qc_cells}}).
+Default is NULL (i.e. not used)}
 }
 \value{
 a list of ggplot2 graphs.

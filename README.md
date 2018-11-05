@@ -17,7 +17,5 @@ The internal workflow is as follow:
 ## Todo
 
 - Example on public data.
-- Integrate QC info in `plot_communities`.
-- Integrate communities in `plot_tsne`.
 - Add multi-samples capability and graphs.
 - Add meta-cell based CNA calling.

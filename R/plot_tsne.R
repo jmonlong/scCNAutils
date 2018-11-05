@@ -1,13 +1,15 @@
 ##' @title tSNE graphs
 ##' @param tsne_df the output data.frame from \code{\link{run_tsne}} (columns: cell, tsne1, tsne2)
-##' @param qc_df a data.frame with QC metrics (output from \code{\link{qc_cells}}). Default is NULL
-##' (i.e. not used)
+##' @param qc_df a data.frame with QC metrics (output from \code{\link{qc_cells}}).
+##' Default is NULL (i.e. not used)
+##' @param comm_df a data.frame with communities (output from \code{\link{find_communities}}).
+##' Default is NULL (i.e. not used)
 ##' @return a list of ggplot objects
 ##' @author Jean Monlong
 ##' @import ggplot2
 ##' @export
-plot_tsne <- function(tsne_df, qc_df=NULL){
-  tsne1 = tsne2 = tot = mito = NULL
+plot_tsne <- function(tsne_df, qc_df=NULL, comm_df=NULL){
+  tsne1 = tsne2 = tot = mito = G1.S = G2.M = community = NULL
   ptalpha = .5
   if(nrow(tsne_df) > 1e4){
     ptalpha = .1
@@ -30,6 +32,22 @@ plot_tsne <- function(tsne_df, qc_df=NULL){
         scale_colour_gradientn(name='proportion\nof\nmitochondrial\nRNA',
                                colors=grDevices::terrain.colors(10))
     }
+    if(all(c('G1.S', 'G2.M') %in% colnames(tsne_df))){
+      ggp.l$cellcycle = ggplot(tsne_df, aes(tsne1, tsne2, colour=G1.S+G2.M)) +
+        geom_point(alpha=ptalpha) + theme_bw() +
+        scale_colour_gradientn(name='cycling score',
+                               colors=grDevices::terrain.colors(10))
+    }
+
+  }
+  if(!is.null(comm_df)){
+    nrows = nrow(tsne_df)
+    tsne_df = merge(tsne_df, comm_df)
+    if(nrow(tsne_df) < nrows){
+      warning('Some cells in tsne_df are missing from comm_df.')
+    }
+    ggp.l$comm = ggplot(tsne_df, aes(tsne1, tsne2, colour=community)) +
+      geom_point(alpha=ptalpha) + theme_bw()
   }
   return(ggp.l)
 }

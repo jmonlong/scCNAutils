@@ -4,13 +4,16 @@
 \alias{plot_tsne}
 \title{tSNE graphs}
 \usage{
-plot_tsne(tsne_df, qc_df = NULL)
+plot_tsne(tsne_df, qc_df = NULL, comm_df = NULL)
 }
 \arguments{
 \item{tsne_df}{the output data.frame from \code{\link{run_tsne}} (columns: cell, tsne1, tsne2)}
 
-\item{qc_df}{a data.frame with QC metrics (output from \code{\link{qc_cells}}). Default is NULL
-(i.e. not used)}
+\item{qc_df}{a data.frame with QC metrics (output from \code{\link{qc_cells}}).
+Default is NULL (i.e. not used)}
+
+\item{comm_df}{a data.frame with communities (output from \code{\link{find_communities}}).
+Default is NULL (i.e. not used)}
 }
 \value{
 a list of ggplot objects
