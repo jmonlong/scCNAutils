@@ -11,8 +11,7 @@ devtools::install_github('jmonlong/scCNAutils')
 
 ```r
 library(scCNAutils)
-res.df = auto_cna_signal(c('sampleA', 'sampleB'), 'genes.tsv', prefix='example',
-                         cell_cycle='cc_genes.tsv')
+res.df = auto_cna_signal(c('sampleA', 'sampleB'), 'genes.tsv', prefix='example', cell_cycle='cc_genes.tsv')
 load('example-coord-norm.RData')
 cna.df = auto_cna_call(data, res.df, prefix='example')
 ```
