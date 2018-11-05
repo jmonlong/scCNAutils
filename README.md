@@ -7,7 +7,7 @@ Functions to analyze copy number aberrations in single-cell data
 devtools::install_github('jmonlong/scCNAutils')
 ```
 
-### Usage
+## Usage
 
 ```r
 library(scCNAutils)
