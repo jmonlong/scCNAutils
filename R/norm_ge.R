@@ -1,3 +1,5 @@
+##' The expression of each cell is normalized to account for depth differences.
+##'
 ##' @title Normalize gene expression
 ##' @param ge_df the input gene expression
 ##' @param method the normalization method

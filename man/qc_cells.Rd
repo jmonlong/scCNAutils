@@ -17,6 +17,9 @@ cycle scores. See details.}
 a data.frame with qc metrics per cell.
 }
 \description{
+From raw gene expression, a few QC metrics are computed.
+}
+\details{
 If cell_cycle is provided it should be a data.frame (or a tsv file) with
 two columns: 'symbol' with gene names, and 'phase' with the cell cycle phase
 (e.g. either 'G1.S' or 'G2.M').

@@ -59,9 +59,10 @@ cell_cycle = data.frame(symbol=sample(genes.df$symbol, 4),
 
 test_that("CNA signal runs for one sample", {
   res.df = auto_cna_signal('sampleA', genes.coord, prefix='tempfortest', cell_cycle=cell_cycle)
-  load('tempfortest-coord-norm.RData')
+  load('tempfortest-ge-coord-norm.RData')
   res.df$community = factor(sample.int(2, nrow(res.df), TRUE))
-  cna.df = auto_cna_call(data, res.df, prefix='tempfortest')
+  cna.df = auto_cna_call(data, res.df, prefix='tempfortest',
+                         baseline_communities=1)
   outfiles = list.files('.', 'tempfortest')
   expect_gt(length(outfiles), 0)
   expect_true(all(file.remove(outfiles)))

@@ -28,7 +28,8 @@ a list with
 \item{info}{information about which metacell correspond to which community.}
 }
 \description{
-Make metacells
+Randomly select cells in each community and merge them to create metacells
+with higher resolution.
 }
 \author{
 Jean Monlong

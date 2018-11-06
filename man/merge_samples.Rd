@@ -18,7 +18,8 @@ a list with
 corresponding sample name}
 }
 \description{
-Merge expression of multiple samples
+The expression of multiple samples are merged. New cell names are produced as
+SAMPLE_CELL.
 }
 \author{
 Jean Monlong

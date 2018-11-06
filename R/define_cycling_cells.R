@@ -1,3 +1,5 @@
+##' Using cell cycle scores, identify cells that are cycling.
+##'
 ##' @title Define cycling cells
 ##' @param qc_df the output data.frame from \code{\link{qc_cells}} (ran with a
 ##' non-null \emph{cell_cycle} parameter)

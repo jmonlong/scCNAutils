@@ -22,7 +22,31 @@ Default is NULL (i.e. not used)}
 a list of ggplot objects
 }
 \description{
-tSNE graphs
+tSNE graphs colored according to QC metrics or sample labels.
+}
+\details{
+If the QC data.frame is provided, the distribution of QC metrics is
+shown to investigate if some communities are batch effects.
+
+If multiple samples were merged (\code{\link{merge_samples}}), the
+points can be colored by sample of origin by providing the info_df
+data.frame.
+
+If any qc_df/comm_df/info_df are null but their columns present in tsne_df,
+their corresponding graphs will be generated. Hence a merged version of
+tsne_df, comm_df, qc_df and info_df works (e.g. output of
+\code{\link{auto_cna_signal}}.
+}
+\examples{
+\dontrun{
+ggp.l = plot_tsne(tsne_df, qc_df, comm_df)
+
+## Print first graph
+ggpl.l[[1]]
+
+## Customize ggplot
+ggpl.l[[1]] + ggtitle('First tSNE graph')
+}
 }
 \author{
 Jean Monlong

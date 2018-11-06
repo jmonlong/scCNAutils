@@ -1,3 +1,6 @@
+##' The expression of multiple samples are merged. New cell names are produced as
+##' SAMPLE_CELL. 
+##'
 ##' @title Merge expression of multiple samples
 ##' @param ge_list a list of ge_df (e.g. read from \code{\link{read_mtx}}).
 ##' @param sample_names the names of each sample. If NULL, tries to use ge_list's names.

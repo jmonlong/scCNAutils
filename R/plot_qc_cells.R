@@ -4,6 +4,16 @@
 ##' @author Jean Monlong
 ##' @import ggplot2
 ##' @export
+##' @examples
+##' \dontrun{
+##' ggp.l = plot_qc_cells(qc_df)
+##'
+##' ## Print first graph
+##' ggpl.l[[1]]
+##'
+##' ## Customize ggplot
+##' ggpl.l[[1]] + ggtitle('First QC graph')
+##' }
 plot_qc_cells <- function(qc_df){
   tot = zeros = mito = NULL
   ggp.l = list()

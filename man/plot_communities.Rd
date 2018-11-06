@@ -20,7 +20,33 @@ Default is NULL (i.e. not used)}
 a list of ggplot2 graphs.
 }
 \description{
-Community graphs
+Graphs about the communities found by \code{\link{find_communities}}.
+For example the size of the communities or the distribution of QC
+metrics in each community.
+}
+\details{
+If the QC data.frame is provided, the distribution of QC metrics is
+shown to investigate if some communities are batch effects.
+
+If multiple samples were merged (\code{\link{merge_samples}}), the
+proportion of cells from each sample of origin can be shown if the
+info_df data.frame is provided.
+
+If qc_df and/or info_df are null but their columns present in comm_df,
+their corresponding graphs will be generated. Hence a merged version of
+comm_df, qc_df and info_df works (e.g. output of
+\code{\link{auto_cna_signal}}.
+}
+\examples{
+\dontrun{
+ggp.l = plot_communities(comm_df, qc_df)
+
+## Print first graph
+ggpl.l[[1]]
+
+## Customize ggplot
+ggpl.l[[1]] + ggtitle('First graph about communities')
+}
 }
 \author{
 Jean Monlong

@@ -17,7 +17,7 @@ run_tsne(pca_o, nb_pcs = 10, nb_it = 1000)
 a data.frame with columns: cell, tsne1, tsne2
 }
 \description{
-Run tSNE
+tSNE from PCA results.
 }
 \author{
 Jean Monlong

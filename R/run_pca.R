@@ -1,3 +1,5 @@
+##' PCA analysis, eventually using a subset of core cells for the PC construction.
+##'
 ##' Cells in core_cells are used to build the principal components to which
 ##' all cells are then projected to. Usually used to reduce the effect of
 ##' cell cycle in the PCA, by using only cells that don't cycle (see \code{\link{qc_cells}})

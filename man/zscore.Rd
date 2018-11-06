@@ -20,7 +20,8 @@ as normals}
 a data.frame with Z-scores.
 }
 \description{
-Compute Z-score
+Transform gene expression into a scaled score, either using all cells or a
+subset of cells as baseline.
 }
 \author{
 Jean Monlong

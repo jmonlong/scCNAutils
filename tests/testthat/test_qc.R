@@ -59,6 +59,7 @@ test_that("apply no filters", {
 })
 
 test_that("qc graphs don't thow an error", {
+  df$symbol[sample.int(nrow(df), 3)] = paste0('MT-', 1:3)
   qc.df = qc_cells(df)
   ggp = plot_qc_cells(qc.df)
   pdf('temp.pdf')

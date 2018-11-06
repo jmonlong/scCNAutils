@@ -1,3 +1,5 @@
+##' Build a KNN graph and run Louvain algorithm for community detection.
+##'
 ##' @title Community detection
 ##' @param pca_o the output of \code{\link{run_pca}} 
 ##' @param nb_pcs the number of PCs to use. Default 10.

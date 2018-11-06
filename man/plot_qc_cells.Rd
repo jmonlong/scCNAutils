@@ -15,6 +15,17 @@ a list of ggplots
 \description{
 QC graphs
 }
+\examples{
+\dontrun{
+ggp.l = plot_qc_cells(qc_df)
+
+## Print first graph
+ggpl.l[[1]]
+
+## Customize ggplot
+ggpl.l[[1]] + ggtitle('First QC graph')
+}
+}
 \author{
 Jean Monlong
 }

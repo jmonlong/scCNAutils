@@ -18,7 +18,7 @@ a list with
 \item{graphs}{a list of ggplot2 graphs}
 }
 \description{
-Define cycling cells
+Using cell cycle scores, identify cells that are cycling.
 }
 \author{
 Jean Monlong

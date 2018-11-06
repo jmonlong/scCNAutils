@@ -21,12 +21,14 @@ a list with
 \item{sdev.graph}{a ggplot graph of the sdev}
 }
 \description{
+PCA analysis, eventually using a subset of core cells for the PC construction.
+}
+\details{
 Cells in core_cells are used to build the principal components to which
 all cells are then projected to. Usually used to reduce the effect of
 cell cycle in the PCA, by using only cells that don't cycle (see \code{\link{qc_cells}})
 as \emph{core_cells}.
-}
-\details{
+
 The graph (\emph{sdev.graph}) shows the standard deviation for the top 50 PCs. To
 show more/less PCs, add \code{xlim(1,N)} to the \emph{sdev.graph}. See examples.
 }

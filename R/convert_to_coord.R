@@ -1,3 +1,6 @@
+##' Convert the 'symbol' column (gene names) into three columns with gene coordinates
+##' 'chr', 'start' and 'end'.
+##'
 ##' If \emph{genes_coord} is a filename, the file is expected to be a tab-delimited
 ##' file with four columns: 'chr', 'start', 'end', 'symbol'. The order of the
 ##' columns is not important.

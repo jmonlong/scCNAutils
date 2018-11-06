@@ -17,7 +17,7 @@ norm_ge(ge_df, method = c("tmm", "total"), nb_cores = 1)
 a data.frame with the normalized expression.
 }
 \description{
-Normalize gene expression
+The expression of each cell is normalized to account for depth differences.
 }
 \author{
 Jean Monlong

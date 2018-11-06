@@ -1,3 +1,5 @@
+##' tSNE from PCA results.
+##'
 ##' @title Run tSNE
 ##' @param pca_o the output of \code{\link{run_pca}} 
 ##' @param nb_pcs the number of PCs to use. Default 10.

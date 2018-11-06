@@ -4,7 +4,8 @@
 \alias{qc_filter}
 \title{Filter cells based on QC results}
 \usage{
-qc_filter(ge_df, qc_df, max_mito_prop = 0.2, min_total_exp = 0)
+qc_filter(ge_df, qc_df, max_mito_prop = 0.2, min_total_exp = 0,
+  cells_sel = NULL)
 }
 \arguments{
 \item{ge_df}{the input gene expression with a 'symbol' column and then one
@@ -15,6 +16,8 @@ column per cell.}
 \item{max_mito_prop}{the maximum proportion of mitochondrial RNA.}
 
 \item{min_total_exp}{the minimum total cell expression}
+
+\item{cells_sel}{consider only these cells. Other cells filtered no matter what.}
 }
 \value{
 \emph{ge_df} with only the cells that passed the filters

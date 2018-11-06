@@ -1,3 +1,6 @@
+##' Transform gene expression into a scaled score, either using all cells or a
+##' subset of cells as baseline.
+##'
 ##' @title Compute Z-score
 ##' @param ge_df the input expression data.frame
 ##' @param wins_th the threshold to winsorize Z-score. Default is 3

@@ -1,3 +1,6 @@
+##' Randomly select cells in each community and merge them to create metacells
+##' with higher resolution.
+##'
 ##' @title Make metacells
 ##' @param ge_df normalized gene expression of all cells (e.g. output from
 ##' \code{\link{norm_ge}}.

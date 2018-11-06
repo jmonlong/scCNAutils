@@ -19,7 +19,7 @@ call_cna(z_df, trans_prob = 1e-04, nb_cores = 1, mc_info = NULL)
 a data.frame with the CNA calls.
 }
 \description{
-Call CNA
+Calls CNA using a HMM approach.
 }
 \author{
 Jean Monlong

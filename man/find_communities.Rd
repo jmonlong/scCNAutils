@@ -17,7 +17,7 @@ find_communities(pca_o, nb_pcs = 10, k = 100)
 a data.frame with two columns: 'cell' and 'community'.
 }
 \description{
-Community detection
+Build a KNN graph and run Louvain algorithm for community detection.
 }
 \author{
 Jean Monlong

@@ -1,3 +1,6 @@
+##' The expression/score of a gene/bin is replaced by a summary of bins around.
+##' For example the median across 3 bins.
+##'
 ##' @title Moving-window smoothing
 ##' @param df the input data.frame with coordinate columns (chr, start, end) and then
 ##' one column per cell

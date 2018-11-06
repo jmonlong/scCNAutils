@@ -20,7 +20,8 @@ one column per cell}
 a data.frame with smoothed signal.
 }
 \description{
-Moving-window smoothing
+The expression/score of a gene/bin is replaced by a summary of bins around.
+For example the median across 3 bins.
 }
 \author{
 Jean Monlong

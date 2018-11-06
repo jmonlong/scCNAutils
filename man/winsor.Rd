@@ -4,7 +4,7 @@
 \alias{winsor}
 \title{Winsorize}
 \usage{
-winsor(x, u = NULL, l = NULL, qu = NULL)
+winsor(x, u = NULL, l = NULL)
 }
 \arguments{
 \item{x}{input vector}
@@ -12,8 +12,6 @@ winsor(x, u = NULL, l = NULL, qu = NULL)
 \item{u}{upper limit}
 
 \item{l}{lower limit}
-
-\item{qu}{upper quartile, if 'u' is null}
 }
 \value{
 winsorized vector

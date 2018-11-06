@@ -1,3 +1,5 @@
+##' Calls CNA using a HMM approach.
+##'
 ##' @title Call CNA
 ##' @param z_df the Z-scores, from \code{\link{zscore}}.
 ##' @param trans_prob the transition probability for the HMM.
