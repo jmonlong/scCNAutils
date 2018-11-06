@@ -9,10 +9,8 @@ Functions to analyze copy number aberrations in single-cell data. **Still in dev
 To make sure both CRAN and Bioconductor dependencies are installed, better to install using the `biocLite` function from Bioconductor:
 
 ```r
-if (!requireNamespace("BiocManager", quietly = TRUE))
-  install.packages("BiocManager")
-BiocManager::install("BiocInstaller", version = "3.8")
-BiocInstaller::biocLite('jmonlong/scCNAutils')
+source('http://bioconductor.org/biocLite.R')
+biocLite('jmonlong/scCNAutils')
 ```
 
 ## Usage
