@@ -19,8 +19,7 @@
 ##' @param qc_df a data.frame with QC metrics (output from \code{\link{qc_cells}}).
 ##' Default is NULL (i.e. not used)
 ##' @param info_df a data.frame with sample merge info (output from
-##' \code{\link{merge_samples}}).
-##' Default is NULL (i.e. not used)
+##' \code{\link{merge_samples}}). Default is NULL (i.e. not used)
 ##' @return a list of ggplot2 graphs.
 ##' @author Jean Monlong
 ##' @import ggplot2

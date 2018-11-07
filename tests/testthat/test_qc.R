@@ -4,9 +4,14 @@ context("QC per cell")
 nb.genes = 100
 nb.cells = 10
 mat = matrix(rpois(nb.cells*nb.genes, 1), nb.genes, nb.cells)
-colnames(mat) = paste0('barcode', 1:nb.cells)
+cells = paste0('barcode', 1:nb.cells)
+colnames(mat) = cells
 df = data.frame(symbol=paste0('gene', 1:nb.genes), stringsAsFactors=FALSE)
 df = cbind(df, mat)
+
+## Sample info
+info.df = data.frame(cell=cells, sample=sample(c('s1','s2'), nb.cells, TRUE),
+                     stringsAsFactors=FALSE)
 
 test_that("computes simple QC, no mito genes", {
   qc.df = qc_cells(df)
@@ -61,7 +66,7 @@ test_that("apply no filters", {
 test_that("qc graphs don't thow an error", {
   df$symbol[sample.int(nrow(df), 3)] = paste0('MT-', 1:3)
   qc.df = qc_cells(df)
-  ggp = plot_qc_cells(qc.df)
+  ggp = plot_qc_cells(qc.df, info.df)
   pdf('temp.pdf')
   lapply(ggp, print)
   dev.off()

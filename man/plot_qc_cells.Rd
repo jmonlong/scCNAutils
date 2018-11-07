@@ -4,10 +4,13 @@
 \alias{plot_qc_cells}
 \title{QC graphs}
 \usage{
-plot_qc_cells(qc_df)
+plot_qc_cells(qc_df, info_df = NULL)
 }
 \arguments{
 \item{qc_df}{the output data.frame from \code{\link{qc_cells}}}
+
+\item{info_df}{a data.frame with sample merge info (output from
+\code{\link{merge_samples}}). Default is NULL (i.e. not used)}
 }
 \value{
 a list of ggplots

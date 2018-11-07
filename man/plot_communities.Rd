@@ -13,8 +13,7 @@ plot_communities(comm_df, qc_df = NULL, info_df = NULL)
 Default is NULL (i.e. not used)}
 
 \item{info_df}{a data.frame with sample merge info (output from
-\code{\link{merge_samples}}).
-Default is NULL (i.e. not used)}
+\code{\link{merge_samples}}). Default is NULL (i.e. not used)}
 }
 \value{
 a list of ggplot2 graphs.

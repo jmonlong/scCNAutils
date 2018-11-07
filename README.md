@@ -85,7 +85,6 @@ The internal workflow is as follow:
 
 ## Next
 
-- Split QC graphs per sample (if sample labels provided).
 - Test on real data.
 - Try to use Seurat's functions (e.g. Louvain with gamma and UMAP).
 - Example on public cancer data.
