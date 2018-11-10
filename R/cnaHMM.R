@@ -25,10 +25,13 @@ cnaHMM <- function(ge, trans.prob=.0001, log.mu=TRUE, max.samps=200, perChr=TRUE
                 trans.prob/2, trans.prob/2, 1-trans.prob),
               ncol = length(N), byrow = TRUE)
   Pi <- c(.2, .6, .2)
-  runHMM <- function(ge){
+  runHMM <- function(ge, var.tot=NULL){
     coord.df = ge[,c("chr","start","end")]
     ge.mat = as.matrix(t(ge[,cells]))
     var.est = stats::var(as.numeric(ge.mat), na.rm=TRUE) # var of samples in state 1
+    if(var.est == 0 & !is.null(var.tot)){
+      var.est = var.tot
+    }
     Sigma <- array(0, dim =c(M,M,length(N)))
     Sigma[,,2] <- Sigma[,,3] <- Sigma[,,1] <- var.est * diag(M) # Independent samples
     HMM.o <- suppressWarnings(RcppHMM::verifyModel(list("Model" = "GHMM", "StateNames" = N,
@@ -42,8 +45,9 @@ cnaHMM <- function(ge, trans.prob=.0001, log.mu=TRUE, max.samps=200, perChr=TRUE
   }
   ge = ge[order(ge$chr, ge$start),]
   if(perChr){
+    var.est.total = stats::var(as.numeric(as.matrix(ge[,cells])), na.rm=TRUE)
     res = lapply(unique(ge$chr), function(chri){
-      runHMM(ge[which(ge$chr == chri),])
+      runHMM(ge[which(ge$chr == chri),], var.est.total)
     })
     res = do.call(rbind, res)
   } else {

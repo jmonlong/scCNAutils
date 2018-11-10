@@ -48,7 +48,8 @@ auto_cna_call <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
   comm.metacells = mc.o$info$cell[grep('baseline_', mc.o$info$community, invert=TRUE)]
   z_df = z_df[, c('chr','start','end', comm.metacells)]
   z_df = smooth_movingw(z_df, smooth_wsize, nb_cores)
-
+  save(z_df, file=paste0(prefix, '-cnaz.RData'))
+  
   ## Call CNAs and generate graph
   message('Calling CNAs...')
   cna.df = call_cna(z_df, trans_prob, nb_cores, mc.o$info)
