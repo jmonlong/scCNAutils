@@ -1,4 +1,7 @@
-- [Reference manual](scCNAutils-manual.pdf).
+## Reference manual
+
+- Access within R. E.g. `?plot_tsne`.
+- PDF version: [scCNAutils-manual.pdf](scCNAutils-manual.pdf).
 
 ## Install on a HPC
 
