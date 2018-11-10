@@ -26,6 +26,7 @@ auto_cna_call <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
                           bin_mean_exp=3, z_wins_th=3, smooth_wsize=3){
 
   ## Make metacells
+  message('Creating metacells...')
   if(is.null(baseline_cells) & !is.null(baseline_communities)){
     baseline_cells = comm_df$cell[which(comm_df$community %in% baseline_communities)]
   }
@@ -33,19 +34,23 @@ auto_cna_call <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
                         nb_cores)
 
   ## Normalize and bin genes
+  message('Normalizing and binning...')
   ge_df = norm_ge(mc.o$ge, nb_cores=nb_cores)
   ge_df = bin_genes(ge_df, bin_mean_exp, nb_cores=nb_cores)
 
   ## Normalize using baseline metacells
+  message('Scaling...')
   baseline.metacells = mc.o$info$cell[grep('baseline_', mc.o$info$community)]
   z_df = zscore(ge_df, z_wins_th, method='norm', normals=baseline.metacells)
 
   ## Remove baseline metacells and smooth
+  message('Smoothing...')
   comm.metacells = mc.o$info$cell[grep('baseline_', mc.o$info$community, invert=TRUE)]
   z_df = z_df[, c('chr','start','end', comm.metacells)]
   z_df = smooth_movingw(z_df, smooth_wsize, nb_cores)
 
   ## Call CNAs and generate graph
+  message('Calling CNAs...')
   cna.df = call_cna(z_df, trans_prob, nb_cores, mc.o$info)
   ggp = plot_cna(cna.df, chrs)
   grDevices::pdf(paste0(prefix, '-CNA.pdf', 9, 7))
