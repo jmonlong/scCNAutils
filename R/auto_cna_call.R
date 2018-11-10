@@ -32,6 +32,7 @@ auto_cna_call <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
   }
   mc.o = make_metacells(ge_df, comm_df, nb_metacells, metacell_size, baseline_cells,
                         nb_cores)
+  save(mc.o, file=paste0(prefix, '-metacells.RData')
 
   ## Normalize and bin genes
   message('Normalizing and binning...')
