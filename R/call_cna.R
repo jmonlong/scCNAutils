@@ -11,6 +11,7 @@
 ##' @export
 call_cna <- function(z_df, trans_prob=1e-4, nb_cores=1, mc_info=NULL){
   . = V1 = end = queryHits = subjectHits = NULL
+  options('dplyr.show_progress'=FALSE)
   freq.range <- function(df, nb.samp){
     gr.all = GenomicRanges::GRanges(df$chr,
                                     IRanges::IRanges(df$start, df$end),

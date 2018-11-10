@@ -140,9 +140,11 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
       load(score.file)
     }
   } else {
-    message('Binning, scaling and smoothing...')
+    message('Binning...')
     data = bin_genes(data, bin_mean_exp, nb_cores)
+    message('Scaling...')
     data = zscore(data, z_wins_th, method='z')
+    message('Smoothing...')
     data = smooth_movingw(data, smooth_wsize, nb_cores)
     save(data, file=score.file)
   }

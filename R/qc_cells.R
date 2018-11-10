@@ -14,6 +14,7 @@
 ##' @importFrom rlang .data
 ##' @export
 qc_cells <- function(ge_df, cell_cycle=NULL){
+  options('dplyr.show_progress'=FALSE)
   cells = setdiff(colnames(ge_df), 'symbol')
   tot = colSums(ge_df[,cells])
   zeros = apply(ge_df[,cells], 2, function(x)sum(x==0))

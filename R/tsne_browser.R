@@ -16,7 +16,7 @@
 ##' @export
 ##' @importFrom magrittr %>%
 tsne_browser <- function(cells_df, nb_points=5000, plot_dim=800){
-
+  options('dplyr.show_progress'=FALSE)
   ## Dummy data for development
   ## N = 1e4
   ## cells_df = data.frame(cell=paste0('c', 1:N),

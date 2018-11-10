@@ -19,6 +19,7 @@
 make_metacells <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
                            baseline_cells=NULL, nb_cores=1){
   cells = setdiff(colnames(ge_df), c("chr","start","end"))
+  options('dplyr.show_progress'=FALSE)
   if(is.null(baseline_cells)){
     baseline_cells = cells
   }
