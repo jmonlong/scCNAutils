@@ -21,7 +21,10 @@ Imports:
     igraph,
     RcppHMM,
     GenomicRanges,
-    IRanges
+    IRanges,
+    shiny,
+    rbokeh,
+    scales
 Suggests:
     testthat
 RoxygenNote: 6.1.0

@@ -4,6 +4,9 @@ check:
 test:
 	Rscript -e 'devtools::test()'
 
+install:
+	Rscript -e 'devtools::install()'
+
 manual: docs/scCNAutils-manual.pdf
 
 docs/scCNAutils-manual.pdf: man/*.Rd
