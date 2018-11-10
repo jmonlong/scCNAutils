@@ -27,7 +27,7 @@ bin_genes <- function(ge_df, mean_exp=3, nb_cores=1){
   m.df = dplyr::ungroup(m.df) %>%
     dplyr::mutate(bins=paste0(as.character(.data$chr), '_', .data$bins))
   m.df$cumm = NULL
-  message(nrow(m.df), ' expressed bins created.')
+  message(length(unique(m.df$bins)), ' expressed bins created.')
   ge_df = merge(ge_df, m.df)
   ## sum expression in each bin per cell
   mergeGenes.f <- function(ge_df){
