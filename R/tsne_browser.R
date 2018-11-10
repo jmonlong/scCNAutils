@@ -17,6 +17,7 @@
 ##' @importFrom magrittr %>%
 tsne_browser <- function(cells_df, nb_points=5000, plot_dim=800){
   options('dplyr.show_progress'=FALSE)
+
   ## Dummy data for development
   ## N = 1e4
   ## cells_df = data.frame(cell=paste0('c', 1:N),
@@ -92,7 +93,7 @@ tsne_browser <- function(cells_df, nb_points=5000, plot_dim=800){
   y.min = min(y.breaks$breaks)
   x.max = max(x.breaks$breaks)
   y.max = max(y.breaks$breaks)
-  col.choices = intersect(c('sample','community', 'depth', 'mito.prop', 'G1.S', 'G2.M'), colnames(cells_df))
+  col.choices = setdiff(colnames(cells_df), c('cell','group','tsne1','tsne2'))
   sidebar.panel = shiny::sidebarPanel(
                            shiny::numericInput('nbp', 'Number of points to draw',
                                                value=nb_points, step=100),

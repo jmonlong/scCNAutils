@@ -6,12 +6,14 @@ Functions to analyze copy number aberrations in single-cell data. **Still in dev
 
 ## Install
 
-To make sure both CRAN and Bioconductor dependencies are installed, better to install using the `biocLite` function from Bioconductor:
+To make sure both CRAN and Bioconductor dependencies are installed, the easiest is to install using the `biocLite` function from Bioconductor:
 
 ```r
 source('http://bioconductor.org/biocLite.R')
 biocLite('jmonlong/scCNAutils')
 ```
+
+See instructions about local/HPC install in the [`docs` folder](docs).
 
 ## Usage
 
@@ -27,6 +29,9 @@ where
 - *sampleA* and *sampleB* are folders with *matrix.mtx*, *genes.tsv* and *barcodes.tsv* files.
 - *genes.tsv* has coordinates for each genes. Columns: *chr*, *start*, *end*, *symbol*.
 - *cc_genes.tsv* has a list of genes for *G1.S*/*G2.M* cell-cycle phases. Columns: *symbol*, *phase*.
+
+More instructions about how to get the *genes.tsv* and *cc_genes.tsv* files in the [`docs` folder](docs).
+
 
 Instead of a list of folder paths, the input can also be a list of data.frames with a *symbol* column for gene names and then one column per cell. If named, the names of the list can be used as sample names. Otherwise use `sample_names=`.
 
@@ -65,6 +70,14 @@ cna.ggp = plot_cna(cna.df)
 
 ## For example changing colors of sample labels in tSNE
 tsne.ggp$sample + scale_colour_brewer(palette='Set1')
+```
+
+## Interactive graph
+
+Instead of producing many times the same tSNE graph with different coloring, and to be able to zoom or investigate outlier cells, a simple [Shiny app](https://www.rstudio.com/products/shiny/shiny-user-showcase/) with a [bokeh](https://bokeh.pydata.org/en/latest/docs/gallery.html) graph has been implemented. In addition to the zoom and color change, the user can hover over a cell to get its information.
+
+```r
+tsne_browser(cells.df)
 ```
 
 ## Workflow

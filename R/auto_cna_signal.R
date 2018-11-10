@@ -9,6 +9,7 @@
 ##' @param pause_after_qc pause after the QC to pick custom QC thresholds.
 ##' @param use_cache should intermediate files used and avoid redoing steps?
 ##' @param sample_names the names of each sample. If NULL, tries to use data's names.
+##' @param info_df a data.frame with information about cells.
 ##' @param max_mito_prop the maximum proportion of mitochondrial RNA.
 ##' @param min_total_exp the minimum total cell expression
 ##' @param cells_sel consider only these cells. Other cells filtered no matter what.
@@ -26,6 +27,7 @@
 ##' @export
 auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores=1,
                             pause_after_qc=FALSE, use_cache=TRUE, sample_names=NULL,
+                            info_df=NULL, 
                             max_mito_prop=.2, min_total_exp=0, cells_sel=NULL,
                             chrs=c(1:22,"X","Y"), cell_cycle=NULL, bin_mean_exp=3,
                             z_wins_th=3, smooth_wsize=3, cc_sd_th=3, nb_pcs=10,
@@ -89,6 +91,15 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
     if(any(is.na(data))){
       stop('Input data as NAs.')
       file.remove(raw.file)
+    }
+  }
+
+  ## Merge info
+  if(!is.null(info_df)){
+    if(is.null(info.df)){
+      info.df = info_df
+    } else {
+      info.df = merge(info.df, info_df, by='cell', suffixes=c('','.pars'))
     }
   }
 
@@ -179,12 +190,13 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
   }
   
   ## Community
+  comm.df = NULL
   if(skip.comm){
     load(comm.file)
   } else {
     message('Detecting communities...')
     comm.df = find_communities(pca.o, nb_pcs, comm_k)
-    comm.ggp = plot_communities(comm.df)
+    comm.ggp = plot_communities(comm.df, qc_df=qc.df, info_df=info.df)
     grDevices::pdf(paste0(prefix, '-coord-norm-bin', bin_mean_exp, '-z', z_wins_th,
                           '-smooth', smooth_wsize, '-comm', nb_pcs, 'PCs', comm_k,
                           '.pdf'), 9, 7)
@@ -196,7 +208,7 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
   ## tSNE
   message('Computing tSNE...')
   tsne.df = run_tsne(pca.o, nb_pcs)
-  tsne.ggp = plot_tsne(tsne.df, qc.df)
+  tsne.ggp = plot_tsne(tsne.df, qc_df=qc.df, comm_df=comm.df, info_df=info.df)
   grDevices::pdf(paste0(prefix, '-coord-norm-bin', bin_mean_exp, '-z', z_wins_th,
                         '-smooth', smooth_wsize, '-tsne', nb_pcs, 'PCs.pdf'), 9, 7)
   lapply(tsne.ggp, print)
