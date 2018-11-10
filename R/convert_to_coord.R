@@ -30,7 +30,8 @@ convert_to_coord <- function(ge_df, genes_coord, chrs=c(1:22,"X","Y"),
   }
   if(any(!(ge_df$symbol %in% genes_coord$symbol))){
     missing.genes = setdiff(ge_df$symbol, genes_coord$symbol)
-    warning('Some genes are missing and will be removed: ', missing.genes)
+    warning('Some genes are missing and will be removed: ',
+            paste(missing.genes, collapse=' '))
   }
   ## Merge coordinates and remove gene names
   ge_df = merge(genes_coord, ge_df)

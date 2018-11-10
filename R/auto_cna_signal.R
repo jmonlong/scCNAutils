@@ -109,7 +109,7 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
   } else {
     message('QC...')
     qc.df = qc_cells(data, cell_cycle)
-    qc.ggp = plot_qc_cells(qc.df)
+    qc.ggp = plot_qc_cells(qc.df, info_df=info.df)
     grDevices::pdf(paste0(prefix, '-qc.pdf'), 9, 7)
     lapply(qc.ggp, print)
     grDevices::dev.off()

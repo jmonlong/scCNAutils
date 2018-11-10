@@ -20,9 +20,9 @@ define_cycling_cells <- function(qc_df, sd_th=3){
   ptalpha = ifelse(nrow(qc_df)<1e4, .5, .1)
   G1.S = G2.M = NULL
   ggp.l = list()
-  ggp.l$g1.s = ggplot(qc_df, aes(G1.S)) + geom_histogram() + theme_bw() +
+  ggp.l$g1.s = ggplot(qc_df, aes(G1.S)) + geom_histogram(bins=30) + theme_bw() +
     geom_vline(xintercept=g1s.th, linetype=2) + ylab('cell')
-  ggp.l$g2.m = ggplot(qc_df, aes(G2.M)) + geom_histogram() + theme_bw() +
+  ggp.l$g2.m = ggplot(qc_df, aes(G2.M)) + geom_histogram(bins=30) + theme_bw() +
     geom_vline(xintercept=g2m.th, linetype=2) + ylab('cell')
   ggp.l$both = ggplot(qc_df, aes(G1.S, G2.M)) + geom_point(alpha=ptalpha) + theme_bw() +
     geom_hline(yintercept=g2m.th, linetype=2) +

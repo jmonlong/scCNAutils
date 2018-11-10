@@ -19,12 +19,12 @@
 plot_qc_cells <- function(qc_df, info_df=NULL){
   tot = zeros = mito = NULL
   ggp.l = list()
-  ggp.l$depth = ggplot(qc_df, aes(x=tot)) + geom_histogram() + theme_bw() +
+  ggp.l$depth = ggplot(qc_df, aes(x=tot)) + geom_histogram(bins=30) + theme_bw() +
     xlab('depth') + ylab('cell')
-  ggp.l$zeros = ggplot(qc_df, aes(x=zeros)) + geom_histogram() + theme_bw() +
+  ggp.l$zeros = ggplot(qc_df, aes(x=zeros)) + geom_histogram(bins=30) + theme_bw() +
     xlab('number of 0s') + ylab('cell')
   if(any(qc_df$mito > 0)){
-    ggp.l$mito = ggplot(qc_df, aes(x=mito/tot)) + geom_histogram() + theme_bw() +
+    ggp.l$mito = ggplot(qc_df, aes(x=mito/tot)) + geom_histogram(bins=30) + theme_bw() +
       xlab('proportion of mitochondrial RNA') + ylab('cell')
   }
 
@@ -37,14 +37,14 @@ plot_qc_cells <- function(qc_df, info_df=NULL){
         warning('Some cells in qc_df are missing from info_df.')
       }
     }
-    ggp.l$depth.sample = ggplot(qc_df, aes(x=tot)) + geom_histogram() +
+    ggp.l$depth.sample = ggplot(qc_df, aes(x=tot)) + geom_histogram(bins=30) +
       theme_bw() + xlab('depth') + ylab('cell') +
       facet_grid(sample~., scales='free')
-    ggp.l$zeros = ggplot(qc_df, aes(x=zeros)) + geom_histogram() + theme_bw() +
+    ggp.l$zeros = ggplot(qc_df, aes(x=zeros)) + geom_histogram(bins=30) + theme_bw() +
       xlab('number of 0s') + ylab('cell') +
       facet_grid(sample~., scales='free')
     if(any(qc_df$mito > 0)){
-      ggp.l$mito = ggplot(qc_df, aes(x=mito/tot)) + geom_histogram() +
+      ggp.l$mito = ggplot(qc_df, aes(x=mito/tot)) + geom_histogram(bins=30) +
         theme_bw() + ylab('cell') +
         xlab('proportion of mitochondrial RNA') +
         facet_grid(sample~., scales='free')
