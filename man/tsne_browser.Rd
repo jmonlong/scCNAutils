@@ -14,7 +14,7 @@ tsne_browser(cells_df, nb_points = 5000, plot_dim = 800)
 \item{plot_dim}{the dimension of the plot in pixels.}
 }
 \value{
-opens a Shiny app ina web-browser.
+opens a Shiny app in a web-browser.
 }
 \description{
 Interactive application to visualize the tSNE results: zoom, hover

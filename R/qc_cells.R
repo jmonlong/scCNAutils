@@ -48,7 +48,12 @@ qc_cells <- function(ge_df, cell_cycle=NULL){
     ## Scale and add columns for each phase to the main df
     ge.cc = ge.cc %>% dplyr::ungroup(.data) %>% dplyr::group_by(.data$phase) %>%
       dplyr::mutate(ge=scale(.data$ge)) %>% tidyr::spread('phase', 'ge')
-    qc.df = merge(qc.df, ge.cc)
+    if(nrow(ge.cc) > 0){
+      qc.df = merge(qc.df, ge.cc)
+    } else {
+      warning('No cell-cycle gene expressed, suspicious...')
+      qc.df$G1.S = qc.df$G2.M = NA
+    }
   }
   return(qc.df)
 }

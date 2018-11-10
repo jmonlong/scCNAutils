@@ -86,6 +86,10 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
     } else {
       save(data, file=raw.file)
     }
+    if(any(is.na(data))){
+      stop('Input data as NAs.')
+      file.remove(raw.file)
+    }
   }
 
   ## QC
