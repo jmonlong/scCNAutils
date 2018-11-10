@@ -26,7 +26,7 @@ library(scCNAutils)
 Some dependencies, like *RcppHMM*,  require C++ compilation and might raise installation errors if the HPC is not well configured (or uses modules).
 I usually try different *gcc* modules until the installation/compilation works.
 
-On Abacus, the modules that worked for me were *mugqic/R_Bioconductor/3.5.0_3.7* and *mugqic_dev/gcc/4.7.2*.
+On Abacus, the modules that worked for me were `mugqic/R_Bioconductor/3.5.0_3.7` and `mugqic_dev/gcc/4.7.2`.
 
 
 ## Getting genes coordinates
