@@ -1,12 +1,12 @@
 # scCNAutils
 
-Functions to analyze copy number aberrations in single-cell data. **Still in development.**
+A cleaned up version of the functions I used to analyze copy number aberrations in single-cell data. **Still in development.**
 
-- [Reference manual](docs/scCNAutils-manual.pdf).
+Main information below, other information in the [`docs` folder](docs). 
 
 ## Install
 
-To make sure both CRAN and Bioconductor dependencies are installed, the easiest is to install using the `biocLite` function from Bioconductor:
+To make sure both CRAN and Bioconductor dependencies are installed, the easiest is to use the `biocLite` function from Bioconductor:
 
 ```r
 source('http://bioconductor.org/biocLite.R')

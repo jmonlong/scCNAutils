@@ -26,6 +26,7 @@ make_metacells(ge_df, comm_df, nb_metacells = 10, metacell_size = 3,
 a list with
 \item{ge}{a data.frame with coordinates and gene expression for each metacell.}
 \item{info}{information about which metacell correspond to which community.}
+\item{mc_cells}{information about which cells were used for each metacell.}
 }
 \description{
 Randomly select cells in each community and merge them to create metacells

@@ -60,3 +60,41 @@ write.table(genc.df, file='genes.v29.tsv', quote=FALSE, row.names=FALSE, sep='\t
 We use genes from [Tirosh et al 2016](https://www.nature.com/articles/nature20123). 
 `cell-cycle-genes-tirosh2016.tsv` contains the genes for phase G1/S and G2/M.
 
+## Metacells
+
+Because each cell has a limited depth, some analysis is performed at the metacell level. 
+A metacell is just several cells merged to increase depth and resolution. 
+In general we aim at creating metacells from around the same number of cells, to make sure the metacells have comparable depth in later analysis.
+There are currently two ways implemented in the `make_metacells` functions to create metacells:
+
+1. Random selection of cells in pre-defined groups of cells (e.g. community).
+1. Clustering of cells into similar-size clusters, then merged into metacells.
+
+With the first approach, we can investigate CNAs at the community level. 
+In practice, we create a few metacells (e.g. 10) for each community that are then used to call CNA.
+CNA consistently present in metacells from a community are most likely shared by the majority of the cells in this community.
+
+```r
+mc.o = make_metacells(ge_df, comm_df, nb_metacells=10, metacell_size=5)
+```
+
+where 
+
+- *ge_df* contains coordinates columns (chr/start/end) and expression (or coverage) for each cell.
+- *comm_df* contains a column *cell* and and column *community*, defining the grouping for each cell.
+
+The second approach is used to investigate all the cells, creating metacells that capture as much as possible rare signal shared by just a few cells.
+The clustering is still performed separately in each community but the cells are not randomly selected, they are clustered to form metacells of similar cells within each community.
+The communities are used to speed up the clustering and simplify summary at the community level.
+Hence the community definition has much less an effect on the final metacells than in the first strategy.
+To use this approach, specify `nb_metacells=NULL`.
+
+```r
+mc.o = make_metacells(ge_df, comm_df, nb_metacells=NULL, metacell_size=5)
+```
+
+The output (*mc.o*) is a list with 
+
+- *ge* the gene expression (or coverage) in each metacell.
+- *info* a data.frame with information about each metacell and its corresponding community.
+- *mc_cells* a data.frame with information about which cells were used in each metacell.

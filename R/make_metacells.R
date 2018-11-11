@@ -13,6 +13,7 @@
 ##' @return a list with
 ##' \item{ge}{a data.frame with coordinates and gene expression for each metacell.}
 ##' \item{info}{information about which metacell correspond to which community.}
+##' \item{mc_cells}{information about which cells were used for each metacell.}
 ##' @author Jean Monlong
 ##' @importFrom magrittr %>%
 ##' @export
@@ -57,9 +58,15 @@ make_metacells <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
   ## Merge gene expression
   ge.mc = ge_df[, c('chr', 'start', 'end')]
   ge.mc.l = parallel::mclapply(1:length(mc.o$cells.tm), function(ii){
-    ge_df[,mc.o$cells.tm[[ii]]] %>% as.matrix %>% apply(1,sum)
+    ge_df[,mc.o$cells.tm[[ii]]] %>% as.matrix %>% rowSums
   }, mc.cores=nb_cores)
   names(ge.mc.l) = mc.o$cells.info$cell
   ge.mc = cbind(ge.mc, as.data.frame(ge.mc.l))
-  return(list(ge=ge.mc, info=mc.o$cells.info, mc_cells=mc.o$cells.tm))
+
+  ## Format cells info into data.frame
+  mc_cells = data.frame(cell=unlist(mc.o$cells.tm),
+                        metacell=rep(mc.o$cells.info$cell, unlist(lapply(mc.o$cells.tm, length))),
+                        stringsAsFactors=FALSE)
+  
+  return(list(ge=ge.mc, info=mc.o$cells.info, mc_cells=mc_cells))
 }
