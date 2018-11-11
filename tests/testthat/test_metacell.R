@@ -23,3 +23,13 @@ test_that("makes metacells", {
   mc.l = make_metacells(ge.df, comm.df, nb_metacells=2)
   expect_gt(nrow(mc.l$ge), 0)
 })
+
+test_that("makes metacells by clustering", {
+  mc.l = make_metacells(ge.df, comm.df, nb_metacells=NULL)
+  expect_gt(nrow(mc.l$ge), 0)
+})
+
+test_that("makes metacells without baseline cells", {
+  mc.l = make_metacells(ge.df, comm.df, baseline_cells=FALSE)
+  expect_true(!any(grepl('baseline_', mc.l$info$cell)))
+})

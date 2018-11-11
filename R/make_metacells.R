@@ -22,15 +22,23 @@ make_metacells <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
   options('dplyr.show_progress'=FALSE)
   if(is.null(baseline_cells)){
     baseline_cells = cells
+  } else if(is.logical(baseline_cells) && !baseline_cells){
+    baseline_cells = NULL
   }
 
   ## Add "baseline" communities
-  groups.df = data.frame(cell=baseline_cells, stringsAsFactors=FALSE)
-  baseline.comm = sample.int(ceiling(length(baseline_cells)/
-                                     (2*metacell_size*nb_metacells)),
-                             length(baseline_cells), replace=TRUE)
-  groups.df$community = paste0('baseline_', baseline.comm)
-  groups.df = rbind(groups.df, comm_df[, c('cell', 'community')])
+  groups.df = NULL
+  if(is.null(baseline_cells) | is.null(nb_metacells)){
+    groups.df = comm_df[, c('cell', 'community')]
+  } else {
+    groups.df = data.frame(cell=baseline_cells, stringsAsFactors=FALSE)
+    nbm = ifelse(is.null(nb_metacells), 1, nb_metacells)
+    baseline.comm = sample.int(ceiling(length(baseline_cells)/
+                                       (2*metacell_size*nbm)),
+                               length(baseline_cells), replace=TRUE)
+    groups.df$community = paste0('baseline_', baseline.comm)
+    groups.df = rbind(groups.df, comm_df[, c('cell', 'community')])
+  }
 
   ## Filter small communities
   comm.size = table(groups.df$community)
@@ -40,33 +48,18 @@ make_metacells <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
     groups.df = groups.df[which(!(groups.df$community %in% small.groups)), ]
   }
 
-  ## Select cells for metacells
-  cells.tm = lapply(unique(groups.df$community), function(comm){
-    group.comm = groups.df[which(groups.df$community==comm),]
-    recycle = FALSE
-    if(nrow(group.comm) < metacell_size*nb_metacells) {
-      warning("Recycling cells because ", comm, " is a small group.")
-      recycle = TRUE
-    }
-    cells.s = sample(group.comm$cell, metacell_size*nb_metacells, recycle)
-    split(cells.s, rep(1:nb_metacells, metacell_size))
-  })
-  cells.info = data.frame(community=rep(unique(groups.df$community),
-                                        unlist(lapply(cells.tm, length))),
-                          stringsAsFactors=FALSE)
-  if(is.factor(groups.df$community)){
-    cells.info$community = factor(cells.info$community,
-                                  levels=levels(groups.df$community))
+  if(!is.null(nb_metacells)){    
+    mc.o = metacells_subsample(groups.df, nb_metacells, metacell_size)
+  } else {
+    mc.o = metacells_cluster(groups.df, ge_df, nb_metacells, metacell_size, nb_cores)
   }
-  cells.info$cell = paste0("mc",1:nrow(cells.info))
-  cells.tm = do.call(c, cells.tm)
-
+  
   ## Merge gene expression
   ge.mc = ge_df[, c('chr', 'start', 'end')]
-  ge.mc.l = parallel::mclapply(1:length(cells.tm), function(ii){
-    ge_df[,cells.tm[[ii]]] %>% as.matrix %>% apply(1,sum)
+  ge.mc.l = parallel::mclapply(1:length(mc.o$cells.tm), function(ii){
+    ge_df[,mc.o$cells.tm[[ii]]] %>% as.matrix %>% apply(1,sum)
   }, mc.cores=nb_cores)
-  names(ge.mc.l) = cells.info$cell
+  names(ge.mc.l) = mc.o$cells.info$cell
   ge.mc = cbind(ge.mc, as.data.frame(ge.mc.l))
-  return(list(ge=ge.mc, info=cells.info))
+  return(list(ge=ge.mc, info=mc.o$cells.info, mc_cells=mc.o$cells.tm))
 }
