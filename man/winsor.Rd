@@ -17,9 +17,8 @@ winsor(x, u = NULL, l = NULL)
 winsorized vector
 }
 \description{
-Winsorize
+Convenience function to winsorize a vector.
 }
 \author{
 Jean Monlong
 }
-\keyword{internal}

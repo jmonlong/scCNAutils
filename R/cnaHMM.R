@@ -29,7 +29,7 @@ cnaHMM <- function(ge, trans.prob=.0001, log.mu=TRUE, max.samps=200, perChr=TRUE
     coord.df = ge[,c("chr","start","end")]
     ge.mat = as.matrix(t(ge[,cells]))
     var.est = stats::var(as.numeric(ge.mat), na.rm=TRUE) # var of samples in state 1
-    if(var.est == 0 & !is.null(var.tot)){
+    if(var.est < 1e-4 & !is.null(var.tot)){
       var.est = var.tot
     }
     Sigma <- array(0, dim =c(M,M,length(N)))
