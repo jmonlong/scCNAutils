@@ -59,7 +59,7 @@ auto_cna_call <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
   baseline_communities = grep('baseline_', mc.o$info$community, value=TRUE)
   ggp = plot_aneuploidy(ge_df, mc.o$info, baseline_communities=baseline_communities)
   grDevices::pdf(paste0(prefix, '-aneuploidy.pdf'), 9, 7)
-  print(ggp)
+  tmp = lapply(ggp, print)
   grDevices::dev.off()
     
   ## Normalize using baseline metacells
@@ -83,7 +83,7 @@ auto_cna_call <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
   }
   ggp = plot_cna(cna.o, chrs)
   grDevices::pdf(paste0(prefix, '-CNA.pdf'), 9, 7)
-  print(ggp)
+  tmp = lapply(ggp, print)
   grDevices::dev.off()
 
   return(cna.o)
