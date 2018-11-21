@@ -104,3 +104,4 @@ The internal workflow is as follow:
 - winsor function external.
 - Debug false calls from HMM.
 - Add orthogonal aneuploidy metric.
+- Add QC plots for the CNA calls.

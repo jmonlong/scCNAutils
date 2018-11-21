@@ -35,28 +35,21 @@ call_cna <- function(z_df, trans_prob=1e-4, nb_cores=1, mc_info=NULL){
     rle.o = rle(paste(cn.df$chr, cn.df$CN))
     ## Merge into segments
     cn.df$seg = rep(1:length(rle.o$lengths), rle.o$lengths)
-    seg.df = dplyr::ungroup(cn.df) %>% dplyr::group_by(.data$chr, .data$CN, .data$seg) %>%
+    seg.df = dplyr::ungroup(cn.df) %>%
+      dplyr::group_by(.data$chr, .data$CN, .data$seg) %>%
       dplyr::summarize(start=min(.data$start), end=max(.data$end),
                        mean=mean(.data$mean), length=dplyr::n())
     seg.df$seg = NULL
     seg.df = seg.df[order(seg.df$chr, seg.df$start),]
-    ## Filter short segments and merge again
-    seg.c = seg.df[which(seg.df$length>5),]
-    seg.c = seg.c[order(seg.c$chr, seg.c$start),]
-    rle.o = rle(paste(seg.c$chr, seg.c$CN))
-    seg.c$seg = rep(1:length(rle.o$lengths), rle.o$lengths)
-    seg.c = dplyr::ungroup(seg.c) %>% dplyr::group_by(.data$chr, .data$CN, .data$seg) %>%
-      dplyr::summarize(start=min(.data$start), end=max(end),
-                       mean=sum(.data$mean*.data$length)/sum(.data$length),
-                       length=sum(.data$length))
-    seg.c$seg = NULL
-    seg.c = seg.c[order(seg.c$chr, seg.c$start),]
-    seg.c$cell = as.character(cell)
+    seg.df$cell = as.character(cell)
     cn.df$cell = as.character(cell)
-    list(seg=seg.c, cn=cn.df)
+    list(seg=seg.df, cn=cn.df)
   }, mc.cores=nb_cores)
   seg.df = do.call(rbind, lapply(hmm.o, function(e)e$seg))
+  cn.df = do.call(rbind, lapply(hmm.o, function(e)e$cn))
+  seg.df$pass.filter = seg.df$length>5
   if(!is.null(mc_info)){
+    seg.df = seg.df[which(seg.df$pass.filter),]
     seg.df = merge(seg.df, mc_info)
     nb_metacells = unique(table(mc_info$community))
     if(length(nb_metacells)>1){
@@ -65,5 +58,5 @@ call_cna <- function(z_df, trans_prob=1e-4, nb_cores=1, mc_info=NULL){
     seg.df = seg.df %>% dplyr::group_by(.data$community, .data$CN) %>%
       dplyr::do(freq.range(.data, nb_metacells))
   }
-  return(seg.df)
+  return(list(seg.df=seg.df, hmm.df=cn.df))
 }

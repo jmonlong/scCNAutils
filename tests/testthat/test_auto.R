@@ -62,6 +62,8 @@ test_that("CNA signal runs for one sample", {
   load('tempfortest-ge-coord-norm.RData')
   res.df$community = factor(sample.int(2, nrow(res.df), TRUE))
   cna.df = auto_cna_call(data, res.df, prefix='tempfortest',
+                         baseline_communities=1, multisamps=FALSE)
+  cna.df = auto_cna_call(data, res.df, prefix='tempfortest',
                          baseline_communities=1)
   outfiles = list.files('.', 'tempfortest')
   expect_gt(length(outfiles), 0)

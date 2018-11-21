@@ -5,7 +5,7 @@
 \title{Call CNA using a HMM approach}
 \usage{
 cnaHMM(ge, trans.prob = 1e-04, log.mu = TRUE, max.samps = 200,
-  perChr = TRUE)
+  perChr = TRUE, winsorize = TRUE)
 }
 \arguments{
 \item{ge}{the input gene expression}
@@ -17,6 +17,8 @@ cnaHMM(ge, trans.prob = 1e-04, log.mu = TRUE, max.samps = 200,
 \item{max.samps}{the maximum number of samples accepted.}
 
 \item{perChr}{run on each chromosome separately?}
+
+\item{winsorize}{winsorize zscores to limit the effect of extreme outliers.}
 }
 \value{
 a data.frame with info about CNA segments

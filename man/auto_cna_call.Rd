@@ -5,7 +5,7 @@
 \title{Automated pipeline to call CNA}
 \usage{
 auto_cna_call(ge_df, comm_df, nb_metacells = 10, metacell_size = 3,
-  trans_prob = 1e-04, baseline_cells = NULL,
+  multisamps = TRUE, trans_prob = 0.1, baseline_cells = NULL,
   baseline_communities = NULL, prefix = "scCNAutils_out",
   nb_cores = 1, chrs = c(1:22, "X", "Y"), bin_mean_exp = 3,
   z_wins_th = 3, smooth_wsize = 3)
@@ -20,6 +20,9 @@ auto_cna_call(ge_df, comm_df, nb_metacells = 10, metacell_size = 3,
 \item{nb_metacells}{the number of metacells per comunity.}
 
 \item{metacell_size}{the number of cells in a metacell.}
+
+\item{multisamps}{use the multi-sample version of the HMM segmentation? Default is TRUE.
+See details.}
 
 \item{trans_prob}{the transition probability for the HMM.}
 
@@ -44,7 +47,21 @@ baseline.cells is NULL.}
 a data.frame with CNAs
 }
 \description{
-Automated pipeline to call CNA
+Automated pipeline to call CNA using metacells.
+}
+\details{
+Once the metacells are created there are two ways to call CNA. First, if
+\code{multisamps=FALSE}, to call CNA on each metacell and merge the result
+per community, keeping the information about how many metacell support the
+CNA. Second, if \code{multisamps=TRUE} (default), to run the HMM on all the
+metacells for a community. The multi-sample approach should be more robust.
+
+The transition probability (\code{trans_prob}) is going to affect the HMM
+segmentation. Smaller values will create longer segments. One approach,
+often advocated by HMM aficionados, is to try different values and use the
+ones that gives the best results, for example based on the QC graphs (TODO).
+Another approach is to use a loose transition probability and then filter
+short segments ('length' column or 'pass.filter' column).
 }
 \author{
 Jean Monlong

@@ -1,3 +1,17 @@
+##' Automated pipeline to call CNA using metacells.
+##' 
+##' Once the metacells are created there are two ways to call CNA. First, if
+##' \code{multisamps=FALSE}, to call CNA on each metacell and merge the result
+##' per community, keeping the information about how many metacell support the
+##' CNA. Second, if \code{multisamps=TRUE} (default), to run the HMM on all the
+##' metacells for a community. The multi-sample approach should be more robust.
+##'
+##' The transition probability (\code{trans_prob}) is going to affect the HMM
+##' segmentation. Smaller values will create longer segments. One approach,
+##' often advocated by HMM aficionados, is to try different values and use the
+##' ones that gives the best results, for example based on the QC graphs (TODO).
+##' Another approach is to use a loose transition probability and then filter
+##' short segments ('length' column or 'pass.filter' column).
 ##' @title Automated pipeline to call CNA
 ##' @param ge_df normalized gene expression of all cells (e.g. output from
 ##' \code{\link{norm_ge}}.
@@ -5,6 +19,8 @@
 ##' \code{\link{find_communities}}.
 ##' @param nb_metacells the number of metacells per comunity.
 ##' @param metacell_size the number of cells in a metacell.
+##' @param multisamps use the multi-sample version of the HMM segmentation? Default is TRUE.
+##' See details.
 ##' @param trans_prob the transition probability for the HMM.
 ##' @param baseline_cells cells to use as baseline.
 ##' @param baseline_communities communities to use as baseline. Used if
@@ -19,7 +35,7 @@
 ##' @author Jean Monlong
 ##' @export
 auto_cna_call <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
-                          trans_prob=1e-4,
+                          multisamps=TRUE, trans_prob=.1,
                           baseline_cells=NULL, baseline_communities=NULL,
                           prefix='scCNAutils_out',
                           nb_cores=1, chrs=c(1:22,"X","Y"),
@@ -39,6 +55,13 @@ auto_cna_call <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
   ge_df = norm_ge(mc.o$ge, nb_cores=nb_cores)
   ge_df = bin_genes(ge_df, bin_mean_exp, nb_cores=nb_cores)
 
+  ## Aneuploidy graph on metacells
+  baseline_communities = grep('baseline_', mc.o$info$community, value=TRUE)
+  ggp = plot_aneuploidy(ge_df, mc.o$info, baseline_communities=baseline_communities)
+  grDevices::pdf(paste0(prefix, '-aneuploidy.pdf'), 9, 7)
+  print(ggp)
+  grDevices::dev.off()
+    
   ## Normalize using baseline metacells
   message('Scaling...')
   baseline.metacells = mc.o$info$cell[grep('baseline_', mc.o$info$community)]
@@ -53,11 +76,15 @@ auto_cna_call <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
 
   ## Call CNAs and generate graph
   message('Calling CNAs...')
-  cna.df = call_cna(z_df, trans_prob, nb_cores, mc.o$info)
-  ggp = plot_cna(cna.df, chrs)
+  if(multisamps){
+    cna.o = call_cna_multisamps(z_df, mc.o$info, trans_prob, nb_cores)
+  } else {
+    cna.o = call_cna(z_df, trans_prob, nb_cores, mc.o$info)
+  }
+  ggp = plot_cna(cna.o, chrs)
   grDevices::pdf(paste0(prefix, '-CNA.pdf'), 9, 7)
   print(ggp)
   grDevices::dev.off()
 
-  return(cna.df)
+  return(cna.o)
 }

@@ -4,10 +4,11 @@
 ##' @param log.mu should the mu be log-scaled?
 ##' @param max.samps the maximum number of samples accepted.
 ##' @param perChr run on each chromosome separately?
+##' @param winsorize winsorize zscores to limit the effect of extreme outliers.
 ##' @return a data.frame with info about CNA segments
 ##' @author Jean Monlong
 ##' @keywords internal
-cnaHMM <- function(ge, trans.prob=.0001, log.mu=TRUE, max.samps=200, perChr=TRUE){
+cnaHMM <- function(ge, trans.prob=.0001, log.mu=TRUE, max.samps=200, perChr=TRUE, winsorize=TRUE){
   cells = setdiff(colnames(ge), c("chr","start","end"))
   if(length(cells) > max.samps){
     warning('Too many samples. Downsampling to 200.')
@@ -15,6 +16,9 @@ cnaHMM <- function(ge, trans.prob=.0001, log.mu=TRUE, max.samps=200, perChr=TRUE
   }
   ## HMM definition
   M = length(cells) # nb of samples
+  if(M==0){
+    stop('No cell to call.')
+  }
   N = c("loss","neutral","gain") # states
   Mu <- cbind(rep(1/2,M), rep(1,M), rep(3/2,M)) # mean in each state/samples
   if(log.mu){
@@ -24,7 +28,7 @@ cnaHMM <- function(ge, trans.prob=.0001, log.mu=TRUE, max.samps=200, perChr=TRUE
                 trans.prob/2, 1-trans.prob, trans.prob/2,
                 trans.prob/2, trans.prob/2, 1-trans.prob),
               ncol = length(N), byrow = TRUE)
-  Pi <- c(.2, .6, .2)
+  Pi <- c(.1, .8, .1)
   runHMM <- function(ge, var.tot=NULL){
     coord.df = ge[,c("chr","start","end")]
     ge.mat = as.matrix(t(ge[,cells]))
@@ -44,8 +48,16 @@ cnaHMM <- function(ge, trans.prob=.0001, log.mu=TRUE, max.samps=200, perChr=TRUE
     coord.df
   }
   ge = ge[order(ge$chr, ge$start),]
+  var.est.total = stats::var(as.numeric(as.matrix(ge[,cells])), na.rm=TRUE)
+  ## Winsor
+  if(winsorize){
+    w.u = Mu[1,3] + 2*var.est.total
+    w.l = Mu[1,1] - 2*var.est.total
+    for(cell in cells){
+      ge[,cell] = winsor(ge[,cell], w.u, w.l)
+    }
+  }
   if(perChr){
-    var.est.total = stats::var(as.numeric(as.matrix(ge[,cells])), na.rm=TRUE)
     res = lapply(unique(ge$chr), function(chri){
       runHMM(ge[which(ge$chr == chri),], var.est.total)
     })

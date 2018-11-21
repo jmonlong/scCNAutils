@@ -4,10 +4,10 @@
 \alias{plot_cna}
 \title{Heatmap of CNA}
 \usage{
-plot_cna(cna_df, chrs_order = c(1:22, "X", "Y"))
+plot_cna(cna, chrs_order = c(1:22, "X", "Y"))
 }
 \arguments{
-\item{cna_df}{CNA from \code{\link{call_cna}}.}
+\item{cna}{CNAs from \code{\link{call_cna}}.}
 
 \item{chrs_order}{order of the chroosomes in the graph.}
 }

@@ -17,13 +17,21 @@ df = cbind(df, mat)
 mc.info = data.frame(cell=cells, community=factor(rep(1:2,5)), stringsAsFactors=FALSE)
 
 test_that("CNAs are called without errors", {
-  cna.df =call_cna(df, mc_info=mc.info)
-  expect_gt(nrow(cna.df), 0)  
+  cna.o = call_cna(df, mc_info=mc.info)
+  expect_gt(nrow(cna.o$seg.df), 0)  
+  expect_gt(nrow(cna.o$hmm.df), 0)  
+  ggp = plot_cna(cna.o, chrs_order=5:1)
+  pdf('temp.pdf')
+  print(ggp)
+  dev.off()
+  expect_true(file.remove('temp.pdf'))  
 })
 
-test_that("graphs don't throw errors", {
-  cna.df =call_cna(df, mc_info=mc.info)
-  ggp = plot_cna(cna.df, chrs_order=5:1)
+test_that("CNAs are called without errors with multisamp", {
+  cna.o = call_cna_multisamps(df, mc.info)
+  expect_gt(nrow(cna.o$seg.df), 0)  
+  expect_gt(nrow(cna.o$hmm.df), 0)  
+  ggp = plot_cna(cna.o, chrs_order=5:1)
   pdf('temp.pdf')
   print(ggp)
   dev.off()
