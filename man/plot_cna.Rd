@@ -9,7 +9,7 @@ plot_cna(cna, chrs_order = c(1:22, "X", "Y"))
 \arguments{
 \item{cna}{CNAs from \code{\link{call_cna}}.}
 
-\item{chrs_order}{order of the chroosomes in the graph.}
+\item{chrs_order}{order of the chromosomes in the graph.}
 }
 \value{
 a ggplot2 graph

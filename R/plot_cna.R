@@ -1,6 +1,6 @@
 ##' @title Heatmap of CNA
 ##' @param cna CNAs from \code{\link{call_cna}}.
-##' @param chrs_order order of the chroosomes in the graph.
+##' @param chrs_order order of the chromosomes in the graph.
 ##' @return a ggplot2 graph
 ##' @author Jean Monlong
 ##' @export
@@ -9,6 +9,9 @@ plot_cna <- function(cna, chrs_order=c(1:22, 'X', 'Y')){
   CN = end = prop = start = NULL
   cna_df = cna$seg.df
   chrs_order = intersect(chrs_order, unique(cna_df$chr))
+  if(length(chrs_order)==0){
+    stop('Inconsistent chromosome names in "chrs_order".')
+  }
   cna_df$chr = factor(cna_df$chr, levels=chrs_order)
   cna_df$CN = factor(cna_df$CN, levels=c('loss','neutral','gain'))
   ggp = list()

@@ -132,7 +132,6 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
     save(data, file=filter.file)
   }
   
-  
   ## Coordinates and normalization
   if(skip.norm){
     if(need.norm){
@@ -153,6 +152,7 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
   } else {
     message('Binning...')
     data = bin_genes(data, bin_mean_exp, nb_cores)
+    data = norm_ge(data, nb_cores=nb_cores)
     message('Scaling...')
     data = zscore(data, z_wins_th, method='z')
     message('Smoothing...')

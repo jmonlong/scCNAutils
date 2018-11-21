@@ -40,12 +40,19 @@ auto_cna_call <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
                           prefix='scCNAutils_out',
                           nb_cores=1, chrs=c(1:22,"X","Y"),
                           bin_mean_exp=3, z_wins_th=3, smooth_wsize=3){
-
-  ## Make metacells
-  message('Creating metacells...')
+  comm_df = comm_df[which(comm_df$cell %in% colnames(ge_df)),]
   if(is.null(baseline_cells) & !is.null(baseline_communities)){
     baseline_cells = comm_df$cell[which(comm_df$community %in% baseline_communities)]
   }
+
+  ## Aneuploidy graph from cells
+  ggp = plot_aneuploidy(ge_df, comm_df, baseline_cells=baseline_cells)
+  grDevices::pdf(paste0(prefix, '-aneuploidy.pdf'), 9, 7)
+  tmp = lapply(ggp, print)
+  grDevices::dev.off()
+
+  ## Make metacells
+  message('Creating metacells...')
   mc.o = make_metacells(ge_df, comm_df, nb_metacells, metacell_size, baseline_cells,
                         nb_cores)
   save(mc.o, file=paste0(prefix, '-metacells.RData'))
@@ -54,11 +61,17 @@ auto_cna_call <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
   message('Normalizing and binning...')
   ge_df = norm_ge(mc.o$ge, nb_cores=nb_cores)
   ge_df = bin_genes(ge_df, bin_mean_exp, nb_cores=nb_cores)
+  ge_df = norm_ge(ge_df, nb_cores=nb_cores)
 
-  ## Aneuploidy graph on metacells
-  baseline_communities = grep('baseline_', mc.o$info$community, value=TRUE)
-  ggp = plot_aneuploidy(ge_df, mc.o$info, baseline_communities=baseline_communities)
-  grDevices::pdf(paste0(prefix, '-aneuploidy.pdf'), 9, 7)
+  ## Aneuploidy graph from metacells
+  baseline.metacells = mc.o$info$cell[grep('baseline_', mc.o$info$community)]
+  info.nobaseline = mc.o$info
+  if(!is.null(baseline_communities)){
+    info.nobaseline = mc.o$info[grep('baseline_', mc.o$info$community, invert=TRUE), ]
+    baseline.metacells = mc.o$info$cell[which(mc.o$info$community %in% baseline_communities)]
+  }
+  ggp = plot_aneuploidy(ge_df, info.nobaseline, baseline_cells=baseline.metacells)
+  grDevices::pdf(paste0(prefix, '-aneuploidy-metacells.pdf'), 9, 7)
   tmp = lapply(ggp, print)
   grDevices::dev.off()
     

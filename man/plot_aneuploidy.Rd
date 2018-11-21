@@ -4,8 +4,9 @@
 \alias{plot_aneuploidy}
 \title{Aneuploidy graph}
 \usage{
-plot_aneuploidy(ge_df, comm_df = NULL, baseline_communities = NULL,
-  max_cells = 100)
+plot_aneuploidy(ge_df, comm_df = NULL, baseline_cells = NULL,
+  baseline_communities = NULL, max_cells = 100, chrs_order = c(1:22,
+  "X", "Y"))
 }
 \arguments{
 \item{ge_df}{a data.frame with gene expression (better if binned and
@@ -13,10 +14,14 @@ normalized).}
 
 \item{comm_df}{a data.frame with community information for each cell.}
 
+\item{baseline_cells}{cells to use as baseline.}
+
 \item{baseline_communities}{the communities to use as baseline.}
 
 \item{max_cells}{the maximum number of cells to consider in the boxplot of
 each community. Default: 100.}
+
+\item{chrs_order}{order of the chromosomes in the graph.}
 }
 \value{
 a list of ggplot2 object, one for each chromosome.
