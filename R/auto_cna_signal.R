@@ -147,7 +147,7 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
     save(data, file=norm.file)
   }
 
-  ## Bin, scale and smooth
+  ## Bin
   if(skip.bin){
     if(need.bin){
       load(bin.file)
@@ -159,7 +159,7 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
     save(data, file=bin.file)
   }
   
-  ## Bin, scale and smooth
+  ## Scale and smooth
   if(skip.score){
     if(need.score){
       load(score.file)
