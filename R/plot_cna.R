@@ -49,13 +49,13 @@ plot_cna <- function(cna, chrs_order=c(1:22, 'X', 'Y')){
   ## HMM output, one graph per chromosome
   for(ch in chrs_order){
     hmm.chr = hmm.df[which(hmm.df$chr==ch),]
-    gp = ggplot(hmm.df, aes(x=start, y=mean, colour=CN)) +
+    gp = ggplot(hmm.chr, aes(x=start, y=mean, colour=CN)) +
       geom_hline(yintercept=0, linetype=2) + 
       geom_point() +
       theme_bw() + xlab('position') + ggtitle(ch) + 
       scale_colour_brewer(palette='Set1') + 
       theme(axis.text.x=element_blank())
-    if('cell' %in% colnames(hmm.df)){
+    if('cell' %in% colnames(hmm.chr)){
       gp = gp + facet_wrap(~cell)
     } else {
       gp = gp + facet_wrap(~community)
