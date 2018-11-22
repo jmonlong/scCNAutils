@@ -41,6 +41,8 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
   skip.filter = file.exists(filter.file) & use_cache
   norm.file = paste0(prefix, '-ge-coord-norm.RData')
   skip.norm = file.exists(norm.file) & use_cache
+  bin.file = paste0(prefix, '-coord-norm-bin', bin_mean_exp, '.RData')
+  skip.bin = file.exists(bin.file) & use_cache
   score.file = paste0(prefix, '-coord-norm-bin', bin_mean_exp, '-z', z_wins_th,
                       '-smooth', smooth_wsize, '.RData')
   skip.score = file.exists(score.file) & use_cache
@@ -56,7 +58,8 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
   ## Which of the big data are needed for the remaining steps
   need.raw = !skip.qc | !skip.filter
   need.filter = !skip.norm
-  need.norm = !skip.score
+  need.norm = !skip.bin
+  need.bin = !skip.score
   need.score = !skip.pca
 
   ## Read raw data
@@ -145,14 +148,23 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
   }
 
   ## Bin, scale and smooth
-  if(skip.score){
-    if(need.score){
-      load(score.file)
+  if(skip.bin){
+    if(need.bin){
+      load(bin.file)
     }
   } else {
     message('Binning...')
     data = bin_genes(data, bin_mean_exp, nb_cores)
     data = norm_ge(data, nb_cores=nb_cores)
+    save(data, file=bin.file)
+  }
+  
+  ## Bin, scale and smooth
+  if(skip.score){
+    if(need.score){
+      load(score.file)
+    }
+  } else {
     message('Scaling...')
     data = zscore(data, z_wins_th, method='z')
     message('Smoothing...')

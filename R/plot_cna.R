@@ -19,7 +19,9 @@ plot_cna <- function(cna, chrs_order=c(1:22, 'X', 'Y')){
   ## Reorder community if it looks like numeric
   if(all(!is.na(suppressWarnings(as.numeric(unique(cna_df$community)))))){
     cna_df$community = as.numeric(cna_df$community)
-    hmm.df$community = as.numeric(hmm.df$community)
+    if(!('cell' %in% colnames(hmm.df))){
+      hmm.df$community = as.numeric(hmm.df$community)
+    }
   }
 
   ggp = list()
