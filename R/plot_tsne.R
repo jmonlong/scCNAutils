@@ -23,6 +23,7 @@
 ##' @return a list of ggplot objects
 ##' @author Jean Monlong
 ##' @import ggplot2
+##' @importFrom magrittr %>%
 ##' @export
 ##' @examples
 ##' \dontrun{
@@ -53,9 +54,12 @@ plot_tsne <- function(tsne_df, qc_df=NULL, comm_df=NULL, info_df=NULL){
         warning('Some cells in tsne_df are missing from info_df.')
       }
     }
+    cent =  tsne_df %>% dplyr::select(.data$sample, .data$tsne1, .data$tsne2) %>%
+      dplyr::group_by(.data$sample) %>% dplyr::summarize_all(stats::median)
     ggp.l$sample = ggplot(tsne_df, aes(tsne1, tsne2, colour=sample)) +
       geom_point(alpha=ptalpha) + theme_bw() +
-      guides(colour=guide_legend(override.aes=list(alpha=1)))
+      ggrepel::geom_label_repel(aes(label=sample), data=cent) + 
+      guides(colour=FALSE)
   }
 
   ## QC metrics
@@ -93,9 +97,12 @@ plot_tsne <- function(tsne_df, qc_df=NULL, comm_df=NULL, info_df=NULL){
         warning('Some cells in tsne_df are missing from comm_df.')
       }
     }
+    cent =  tsne_df %>% dplyr::select(.data$community, .data$tsne1, .data$tsne2) %>%
+      dplyr::group_by(.data$community) %>% dplyr::summarize_all(stats::median)
     ggp.l$comm = ggplot(tsne_df, aes(tsne1, tsne2, colour=community)) +
       geom_point(alpha=ptalpha) + theme_bw() +
-      guides(colour=guide_legend(override.aes=list(alpha=1)))
+      ggrepel::geom_label_repel(aes(label=community), data=cent) + 
+      guides(colour=FALSE)
   }
   return(ggp.l)
 }

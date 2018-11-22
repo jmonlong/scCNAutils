@@ -24,7 +24,8 @@ Imports:
     IRanges,
     shiny,
     rbokeh,
-    scales
+    scales,
+    ggrepel
 Suggests:
     testthat
 RoxygenNote: 6.1.0
