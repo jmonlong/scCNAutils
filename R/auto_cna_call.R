@@ -45,13 +45,6 @@ auto_cna_call <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
     baseline_cells = comm_df$cell[which(comm_df$community %in% baseline_communities)]
   }
 
-  ## Aneuploidy graph from cells
-  message('Aneuploidy graph...')
-  ggp = plot_aneuploidy(ge_df, comm_df, baseline_cells=baseline_cells)
-  grDevices::pdf(paste0(prefix, '-aneuploidy.pdf'), 9, 7)
-  tmp = lapply(ggp, print)
-  grDevices::dev.off()
-
   ## Make metacells
   message('Creating metacells...')
   mc.o = make_metacells(ge_df, comm_df, nb_metacells, metacell_size, baseline_cells,
