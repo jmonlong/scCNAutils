@@ -12,7 +12,7 @@
 ##' @export
 run_umap <- function(pca_o, nb_pcs=10, nb_neighbors=5){
   nb_pcs = min(nb_pcs, ncol(pca_o$x))
-  temp.pref = paste0('tempforumap', stats::runif(1, 0, 1e4))
+  temp.pref = paste0('tempforumap', round(stats::runif(1, 0, 1e4)))
   ## Write Python script
   write(c('import umap',
           'import pandas as pd',

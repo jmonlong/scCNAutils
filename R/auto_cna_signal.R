@@ -22,7 +22,8 @@
 ##' @param cc_sd_th the number of SD used for the thresholds when defining cycling cells.
 ##' @param nb_pcs the number of PCs used in the community detection or tSNE. 
 ##' @param comm_k the number of nearest neighbor for the KNN graph. Default 100.
-##' @param umap use UMAP instead of tSNE.
+##' @param viz which method to use for visualization ('tsne', 'umap' or 'both'). Default is
+##' 'tsne'.
 ##' @return a data.frame with QC, community and tSNE for each cell.
 ##' @author Jean Monlong
 ##' @export
@@ -32,7 +33,7 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
                             max_mito_prop=.2, min_total_exp=0, cells_sel=NULL,
                             chrs=c(1:22,"X","Y"), cell_cycle=NULL, bin_mean_exp=3,
                             z_wins_th=3, smooth_wsize=3, cc_sd_th=3, nb_pcs=10,
-                            comm_k=100, umap=FALSE){
+                            comm_k=100, viz=c('tsne','umap','both')){
   ## Cache options
   info.file = paste0(prefix, '-sampleinfo.RData')
   raw.file = paste0(prefix, '-ge.RData')
@@ -223,24 +224,30 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
     save(comm.df, file=comm.file)
   }
 
-  if(umap){
+  if(viz == 'umap' | viz == 'both'){
     ## UMAP
     message('Computing UMAP...')
-    cells.df = run_umap(pca.o, nb_pcs)
-    tsne.ggp = plot_umap(cells.df, qc_df=qc.df, comm_df=comm.df, info_df=info.df)
+    umap.df = run_umap(pca.o, nb_pcs)
+    umap.ggp = plot_umap(umap.df, qc_df=qc.df, comm_df=comm.df, info_df=info.df)
     grDevices::pdf(paste0(prefix, '-coord-norm-bin', bin_mean_exp, '-z', z_wins_th,
                           '-smooth', smooth_wsize, '-umap', nb_pcs, 'PCs.pdf'), 9, 7)
     lapply(tsne.ggp, print)
     grDevices::dev.off()
-  } else {
+    cells.df = umap.df
+  }
+  if(viz == 'tsne' | viz == 'both'){
     ## tSNE
     message('Computing tSNE...')
-    cells.df = run_tsne(pca.o, nb_pcs)
-    tsne.ggp = plot_tsne(cells.df, qc_df=qc.df, comm_df=comm.df, info_df=info.df)
+    tsne.df = run_tsne(pca.o, nb_pcs)
+    tsne.ggp = plot_tsne(tsne.df, qc_df=qc.df, comm_df=comm.df, info_df=info.df)
     grDevices::pdf(paste0(prefix, '-coord-norm-bin', bin_mean_exp, '-z', z_wins_th,
                           '-smooth', smooth_wsize, '-tsne', nb_pcs, 'PCs.pdf'), 9, 7)
     lapply(tsne.ggp, print)
     grDevices::dev.off()
+    cells.df = tsne.df
+  }
+  if(viz=='both'){
+    cells.df = merge(tsne.df, umap.df)
   }
   
   ## Master data.frame with QC, community and tSNE info

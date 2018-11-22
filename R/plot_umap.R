@@ -54,7 +54,8 @@ plot_umap <- function(umap_df, qc_df=NULL, comm_df=NULL, info_df=NULL){
       }
     }
     ggp.l$sample = ggplot(umap_df, aes(umap1, umap2, colour=sample)) +
-      geom_point(alpha=ptalpha) + theme_bw()
+      geom_point(alpha=ptalpha) + theme_bw() +
+      guides(colour=guide_legend(override.aes=list(alpha=1)))
   }
 
   ## QC metrics
@@ -93,7 +94,8 @@ plot_umap <- function(umap_df, qc_df=NULL, comm_df=NULL, info_df=NULL){
       }
     }
     ggp.l$comm = ggplot(umap_df, aes(umap1, umap2, colour=community)) +
-      geom_point(alpha=ptalpha) + theme_bw()
+      geom_point(alpha=ptalpha) + theme_bw() +
+      guides(colour=guide_legend(override.aes=list(alpha=1)))
   }
   return(ggp.l)
 }

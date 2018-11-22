@@ -54,7 +54,8 @@ plot_tsne <- function(tsne_df, qc_df=NULL, comm_df=NULL, info_df=NULL){
       }
     }
     ggp.l$sample = ggplot(tsne_df, aes(tsne1, tsne2, colour=sample)) +
-      geom_point(alpha=ptalpha) + theme_bw()
+      geom_point(alpha=ptalpha) + theme_bw() +
+      guides(colour=guide_legend(override.aes=list(alpha=1)))
   }
 
   ## QC metrics
@@ -93,7 +94,8 @@ plot_tsne <- function(tsne_df, qc_df=NULL, comm_df=NULL, info_df=NULL){
       }
     }
     ggp.l$comm = ggplot(tsne_df, aes(tsne1, tsne2, colour=community)) +
-      geom_point(alpha=ptalpha) + theme_bw()
+      geom_point(alpha=ptalpha) + theme_bw() +
+      guides(colour=guide_legend(override.aes=list(alpha=1)))
   }
   return(ggp.l)
 }

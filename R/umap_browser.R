@@ -47,10 +47,11 @@ umap_browser <- function(cells_df, nb_points=5000, plot_dim=800){
     }
   }
   mergePts <- function(df, nbp, nbp.tot){
-    nbp = nbp/nbp.tot*nrow(df)
-    if(nbp >= nrow(df)){
+    nbp = round(nbp/nbp.tot*nrow(df))
+    if(nbp >= nrow(df) | nbp==0){
       df$nb.cells = 1
     } else {
+      message(nbp)
       km.o = stats::kmeans(df[,c('umap1','umap2')], nbp)
       df$pt = km.o$cluster
       df = df %>% dplyr::group_by(.data$pt) %>%
@@ -93,7 +94,7 @@ umap_browser <- function(cells_df, nb_points=5000, plot_dim=800){
   y.min = min(y.breaks$breaks)
   x.max = max(x.breaks$breaks)
   y.max = max(y.breaks$breaks)
-  col.choices = setdiff(colnames(cells_df), c('cell','group','umap1','umap2'))
+  col.choices = sort(setdiff(colnames(cells_df), c('cell','group','umap1','umap2')))
   sidebar.panel = shiny::sidebarPanel(
                            shiny::numericInput('nbp', 'Number of points to draw',
                                                value=nb_points, step=100),
