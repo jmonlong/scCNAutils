@@ -231,7 +231,7 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
     umap.ggp = plot_umap(umap.df, qc_df=qc.df, comm_df=comm.df, info_df=info.df)
     grDevices::pdf(paste0(prefix, '-coord-norm-bin', bin_mean_exp, '-z', z_wins_th,
                           '-smooth', smooth_wsize, '-umap', nb_pcs, 'PCs.pdf'), 9, 7)
-    lapply(tsne.ggp, print)
+    lapply(umap.ggp, print)
     grDevices::dev.off()
     cells.df = umap.df
   }
