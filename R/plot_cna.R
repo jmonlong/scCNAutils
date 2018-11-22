@@ -53,7 +53,7 @@ plot_cna <- function(cna, chrs_order=c(1:22, 'X', 'Y')){
       geom_hline(yintercept=0, linetype=2) + 
       geom_point() +
       theme_bw() + xlab('position') + ggtitle(ch) + 
-      scale_colour_manual(values=c('steelblue','white','indianred')) + 
+      scale_colour_brewer(palette='Set1') + 
       theme(axis.text.x=element_blank())
     if('cell' %in% colnames(hmm.df)){
       gp = gp + facet_wrap(~cell)
