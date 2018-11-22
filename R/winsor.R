@@ -7,7 +7,7 @@
 ##' @author Jean Monlong
 ##' @export
 winsor <- function(x, u=NULL, l=NULL){
-  if(!is.null(u) && any(x>u)) x[x>u] = u
-  if(!is.null(l) && any(x<l)) x[x<l] = l
+  if(!is.null(u) && any(x>u, na.rm=TRUE)) x[which(x>u)] = u
+  if(!is.null(l) && any(x<l, na.rm=TRUE)) x[which(x<l)] = l
   x
 }

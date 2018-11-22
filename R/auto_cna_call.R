@@ -46,6 +46,7 @@ auto_cna_call <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
   }
 
   ## Aneuploidy graph from cells
+  message('Aneuploidy graph...')
   ggp = plot_aneuploidy(ge_df, comm_df, baseline_cells=baseline_cells)
   grDevices::pdf(paste0(prefix, '-aneuploidy.pdf'), 9, 7)
   tmp = lapply(ggp, print)
@@ -64,6 +65,7 @@ auto_cna_call <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
   ge_df = norm_ge(ge_df, nb_cores=nb_cores)
 
   ## Aneuploidy graph from metacells
+  message('Aneuploidy graph from metacells...')
   baseline.metacells = mc.o$info$cell[grep('baseline_', mc.o$info$community)]
   info.nobaseline = mc.o$info
   if(!is.null(baseline_communities)){
