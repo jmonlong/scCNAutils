@@ -22,6 +22,7 @@
 ##' @param cc_sd_th the number of SD used for the thresholds when defining cycling cells.
 ##' @param nb_pcs the number of PCs used in the community detection or tSNE. 
 ##' @param comm_k the number of nearest neighbor for the KNN graph. Default 100.
+##' @param umap use UMAP instead of tSNE.
 ##' @return a data.frame with QC, community and tSNE for each cell.
 ##' @author Jean Monlong
 ##' @export
@@ -31,8 +32,9 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
                             max_mito_prop=.2, min_total_exp=0, cells_sel=NULL,
                             chrs=c(1:22,"X","Y"), cell_cycle=NULL, bin_mean_exp=3,
                             z_wins_th=3, smooth_wsize=3, cc_sd_th=3, nb_pcs=10,
-                            comm_k=100){
+                            comm_k=100, umap=FALSE){
   ## Cache options
+  info.file = paste0(prefix, '-sampleinfo.RData')
   raw.file = paste0(prefix, '-ge.RData')
   skip.raw = file.exists(raw.file) & use_cache
   qc.file = paste0(prefix, '-qc.RData')
@@ -87,7 +89,8 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
       ms.o = merge_samples(data, sample_names=sample_names)
       data = ms.o$ge
       info.df = ms.o$info
-      save(data, info.df, file=raw.file)
+      save(info.df, file=info.file)
+      save(data, file=raw.file)
     } else {
       save(data, file=raw.file)
     }
@@ -95,6 +98,9 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
       stop('Input data as NAs.')
       file.remove(raw.file)
     }
+  }
+  if(use_cache && file.exists(info.file) && is.null(info.df)){
+    load(info.file)
   }
 
   ## Merge info
@@ -217,19 +223,30 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
     save(comm.df, file=comm.file)
   }
 
-  ## tSNE
-  message('Computing tSNE...')
-  tsne.df = run_tsne(pca.o, nb_pcs)
-  tsne.ggp = plot_tsne(tsne.df, qc_df=qc.df, comm_df=comm.df, info_df=info.df)
-  grDevices::pdf(paste0(prefix, '-coord-norm-bin', bin_mean_exp, '-z', z_wins_th,
-                        '-smooth', smooth_wsize, '-tsne', nb_pcs, 'PCs.pdf'), 9, 7)
-  lapply(tsne.ggp, print)
-  grDevices::dev.off()
+  if(umap){
+    ## UMAP
+    message('Computing UMAP...')
+    cells.df = run_umap(pca.o, nb_pcs)
+    tsne.ggp = plot_umap(cells.df, qc_df=qc.df, comm_df=comm.df, info_df=info.df)
+    grDevices::pdf(paste0(prefix, '-coord-norm-bin', bin_mean_exp, '-z', z_wins_th,
+                          '-smooth', smooth_wsize, '-umap', nb_pcs, 'PCs.pdf'), 9, 7)
+    lapply(tsne.ggp, print)
+    grDevices::dev.off()
+  } else {
+    ## tSNE
+    message('Computing tSNE...')
+    cells.df = run_tsne(pca.o, nb_pcs)
+    tsne.ggp = plot_tsne(cells.df, qc_df=qc.df, comm_df=comm.df, info_df=info.df)
+    grDevices::pdf(paste0(prefix, '-coord-norm-bin', bin_mean_exp, '-z', z_wins_th,
+                          '-smooth', smooth_wsize, '-tsne', nb_pcs, 'PCs.pdf'), 9, 7)
+    lapply(tsne.ggp, print)
+    grDevices::dev.off()
+  }
   
   ## Master data.frame with QC, community and tSNE info
   message('Merging results...')
   res.df = merge(qc.df, comm.df)
-  res.df = merge(res.df, tsne.df)
+  res.df = merge(res.df, cells.df)
   if(!is.null(info.df)){
     res.df = merge(res.df, info.df)
   }

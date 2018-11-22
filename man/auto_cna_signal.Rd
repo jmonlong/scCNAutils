@@ -9,7 +9,8 @@ auto_cna_signal(data, genes_coord, prefix = "scCNAutils_out",
   sample_names = NULL, info_df = NULL, max_mito_prop = 0.2,
   min_total_exp = 0, cells_sel = NULL, chrs = c(1:22, "X", "Y"),
   cell_cycle = NULL, bin_mean_exp = 3, z_wins_th = 3,
-  smooth_wsize = 3, cc_sd_th = 3, nb_pcs = 10, comm_k = 100)
+  smooth_wsize = 3, cc_sd_th = 3, nb_pcs = 10, comm_k = 100,
+  umap = FALSE)
 }
 \arguments{
 \item{data}{a data.frame with gene expression or the path to the folder with the
@@ -52,6 +53,8 @@ cycle scores. See details.}
 \item{nb_pcs}{the number of PCs used in the community detection or tSNE.}
 
 \item{comm_k}{the number of nearest neighbor for the KNN graph. Default 100.}
+
+\item{umap}{use UMAP instead of tSNE.}
 }
 \value{
 a data.frame with QC, community and tSNE for each cell.
