@@ -34,25 +34,30 @@ On Abacus, the modules that worked for me were `mugqic/R_Bioconductor/3.5.0_3.7`
 
 ## Getting genes coordinates
 
-One option if to use the [Gencode annotation](https://www.gencodegenes.org/human/).
-For example to retrieve the coordinates for each gene name (removing duplicated names):
+[Cellranger](https://support.10xgenomics.com/single-cell-gene-expression/software/release-notes/build) from 10X Genomics seems to use Ensembl annotations. 
+As of November 2018:
+
+- `ftp://ftp.ensembl.org/pub/grch37/release-87/gtf/homo_sapiens/Homo_sapiens.GRCh37.87.gtf.gz` for hg19.
+- `ftp://ftp.ensembl.org/pub/release-93/gtf/homo_sapiens/Homo_sapiens.GRCh38.93.gtf.gz` for GRCh38
+
+For example to retrieve the coordinates for each gene name (removing duplicated names) for hg19:
 
 ```r
-download.file('ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_29/gencode.v29.basic.annotation.gtf.gz',
-              'gencode.v29.basic.annotation.gtf.gz')
-genc.df = read.table('gencode.v29.basic.annotation.gtf.gz', as.is=TRUE, sep='\t')
-## Keep protein-coding genes
-genc.df = subset(genc.df, V3 == 'gene')
-genc.df$symbol = gsub('.* gene_name ([^;]*);.*', '\\1', genc.df$V9)
-genc.df$type = gsub('.* gene_type ([^;]*);.*', '\\1', genc.df$V9)
-genc.df = subset(genc.df, type == 'protein_coding')
-## Format and remove duplicates
-genc.df = genc.df[,c(1,4,5,10)]
-colnames(genc.df) = c('chr','start','end', 'symbol')
-genc.df$chr = gsub('chr', '', genc.df$chr)
-genc.df = subset(genc.df, !duplicated(symbol))
-## Save
-write.table(genc.df, file='genes.v29.tsv', quote=FALSE, row.names=FALSE, sep='\t')
+download.file('ftp://ftp.ensembl.org/pub/grch37/release-87/gtf/homo_sapiens/Homo_sapiens.GRCh37.87.gtf.gz',
+              'Homo_sapiens.GRCh37.87.gtf.gz')
+gene.df = read.table('Homo_sapiens.GRCh37.87.gtf.gz', as.is=TRUE, sep='\t')
+## Keep genes                                                                                                                                                                               
+gene.df = subset(gene.df, V3 == 'gene')
+gene.df$symbol = gsub('.* gene_name ([^;]*);.*', '\\1', gene.df$V9)
+## Format and remove duplicates                                                                                                                                                             
+gene.df = gene.df[,c(1,4,5,10)]
+colnames(gene.df) = c('chr','start','end', 'symbol')
+gene.df = subset(gene.df, !duplicated(symbol))
+## Save                                                                                                                                                                                     
+write.table(gene.df, file='genes.coord.tsv', quote=FALSE, row.names=FALSE, sep='\t')
+## Check that gene names match with scRNA-seq data                                                                                                                                          
+ge = read_mtx(path='path/to/some/data')
+all(ge$symbol %in% gene.df$symbol)
 ```
 
 ## Genes associated with cell cycle
