@@ -209,7 +209,7 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
   } else {
     message('PCA...')
     pca.o = run_pca(data, core_cells)
-    grDevices::pdf(paste0(prefix, '-coord-norm-bin', bin_mean_exp, '-z', z_wins_th,
+    grDevices::pdf(paste0(prefix, '-coord-norm-bin', bin_mean_exp, cv.lab, '-z', z_wins_th,
                           '-smooth', smooth_wsize, '-pcaSD.pdf'), 9, 7)
     print(pca.o$sdev.graph)
     grDevices::dev.off()
@@ -224,7 +224,7 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
     message('Detecting communities...')
     comm.df = find_communities(pca.o, nb_pcs, comm_k)
     comm.ggp = plot_communities(comm.df, qc_df=qc.df, info_df=info.df)
-    grDevices::pdf(paste0(prefix, '-coord-norm-bin', bin_mean_exp, '-z', z_wins_th,
+    grDevices::pdf(paste0(prefix, '-coord-norm-bin', bin_mean_exp, cv.lab, '-z', z_wins_th,
                           '-smooth', smooth_wsize, '-comm', nb_pcs, 'PCs', comm_k,
                           '.pdf'), 9, 7)
     lapply(comm.ggp, print)
@@ -237,7 +237,7 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
     message('Computing UMAP...')
     umap.df = run_umap(pca.o, nb_pcs)
     umap.ggp = plot_umap(umap.df, qc_df=qc.df, comm_df=comm.df, info_df=info.df)
-    grDevices::pdf(paste0(prefix, '-coord-norm-bin', bin_mean_exp, '-z', z_wins_th,
+    grDevices::pdf(paste0(prefix, '-coord-norm-bin', bin_mean_exp, cv.lab, '-z', z_wins_th,
                           '-smooth', smooth_wsize, '-umap', nb_pcs, 'PCs.pdf'), 9, 7)
     lapply(umap.ggp, print)
     grDevices::dev.off()
@@ -248,7 +248,7 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
     message('Computing tSNE...')
     tsne.df = run_tsne(pca.o, nb_pcs)
     tsne.ggp = plot_tsne(tsne.df, qc_df=qc.df, comm_df=comm.df, info_df=info.df)
-    grDevices::pdf(paste0(prefix, '-coord-norm-bin', bin_mean_exp, '-z', z_wins_th,
+    grDevices::pdf(paste0(prefix, '-coord-norm-bin', bin_mean_exp, cv.lab, '-z', z_wins_th,
                           '-smooth', smooth_wsize, '-tsne', nb_pcs, 'PCs.pdf'), 9, 7)
     lapply(tsne.ggp, print)
     grDevices::dev.off()
