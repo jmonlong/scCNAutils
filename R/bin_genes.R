@@ -28,7 +28,6 @@ bin_genes <- function(ge_df, mean_exp=3, nb_cores=1){
     dplyr::mutate(bins=paste0(as.character(.data$chr), '_', .data$bins))
   m.df$cumm = NULL
   message(length(unique(m.df$bins)), ' expressed bins created.')
-  ge_df = merge(ge_df, m.df)
   ## sum expression in each bin per cell
   mergeGenes.f <- function(ge_df){
     vv = colSums(as.matrix(ge_df[, cells]))
@@ -36,6 +35,7 @@ bin_genes <- function(ge_df, mean_exp=3, nb_cores=1){
   }
   ge_df.m = parallel::mclapply(unique(ge_df$chr), function(chri){
     ge_df %>% dplyr::filter(.data$chr == chri) %>%
+      merge(m.df[which(m.df$chr == chri),]) %>% 
       dplyr::group_by(.data$bins) %>%
         dplyr::mutate(start=min(.data$start), end=max(.data$end)) %>%
         dplyr::ungroup(.data) %>% dplyr::mutate(bins=NULL) %>%
