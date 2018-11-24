@@ -20,7 +20,7 @@ comm_df = data.frame(cell=colnames(mat),
 test_that("graphs don't raise errors", {
   ggp = plot_aneuploidy(df, comm_df, max_cells=10)
   pdf('temp.pdf')
-  print(ggp)
+  tmp = lapply(ggp, print)
   dev.off()
   expect_true(file.remove('temp.pdf'))  
 })

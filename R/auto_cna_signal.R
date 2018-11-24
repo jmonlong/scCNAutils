@@ -17,6 +17,8 @@
 ##' @param cell_cycle if non-null, either a file or data.frame to compute cell
 ##' cycle scores. See details.
 ##' @param bin_mean_exp the desired minimum mean expression in the bin.
+##' @param rm_cv_quant the quantile threshold to remove CV outlier. Default NULL (i.e.
+##' not used).
 ##' @param z_wins_th the threshold to winsorize Z-score. Default is 3
 ##' @param smooth_wsize the window size for smoothing. Default is 3.
 ##' @param cc_sd_th the number of SD used for the thresholds when defining cycling cells.
@@ -32,6 +34,7 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
                             info_df=NULL, 
                             max_mito_prop=.2, min_total_exp=0, cells_sel=NULL,
                             chrs=c(1:22,"X","Y"), cell_cycle=NULL, bin_mean_exp=3,
+                            rm_cv_quant=NULL,
                             z_wins_th=3, smooth_wsize=3, cc_sd_th=3, nb_pcs=10,
                             comm_k=100, viz=c('tsne','umap','both')){
   ## Cache options
@@ -46,15 +49,16 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
   skip.norm = file.exists(norm.file) & use_cache
   bin.file = paste0(prefix, '-coord-norm-bin', bin_mean_exp, '.RData')
   skip.bin = file.exists(bin.file) & use_cache
-  score.file = paste0(prefix, '-coord-norm-bin', bin_mean_exp, '-z', z_wins_th,
+  cv.lab = ifelse(is.null(rm_cv_quant), '', paste0('-rmcvq', rm_cv_quant))
+  score.file = paste0(prefix, '-coord-norm-bin', bin_mean_exp, cv.lab, '-z', z_wins_th,
                       '-smooth', smooth_wsize, '.RData')
   skip.score = file.exists(score.file) & use_cache
   cnoc.file = paste0(prefix, '-noncycling.txt')
   skip.cnoc = file.exists(cnoc.file) & use_cache
-  pca.file = paste0(prefix, '-coord-norm-bin', bin_mean_exp, '-z', z_wins_th,
+  pca.file = paste0(prefix, '-coord-norm-bin', bin_mean_exp, cv.lab, '-z', z_wins_th,
                     '-smooth', smooth_wsize, '-pca.RData')
   skip.pca = file.exists(pca.file) & use_cache
-  comm.file = paste0(prefix, '-coord-norm-bin', bin_mean_exp, '-z', z_wins_th,
+  comm.file = paste0(prefix, '-coord-norm-bin', bin_mean_exp, cv.lab, '-z', z_wins_th,
                      '-smooth', smooth_wsize, '-comm', nb_pcs, 'PCs', comm_k,
                      '.RData')
   skip.comm = file.exists(comm.file) & use_cache
@@ -172,6 +176,10 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
       load(score.file)
     }
   } else {
+    if(!is.null(rm_cv_quant)){
+      message('Remove CV outliers...')
+      data = rm_cv_outliers(data, ol_quant_th=rm_cv_quant)
+    }
     message('Scaling...')
     data = zscore(data, z_wins_th, method='z')
     message('Smoothing...')
@@ -224,7 +232,7 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
     save(comm.df, file=comm.file)
   }
 
-  if(viz == 'umap' | viz == 'both'){
+  if(viz[1] == 'umap' | viz[1] == 'both'){
     ## UMAP
     message('Computing UMAP...')
     umap.df = run_umap(pca.o, nb_pcs)
@@ -235,7 +243,7 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
     grDevices::dev.off()
     cells.df = umap.df
   }
-  if(viz == 'tsne' | viz == 'both'){
+  if(viz[1] == 'tsne' | viz[1] == 'both'){
     ## tSNE
     message('Computing tSNE...')
     tsne.df = run_tsne(pca.o, nb_pcs)
@@ -246,7 +254,7 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
     grDevices::dev.off()
     cells.df = tsne.df
   }
-  if(viz=='both'){
+  if(viz[1]=='both'){
     cells.df = merge(tsne.df, umap.df)
   }
   

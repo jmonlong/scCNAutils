@@ -30,6 +30,6 @@ test_that("makes metacells by clustering", {
 })
 
 test_that("makes metacells without baseline cells", {
-  mc.l = make_metacells(ge.df, comm.df, baseline_cells=FALSE)
+  mc.l = make_metacells(ge.df, comm.df, baseline_cells=FALSE, nb_metacells=2)
   expect_true(!any(grepl('baseline_', mc.l$info$cell)))
 })
