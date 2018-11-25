@@ -11,17 +11,29 @@
 ##' @author Jean Monlong
 ##' @export
 smooth_movingw <- function(df, wsize=3, nb_cores=1, FUN=stats::median){
+  ## Same function but removing NAs
+  FUNnarm <- function(x){
+    if(any(is.na(x))){
+      x = x[which(!is.na(x))]
+    }
+    if(length(x) == 0){
+      return(NA)
+    } else {
+      return(FUN(x))
+    }
+  }
+  
   ## Function to smooth on cell (vector)
   smooth.cell <- function(vec){
     if(length(vec) < wsize){
-      return(rep(FUN(vec), length(vec)))
+      return(rep(FUNnarm(vec), length(vec)))
     }
     mmm = lapply(1:wsize, function(ii){
       c(rep(NA, ii-1), vec, rep(NA, wsize-ii))
     })
     mmm = matrix(unlist(mmm), ncol=wsize)
     mmm = mmm[round(wsize/2):(round(wsize/2)+length(vec)-1),]
-    apply(mmm, 1, FUN, na.rm=TRUE)
+    apply(mmm, 1, FUNnarm)
   }
   ## function to smooth all cells
   smooth.f <- function(df){
