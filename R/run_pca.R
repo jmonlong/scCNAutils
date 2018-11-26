@@ -49,12 +49,11 @@ run_pca <- function(z_df, core_cells=NULL, out_pcs=100){
   pca.o$x = pca.o$x[, 1:out_pcs]
   ## graph
   PC = sdev = type = NULL
-  sd.df = rbind(data.frame(PC=1:length(pca.o$sdev), sdev=pca.o$sdev, type='sdev'),
-                data.frame(PC=1:length(pca.o$sdev), sdev=cumsum(pca.o$sdev),
-                           type='cumulative sdev'))
-  pca.o$sdev.graph = ggplot(sd.df[which(sd.df$PC<=50),], aes(x=PC, y=sdev, colour=type)) + geom_point(na.rm=TRUE) +
-    geom_line(na.rm=TRUE) + theme_bw() + ylab('standard deviation') +
-    theme(legend.title=element_blank(), legend.position=c(.01,.99),
-          legend.justification=c(0,1)) 
+  sd.df = data.frame(PC=1:length(pca.o$sdev), sdev=pca.o$sdev)
+  pca.o$sdev.graph = ggplot(sd.df[which(sd.df$PC<=50),], aes(x=PC, y=sdev)) + geom_point(na.rm=TRUE) +
+    geom_line(na.rm=TRUE) + theme_bw() + ylab('standard deviation')
+  sd.df = data.frame(PC=0:length(pca.o$sdev), sdev=c(0, cumsum(pca.o$sdev)))
+  pca.o$sdev.cumm.graph = ggplot(sd.df[which(sd.df$PC<=50),], aes(x=PC, y=sdev)) + geom_point(na.rm=TRUE) +
+    geom_line(na.rm=TRUE) + theme_bw() + ylab('cummulative standard deviation')
   return(pca.o)
 }

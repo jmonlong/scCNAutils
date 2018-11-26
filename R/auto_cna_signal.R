@@ -222,7 +222,8 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
     load(comm.file)
   } else {
     message('Detecting communities...')
-    comm.df = find_communities(pca.o, nb_pcs, comm_k)
+    comm.l = find_communities(pca.o, nb_pcs, comm_k)
+    comm.df = comm.l$comm
     comm.ggp = plot_communities(comm.df, qc_df=qc.df, info_df=info.df)
     grDevices::pdf(paste0(prefix, '-coord-norm-bin', bin_mean_exp, cv.lab, '-z', z_wins_th,
                           '-smooth', smooth_wsize, '-comm', nb_pcs, 'PCs', comm_k,

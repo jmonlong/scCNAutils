@@ -14,7 +14,7 @@ df = cbind(df, mat)
 
 test_that("PCA runs with default", {
   pca.o = run_pca(df)
-  expect_equal(length(pca.o), 3)
+  expect_equal(length(pca.o), 4)
   expect_gt(ncol(pca.o$x), 0)
   expect_equal(length(pca.o$sdev), min(nb.cells, nb.genes))
   expect_equal(nrow(pca.o$x), nb.cells)
@@ -23,7 +23,7 @@ test_that("PCA runs with default", {
 test_that("PCA runs with core cells", {
   nb.core.cells = nb.cells / 2
   pca.o = run_pca(df, core_cells=sample(colnames(mat), nb.core.cells))
-  expect_equal(length(pca.o), 3)
+  expect_equal(length(pca.o), 4)
   expect_gt(ncol(pca.o$x), 0)
   expect_equal(length(pca.o$sdev), min(nb.core.cells, nb.genes))
   expect_equal(nrow(pca.o$x), nb.cells)

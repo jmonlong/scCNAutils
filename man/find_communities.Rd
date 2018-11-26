@@ -4,7 +4,8 @@
 \alias{find_communities}
 \title{Community detection}
 \usage{
-find_communities(pca_o, nb_pcs = 10, k = 100)
+find_communities(pca_o, nb_pcs = 10, k = 100, gamma = 1, nreps = 1,
+  nb_cores = 1)
 }
 \arguments{
 \item{pca_o}{the output of \code{\link{run_pca}}}
@@ -12,9 +13,19 @@ find_communities(pca_o, nb_pcs = 10, k = 100)
 \item{nb_pcs}{the number of PCs to use. Default 10.}
 
 \item{k}{the number of nearest neighbor for the KNN graph. Default 100.}
+
+\item{gamma}{a vector of gamma. Default 1.}
+
+\item{nreps}{the number of repetition for each gamma, Default 1.}
+
+\item{nb_cores}{the number of processors to use. Default is 1.}
 }
 \value{
-a data.frame with two columns: 'cell' and 'community'.
+a list with:
+\item{comm}{a data.frame with two columns: 'cell' and 'community'.}
+\item{comm.all}{a matrix with communities for each gamma}
+\item{gamma}{the list of input gamma corresponding to each comm.all column.}
+\item{best.gamma}{the gamma resulting on the highest ARI mean}
 }
 \description{
 Build a KNN graph and run Louvain algorithm for community detection.

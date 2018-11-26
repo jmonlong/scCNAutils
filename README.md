@@ -101,7 +101,4 @@ The internal workflow is as follow:
 - Test on real data.
 - Try to use Seurat's functions (e.g. Louvain with gamma and UMAP).
 - Example on public cancer data.
-- winsor function external.
-- Debug false calls from HMM.
-- Add orthogonal aneuploidy metric.
-- Add QC plots for the CNA calls.
+- PCA plots.

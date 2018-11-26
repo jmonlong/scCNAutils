@@ -21,13 +21,15 @@ info.df = data.frame(cell=cells,
                      stringsAsFactors=FALSE)
 
 test_that("communities found with default", {
-  comm.df = find_communities(pca.o)
+  comm.l = find_communities(pca.o)
+  comm.df = comm.l$comm
   expect_equal(nrow(comm.df), nb.cells)
   expect_gt(nlevels(comm.df$community), 0)
 })
 
 test_that("communities graphs", {
-  comm.df = find_communities(pca.o)
+  comm.l = find_communities(pca.o)
+  comm.df = comm.l$comm
   ggp = plot_communities(comm.df, qc.df, info.df)
   pdf('temp.pdf')
   lapply(ggp, print)
