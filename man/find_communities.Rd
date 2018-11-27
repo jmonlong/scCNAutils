@@ -26,6 +26,7 @@ a list with:
 \item{comm.all}{a matrix with communities for each gamma}
 \item{gamma}{the list of input gamma corresponding to each comm.all column.}
 \item{best.gamma}{the gamma resulting on the highest ARI mean}
+\item{ari.df}{data.frame with ARI stats for each gamma}
 }
 \description{
 Build a KNN graph and run Louvain algorithm for community detection.

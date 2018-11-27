@@ -12,12 +12,13 @@
 ##' \item{comm.all}{a matrix with communities for each gamma}
 ##' \item{gamma}{the list of input gamma corresponding to each comm.all column.}
 ##' \item{best.gamma}{the gamma resulting on the highest ARI mean}
+##' \item{ari.df}{data.frame with ARI stats for each gamma}
 ##' @author Jean Monlong
 ##' @export
 find_communities <- function(pca_o, nb_pcs=10, k=100, gamma=1, nreps=1,
                              nb_cores=1){
   nb_pcs = min(nb_pcs, ncol(pca_o$x))
-  all.comm = best.gamma = NULL
+  all.comm = best.gamma = ari.df = NULL
 
   knn.o = FNN::get.knn(as.matrix(pca_o$x[,1:nb_pcs]), k = k)
   knn.df = data.frame(from=rep(1:nrow(knn.o$nn.index), k),
@@ -89,5 +90,5 @@ find_communities <- function(pca_o, nb_pcs=10, k=100, gamma=1, nreps=1,
   }
   
   return(list(comm=comm.df, comm.all=all.comm, gamma=gamma,
-              best.gamma=best.gamma))
+              best.gamma=best.gamma, ari.df=ari.df))
 }
