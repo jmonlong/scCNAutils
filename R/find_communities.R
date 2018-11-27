@@ -50,25 +50,32 @@ find_communities <- function(pca_o, nb_pcs=10, k=100, gamma=1, nreps=1,
 
     pw.ss = 100 ## only use up to pw.ss random pairs
     exp.l = parallel::mclapply(unique(wc$gamma), function(gamma){
-      cl.mat = wc$comm[,which(wc$gamma==gamma)]
-      ## Stats: number of communities and adusted Rand index
+      cl.mat = wc$comm[,which(wc$gamma==gamma), drop=FALSE]
       nbcls = apply(cl.mat, 2, function(x)length(unique(x)))
-      pw.ij = utils::combn(ncol(cl.mat),2)
-      if(ncol(pw.ij) > pw.ss){
-        pw.ij = pw.ij[, sample.int(ncol(pw.ij), pw.ss)]
+      if(ncol(cl.mat) == 1){
+        comm.rep = cl.mat[,1]
+        ari.df = data.frame(gamma=gamma, ari.mean=NA,
+                            ari.sd=NA,
+                            nb.cluster=mean(nbcls))
+      } else {
+        ## Stats: number of communities and adusted Rand index
+        pw.ij = utils::combn(ncol(cl.mat),2)
+        if(ncol(pw.ij) > pw.ss){
+          pw.ij = pw.ij[, sample.int(ncol(pw.ij), pw.ss)]
+        }
+        ari = sapply(1:ncol(pw.ij), function(ij){
+          adjRandInd(cl.mat[,pw.ij[1,ij]], cl.mat[,pw.ij[2,ij]])
+        }) 
+        ari.df = data.frame(gamma=gamma, ari.mean=mean(ari),
+                            ari.sd=stats::sd(ari),
+                            nb.cluster=mean(nbcls))
+        ## Pick representative run as the one with highest mean ARI
+        sim.mat = matrix(NA, ncol(cl.mat), ncol(cl.mat))
+        sim.mat[pw.ij[1,] + (pw.ij[2,]-1)*ncol(cl.mat)] = ari
+        sim.mat[pw.ij[2,] + (pw.ij[1,]-1)*ncol(cl.mat)] = ari
+        sim.mean = apply(sim.mat, 1, mean, na.rm=TRUE)
+        comm.rep = cl.mat[,which.max(sim.mean)]
       }
-      ari = sapply(1:ncol(pw.ij), function(ij){
-        adjRandInd(cl.mat[,pw.ij[1,ij]], cl.mat[,pw.ij[2,ij]])
-      }) 
-      ari.df = data.frame(gamma=gamma, ari.mean=mean(ari),
-                          ari.sd=stats::sd(ari),
-                          nb.cluster=mean(nbcls))
-      ## Pick representative run as the one with highest mean ARI
-      sim.mat = matrix(NA, ncol(cl.mat), ncol(cl.mat))
-      sim.mat[pw.ij[1,] + (pw.ij[2,]-1)*ncol(cl.mat)] = ari
-      sim.mat[pw.ij[2,] + (pw.ij[1,]-1)*ncol(cl.mat)] = ari
-      sim.mean = apply(sim.mat, 1, mean, na.rm=TRUE)
-      comm.rep = cl.mat[,which.max(sim.mean)]
       return(list(comm=comm.rep, ari.df=ari.df))
     }, mc.cores=nb_cores)
     ari.df = do.call(rbind, lapply(exp.l, function(e) e$ari.df))

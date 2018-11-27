@@ -13,7 +13,7 @@
 ##' @author Jean Monlong
 ##' @export
 run_louvain <- function(graph, gamma=1, nreps=1){
-  gamma = rep(gamma, each=1)
+  gamma = rep(gamma, each=nreps)
   
   temp.pref = paste0('tempforlouvain', round(stats::runif(1, 0, 1e4)))
 
