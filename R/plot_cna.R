@@ -31,7 +31,9 @@ plot_cna <- function(cna, chrs_order=c(1:22, 'X', 'Y')){
       scale_fill_manual(values=c('steelblue','white','indianred')) + xlab('position') +
       ylab('community') + scale_alpha_continuous(name='prop of\nmetacells') + 
       theme(strip.text.y=element_text(angle=0), axis.text.y=element_blank(),
-            axis.text.x=element_blank())
+            axis.text.x=element_blank(), legend.position='bottom',
+            panel.spacing=unit(0, 'cm'), axis.ticks.y=element_blank(),
+            axis.ticks.x=element_blank())
   } else {
     cna_df = cna_df[which(cna_df$pass.filter),]
     ggp$heatmap = ggplot(cna_df, aes(xmin=start, xmax=end, ymin=-.5, ymax=.5, fill=CN, alpha=winsor(length, 10))) +
@@ -40,7 +42,9 @@ plot_cna <- function(cna, chrs_order=c(1:22, 'X', 'Y')){
       scale_alpha_continuous(name='nb bins\nwinsorized at 10',
                          range=c(.2,1)) + 
       theme(strip.text.y=element_text(angle=0), axis.text.y=element_blank(),
-            axis.text.x=element_blank())
+            axis.text.x=element_blank(), legend.position='bottom',
+            panel.spacing=unit(0, 'cm'), axis.ticks.y=element_blank(),
+            axis.ticks.x=element_blank())
     if('cell' %in% colnames(cna_df)){
       ggp$heatmap = ggp$heatmap + facet_grid(cell~chr, scales='free', space='free')
     } else {
@@ -52,7 +56,7 @@ plot_cna <- function(cna, chrs_order=c(1:22, 'X', 'Y')){
   for(ch in chrs_order){
     hmm.chr = hmm.df[which(hmm.df$chr==ch),]
     gp = ggplot(hmm.chr, aes(x=start, y=mean, colour=CN)) +
-      geom_hline(yintercept=0, linetype=2) + 
+      geom_hline(yintercept=log(c(.5, 1, 1.5)), linetype=2) + 
       geom_point() +
       theme_bw() + xlab('position') + ggtitle(ch) + 
       scale_colour_brewer(palette='Set1') + 

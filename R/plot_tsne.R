@@ -54,11 +54,34 @@ plot_tsne <- function(tsne_df, qc_df=NULL, comm_df=NULL, info_df=NULL){
         warning('Some cells in tsne_df are missing from info_df.')
       }
     }
+    if(!is.factor(tsne_df$sample)){
+      tsne_df$sample = factor(tsne_df$sample)
+    }
     cent =  tsne_df %>% dplyr::select(.data$sample, .data$tsne1, .data$tsne2) %>%
       dplyr::group_by(.data$sample) %>% dplyr::summarize_all(stats::median)
     ggp.l$sample = ggplot(tsne_df, aes(tsne1, tsne2, colour=sample)) +
       geom_point(alpha=ptalpha) + theme_bw() +
       ggrepel::geom_label_repel(aes(label=sample), data=cent) + 
+      guides(colour=FALSE)
+  }
+
+  ## Community info
+  if(!is.null(comm_df) | 'community' %in% colnames(tsne_df)){
+    if(!('community' %in% colnames(tsne_df))){
+      nrows = nrow(tsne_df)
+      tsne_df = merge(tsne_df, comm_df)
+      if(nrow(tsne_df) < nrows){
+        warning('Some cells in tsne_df are missing from comm_df.')
+      }
+    }
+    if(!is.factor(tsne_df$community)){
+      tsne_df$community = factor(tsne_df$community)
+    }
+    cent =  tsne_df %>% dplyr::select(.data$community, .data$tsne1, .data$tsne2) %>%
+      dplyr::group_by(.data$community) %>% dplyr::summarize_all(stats::median)
+    ggp.l$comm = ggplot(tsne_df, aes(tsne1, tsne2, colour=community)) +
+      geom_point(alpha=ptalpha) + theme_bw() +
+      ggrepel::geom_label_repel(aes(label=community), data=cent) + 
       guides(colour=FALSE)
   }
 
@@ -88,21 +111,5 @@ plot_tsne <- function(tsne_df, qc_df=NULL, comm_df=NULL, info_df=NULL){
     }
   }
 
-  ## Community info
-  if(!is.null(comm_df) | 'community' %in% colnames(tsne_df)){
-    if(!('community' %in% colnames(tsne_df))){
-      nrows = nrow(tsne_df)
-      tsne_df = merge(tsne_df, comm_df)
-      if(nrow(tsne_df) < nrows){
-        warning('Some cells in tsne_df are missing from comm_df.')
-      }
-    }
-    cent =  tsne_df %>% dplyr::select(.data$community, .data$tsne1, .data$tsne2) %>%
-      dplyr::group_by(.data$community) %>% dplyr::summarize_all(stats::median)
-    ggp.l$comm = ggplot(tsne_df, aes(tsne1, tsne2, colour=community)) +
-      geom_point(alpha=ptalpha) + theme_bw() +
-      ggrepel::geom_label_repel(aes(label=community), data=cent) + 
-      guides(colour=FALSE)
-  }
   return(ggp.l)
 }

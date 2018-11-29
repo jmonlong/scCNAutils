@@ -54,11 +54,34 @@ plot_umap <- function(umap_df, qc_df=NULL, comm_df=NULL, info_df=NULL){
         warning('Some cells in umap_df are missing from info_df.')
       }
     }
+    if(!is.factor(umap_df$sample)){
+      umap_df$sample = factor(umap_df$sample)
+    }
     cent =  umap_df %>% dplyr::select(.data$sample, .data$umap1, .data$umap2) %>%
       dplyr::group_by(.data$sample) %>% dplyr::summarize_all(stats::median)
     ggp.l$sample = ggplot(umap_df, aes(umap1, umap2, colour=sample)) +
       geom_point(alpha=ptalpha) + theme_bw() +
       ggrepel::geom_label_repel(aes(label=sample), data=cent) + 
+      guides(colour=FALSE)
+  }
+
+  ## Community info
+  if(!is.null(comm_df) | 'community' %in% colnames(umap_df)){
+    if(!('community' %in% colnames(umap_df))){
+      nrows = nrow(umap_df)
+      umap_df = merge(umap_df, comm_df)
+      if(nrow(umap_df) < nrows){
+        warning('Some cells in umap_df are missing from comm_df.')
+      }
+    }
+    if(!is.factor(umap_df$community)){
+      umap_df$community = factor(umap_df$community)
+    }
+    cent =  umap_df %>% dplyr::select(.data$community, .data$umap1, .data$umap2) %>%
+      dplyr::group_by(.data$community) %>% dplyr::summarize_all(stats::median)
+    ggp.l$comm = ggplot(umap_df, aes(umap1, umap2, colour=community)) +
+      geom_point(alpha=ptalpha) + theme_bw() +
+      ggrepel::geom_label_repel(aes(label=community), data=cent) + 
       guides(colour=FALSE)
   }
 
@@ -88,21 +111,5 @@ plot_umap <- function(umap_df, qc_df=NULL, comm_df=NULL, info_df=NULL){
     }
   }
 
-  ## Community info
-  if(!is.null(comm_df) | 'community' %in% colnames(umap_df)){
-    if(!('community' %in% colnames(umap_df))){
-      nrows = nrow(umap_df)
-      umap_df = merge(umap_df, comm_df)
-      if(nrow(umap_df) < nrows){
-        warning('Some cells in umap_df are missing from comm_df.')
-      }
-    }
-    cent =  umap_df %>% dplyr::select(.data$community, .data$umap1, .data$umap2) %>%
-      dplyr::group_by(.data$community) %>% dplyr::summarize_all(stats::median)
-    ggp.l$comm = ggplot(umap_df, aes(umap1, umap2, colour=community)) +
-      geom_point(alpha=ptalpha) + theme_bw() +
-      ggrepel::geom_label_repel(aes(label=community), data=cent) + 
-      guides(colour=FALSE)
-  }
   return(ggp.l)
 }

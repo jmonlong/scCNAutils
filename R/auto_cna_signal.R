@@ -212,6 +212,7 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
     grDevices::pdf(paste0(prefix, '-coord-norm-bin', bin_mean_exp, cv.lab, '-z', z_wins_th,
                           '-smooth', smooth_wsize, '-pcaSD.pdf'), 9, 7)
     print(pca.o$sdev.graph)
+    print(pca.o$sdev.cumm.graph)
     grDevices::dev.off()
     save(pca.o, file=pca.file)
   }
