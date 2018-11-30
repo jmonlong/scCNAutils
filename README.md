@@ -98,7 +98,7 @@ The internal workflow is as follow:
 
 ## Next
 
-- Test on real data.
 - Try to use Seurat's functions (e.g. Louvain with gamma and UMAP).
 - Example on public cancer data.
 - PCA plots.
+- Better colors in graphs.
