@@ -4,7 +4,8 @@
 \alias{norm_ge}
 \title{Normalize gene expression}
 \usage{
-norm_ge(ge_df, method = c("tmm", "total"), nb_cores = 1)
+norm_ge(ge_df, method = c("tmm", "total"), nb_cores = 1,
+  rcpp = FALSE)
 }
 \arguments{
 \item{ge_df}{the input gene expression}
@@ -12,6 +13,9 @@ norm_ge(ge_df, method = c("tmm", "total"), nb_cores = 1)
 \item{method}{the normalization method}
 
 \item{nb_cores}{the number of processors to use.}
+
+\item{rcpp}{use Rcpp function. Default is FALSE. More memory-efficient and
+faster when running on one core.}
 }
 \value{
 a data.frame with the normalized expression.

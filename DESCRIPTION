@@ -25,7 +25,9 @@ Imports:
     shiny,
     rbokeh,
     scales,
-    ggrepel
+    ggrepel,
+    Rcpp
 Suggests:
     testthat
 RoxygenNote: 6.1.0
+LinkingTo: Rcpp
