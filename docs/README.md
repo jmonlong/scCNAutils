@@ -31,6 +31,19 @@ I usually try different *gcc* modules until the installation/compilation works.
 
 On Abacus, the modules that worked for me were `mugqic/R_Bioconductor/3.5.0_3.7` and `mugqic_dev/gcc/4.7.2`.
 
+## Optimized version
+
+I'm converting some of the slow R function into Cpp functions. 
+It requires some compilation when installing the package and is not multi-threaded but it is much more memory efficient.
+Using `rcpp=TRUE` in relevant functions is recommended when the data is very big, e.g. a lot of cells.
+
+For now I keep this as a separate branch so that the master branch doesn't require compilation.
+To install the *rcpp* branch:
+
+```r
+biocLite('jmonlong/scCNAutils') ## Do this first to get Bioconductor dependencies
+install_git('git://github.com/jmonlong/scCNAutils.git', branch='rcpp')
+```
 
 ## Getting genes coordinates
 
