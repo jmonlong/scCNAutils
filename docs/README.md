@@ -42,7 +42,7 @@ To install the *rcpp* branch:
 
 ```r
 biocLite('jmonlong/scCNAutils') ## Do this first to get Bioconductor dependencies
-install_git('git://github.com/jmonlong/scCNAutils.git', branch='rcpp')
+devtools::install_git('git://github.com/jmonlong/scCNAutils.git', branch='rcpp')
 ```
 
 ## Getting genes coordinates
