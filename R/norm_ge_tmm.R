@@ -20,6 +20,7 @@ norm_ge_tmm <- function(ge_df, nb_cores=1, rcpp=FALSE){
   norm.df = ge_df[, info.cols, drop=FALSE]
   if(rcpp){
     norm.mat = tmmNormC(as.matrix(ge_df[,cells]), which(cells==cont.sample))
+    colnames(norm.mat) = cells
   } else{
     cont.ge = as.numeric(ge_df[,cont.sample])
     ## Chunks for parallel computation

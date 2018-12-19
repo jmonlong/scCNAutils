@@ -4,7 +4,7 @@
 \alias{bin_genes}
 \title{Merge consecutive genes into expressed bins}
 \usage{
-bin_genes(ge_df, mean_exp = 3, nb_cores = 1)
+bin_genes(ge_df, mean_exp = 3, nb_cores = 1, rcpp = FALSE)
 }
 \arguments{
 \item{ge_df}{the input gene expression with coordinate columns (chr, start, end)
@@ -13,6 +13,9 @@ and then one column per cell.}
 \item{mean_exp}{the desired minimum mean expression in the bin.}
 
 \item{nb_cores}{the number of processors to use.}
+
+\item{rcpp}{use Rcpp function. Default is FALSE. More memory-efficient and
+faster when running on one core.}
 }
 \value{
 a data.frame with bin expression.

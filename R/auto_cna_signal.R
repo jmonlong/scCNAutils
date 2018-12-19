@@ -168,7 +168,7 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
     }
   } else {
     message('Binning...')
-    data = bin_genes(data, bin_mean_exp, nb_cores)
+    data = bin_genes(data, bin_mean_exp, nb_cores, rcpp=rcpp)
     data = norm_ge(data, nb_cores=nb_cores, rcpp=rcpp)
     save(data, file=bin.file)
   }

@@ -5,7 +5,6 @@ using namespace Rcpp;
 //' 
 //' @param ge gene expression amtrix
 //' @param cont index of the control sample. R index so starting at 1.
-//' @export
 // [[Rcpp::export]]
 NumericMatrix tmmNormC(NumericMatrix ge, int cont) {
   // R index -> Cpp index
