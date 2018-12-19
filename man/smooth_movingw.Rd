@@ -4,7 +4,8 @@
 \alias{smooth_movingw}
 \title{Moving-window smoothing}
 \usage{
-smooth_movingw(df, wsize = 3, nb_cores = 1, FUN = stats::median)
+smooth_movingw(df, wsize = 3, nb_cores = 1, FUN = stats::median,
+  rcpp = FALSE)
 }
 \arguments{
 \item{df}{the input data.frame with coordinate columns (chr, start, end) and then
@@ -15,6 +16,9 @@ one column per cell}
 \item{nb_cores}{the number of processors to use.}
 
 \item{FUN}{the function to apply to each window. Default is median.}
+
+\item{rcpp}{use Rcpp function. Default is FALSE. More memory-efficient and
+faster when running on one core.}
 }
 \value{
 a data.frame with smoothed signal.

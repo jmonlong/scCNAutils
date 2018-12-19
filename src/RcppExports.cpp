@@ -17,6 +17,18 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// smoothMovingC
+NumericMatrix smoothMovingC(NumericMatrix ge, int winsize);
+RcppExport SEXP _scCNAutils_smoothMovingC(SEXP geSEXP, SEXP winsizeSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericMatrix >::type ge(geSEXP);
+    Rcpp::traits::input_parameter< int >::type winsize(winsizeSEXP);
+    rcpp_result_gen = Rcpp::wrap(smoothMovingC(ge, winsize));
+    return rcpp_result_gen;
+END_RCPP
+}
 // tmmNormC
 NumericMatrix tmmNormC(NumericMatrix ge, int cont);
 RcppExport SEXP _scCNAutils_tmmNormC(SEXP geSEXP, SEXP contSEXP) {
@@ -32,6 +44,7 @@ END_RCPP
 
 static const R_CallMethodDef CallEntries[] = {
     {"_scCNAutils_binGenesC", (DL_FUNC) &_scCNAutils_binGenesC, 2},
+    {"_scCNAutils_smoothMovingC", (DL_FUNC) &_scCNAutils_smoothMovingC, 2},
     {"_scCNAutils_tmmNormC", (DL_FUNC) &_scCNAutils_tmmNormC, 2},
     {NULL, NULL, 0}
 };

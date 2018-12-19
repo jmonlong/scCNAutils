@@ -9,6 +9,14 @@ binGenesC <- function(ge, bins) {
     .Call('_scCNAutils_binGenesC', PACKAGE = 'scCNAutils', ge, bins)
 }
 
+#' Smooth signal
+#' 
+#' @param ge an ordered gene expression matrix
+#' @param winsize the size of the sliding window (assumed to be odd).
+smoothMovingC <- function(ge, winsize) {
+    .Call('_scCNAutils_smoothMovingC', PACKAGE = 'scCNAutils', ge, winsize)
+}
+
 #' Compute the normalization factor
 #' 
 #' @param ge gene expression amtrix

@@ -7,10 +7,12 @@
 ##' @param wsize the window size. Default is 3.
 ##' @param nb_cores the number of processors to use.
 ##' @param FUN the function to apply to each window. Default is median.
+##' @param rcpp use Rcpp function. Default is FALSE. More memory-efficient and
+##' faster when running on one core.
 ##' @return a data.frame with smoothed signal.
 ##' @author Jean Monlong
 ##' @export
-smooth_movingw <- function(df, wsize=3, nb_cores=1, FUN=stats::median){
+smooth_movingw <- function(df, wsize=3, nb_cores=1, FUN=stats::median, rcpp=FALSE){
   ## Same function but removing NAs
   FUNnarm <- function(x){
     if(any(is.na(x))){
@@ -36,12 +38,22 @@ smooth_movingw <- function(df, wsize=3, nb_cores=1, FUN=stats::median){
     apply(mmm, 1, FUNnarm)
   }
   ## function to smooth all cells
-  smooth.f <- function(df){
-    ## reorder just in case
-    df = df[order(df$chr, df$start),]
-    ## analyze each cell
-    df[, cells] = apply(df[, cells], 2, smooth.cell)
-    df
+  if(rcpp){
+    smooth.f <- function(df){
+      ## reorder just in case
+      df = df[order(df$chr, df$start),]
+      ## analyze each cell
+      df[, cells] = smoothMovingC(as.matrix(df[, cells]), wsize)
+      df
+    }
+  } else {
+    smooth.f <- function(df){
+      ## reorder just in case
+      df = df[order(df$chr, df$start),]
+      ## analyze each cell
+      df[, cells] = apply(df[, cells], 2, smooth.cell)
+      df
+    }
   }
   cells = setdiff(colnames(df), c("chr","start","end"))
   ## Smooth each chromosome
