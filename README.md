@@ -2,7 +2,14 @@
 
 A cleaned up version of the functions I used to analyze copy number aberrations in single-cell data. **Still in development.**
 
-Main information below, other information in the [`docs` folder](docs). 
+Main information below, other information in the [`docs` folder](docs), e.g.:
+
+- [Install on a HPC](docs/README.md#install-on-a-hpc),
+- [Memory-efficient version when too many cells](docs/README.md#optimized-version)
+- [Getting genes coordinates](docs/README.md#getting-genes-coordinates)
+- [Genes associated with cell cycle](docs/README.md#genes-associated-with-cell-cycle)
+- [Metacells](docs/README.md#metacells)
+- [Tuning the community detection](docs/README.md#tuning-the-community-detection)
 
 ## Install
 
@@ -98,7 +105,7 @@ The internal workflow is as follow:
 
 ## Next
 
-- Try to use Seurat's functions (e.g. Louvain with gamma and UMAP).
+- Try to use Seurat's functions (e.g. Louvain with gamma and UMAP). *For now I wrapped Python scripts to do that*.
 - Example on public cancer data.
 - PCA plots.
 - Better colors in graphs.

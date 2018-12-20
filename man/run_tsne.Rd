@@ -4,7 +4,7 @@
 \alias{run_tsne}
 \title{Run tSNE}
 \usage{
-run_tsne(pca_o, nb_pcs = 10, nb_it = 1000)
+run_tsne(pca_o, nb_pcs = 10, nb_it = 1000, tsne_init = NULL)
 }
 \arguments{
 \item{pca_o}{the output of \code{\link{run_pca}}}
@@ -12,6 +12,8 @@ run_tsne(pca_o, nb_pcs = 10, nb_it = 1000)
 \item{nb_pcs}{the number of PCs to use. Default 10.}
 
 \item{nb_it}{the number of iterations. Default 1000.}
+
+\item{tsne_init}{previous tSNE results to use as starting point. Not used is NULL (default).}
 }
 \value{
 a data.frame with columns: cell, tsne1, tsne2

@@ -35,7 +35,7 @@ find_communities <- function(pca_o, nb_pcs=10, k=100, gamma=1, nreps=1,
                          stringsAsFactors=FALSE)
   } else {
     ## Exploration: multiple gammas and/or permutations -> Use pyhton wrapper
-    wc = run_louvain(nw, gamma=gamma, nreps=nreps)
+    wc = run_louvain(nw, gamma=gamma, nreps=nreps, nb_cores=nb_cores)
 
     ## Adjusted Rand Index
     adjRandInd <- function(x,y){

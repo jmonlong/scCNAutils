@@ -31,14 +31,31 @@ I usually try different *gcc* modules until the installation/compilation works.
 
 On Abacus, the modules that worked for me were `mugqic/R_Bioconductor/3.5.0_3.7` and `mugqic_dev/gcc/4.7.2`.
 
+## Optimized version
+
+I'm converting some of the slow R function into Cpp functions. 
+It requires some compilation when installing the package and is not as multi-threaded but it is much more memory efficient.
+Using `rcpp=TRUE` in relevant functions is recommended when the data is very big, e.g. a lot of cells.
+
+For now I keep this as a separate branch so that the master branch doesn't require compilation.
+To install the *rcpp* branch:
+
+```r
+biocLite('jmonlong/scCNAutils') ## Do this first to get Bioconductor dependencies
+devtools::install_git('git://github.com/jmonlong/scCNAutils.git', branch='rcpp')
+```
+
+Note: The Rcpp version is likely faster than with multi-threaded R functions even in small dataset so maybe recommended in general.
 
 ## Getting genes coordinates
 
 [Cellranger](https://support.10xgenomics.com/single-cell-gene-expression/software/release-notes/build) from 10X Genomics seems to use Ensembl annotations. 
-As of November 2018:
+For example:
 
 - `ftp://ftp.ensembl.org/pub/grch37/release-87/gtf/homo_sapiens/Homo_sapiens.GRCh37.87.gtf.gz` for hg19.
 - `ftp://ftp.ensembl.org/pub/release-93/gtf/homo_sapiens/Homo_sapiens.GRCh38.93.gtf.gz` for GRCh38
+
+Depending on the Cellranger version it might be another version from with similar path.
 
 For example to retrieve the coordinates for each gene name (removing duplicated names) for hg19:
 
@@ -46,18 +63,18 @@ For example to retrieve the coordinates for each gene name (removing duplicated 
 download.file('ftp://ftp.ensembl.org/pub/grch37/release-87/gtf/homo_sapiens/Homo_sapiens.GRCh37.87.gtf.gz',
               'Homo_sapiens.GRCh37.87.gtf.gz')
 gene.df = read.table('Homo_sapiens.GRCh37.87.gtf.gz', as.is=TRUE, sep='\t')
-## Keep genes                                                                                                                                                                               
+## Keep genes
 gene.df = subset(gene.df, V3 == 'gene')
 gene.df$symbol = gsub('.* gene_name ([^;]*);.*', '\\1', gene.df$V9)
-## Format and remove duplicates                                                                                                                                                             
+## Format and remove duplicates
 gene.df = gene.df[,c(1,4,5,10)]
 colnames(gene.df) = c('chr','start','end', 'symbol')
 gene.df = subset(gene.df, !duplicated(symbol))
-## Save                                                                                                                                                                                     
+## Save
 write.table(gene.df, file='genes.coord.tsv', quote=FALSE, row.names=FALSE, sep='\t')
-## Check that gene names match with scRNA-seq data                                                                                                                                          
+## Check that gene names match with the scRNA-seq data     
 ge = read_mtx(path='path/to/some/data')
-all(ge$symbol %in% gene.df$symbol)
+mean(ge$symbol %in% gene.df$symbol) ## Poportion of genes in annotation
 ```
 
 ## Genes associated with cell cycle
@@ -103,3 +120,21 @@ The output (*mc.o*) is a list with
 - *ge* the gene expression (or coverage) in each metacell.
 - *info* a data.frame with information about each metacell and its corresponding community.
 - *mc_cells* a data.frame with information about which cells were used in each metacell.
+
+## Tuning the community detection
+
+The Louvain algorithm can take a *resolution* parameter gamma as input. 
+By default gamma is 1.
+Larger gammas result in more communities and vice versa.
+One strategy is then to pick the gamma that leads to the most stable communities.
+Briefly Louvain is ran several time for each gamma and each resulting is compared to the others with the Rand index. 
+The higher the Rand index and the less variable, the more similar/stable are the communities for a particular gamma.
+
+The command to explore gammas, comparing 20 runs for gammas between 0.1 and 1.5:
+
+```r
+## pca.o from run_pca
+comm.exp = find_communities(pca.o, gamma=seq(.1,1.5,.05), nreps=20, nb_cores=4)
+comm.exp$ari.df ## Adjusted Rand Index for each gamma
+head(comm.exp$comm) ## communities for best gamma (highest average ARI).
+```
