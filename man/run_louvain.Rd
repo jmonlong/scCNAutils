@@ -4,7 +4,7 @@
 \alias{run_louvain}
 \title{Python wrapper to run Louvain}
 \usage{
-run_louvain(graph, gamma = 1, nreps = 1)
+run_louvain(graph, gamma = 1, nreps = 1, nb_cores = 1)
 }
 \arguments{
 \item{graph}{a igraph object}
@@ -12,6 +12,8 @@ run_louvain(graph, gamma = 1, nreps = 1)
 \item{gamma}{a vector of gamma. Default 1.}
 
 \item{nreps}{the number of repetition for each gamma, Default 1.}
+
+\item{nb_cores}{the number of processors to use. Default is 1.}
 }
 \value{
 a list with
