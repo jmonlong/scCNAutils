@@ -58,6 +58,9 @@ run_louvain <- function(graph, gamma=1, nreps=1, nb_cores=1){
     comm.df = utils::read.csv(paste0(temp.pref, '_', gamma, '.csv'), header=FALSE,
                               as.is=TRUE)
     file.remove(paste0(temp.pref, '_', gamma, c('.csv', '.py')))
+    if(nrow(comm.df) != length(igraph::V(graph))){
+      comm.df = matrix(NA, length(igraph::V(graph)), length(gammas))
+    }
     return(list(comm.df=as.matrix(comm.df), gammas=gammas))
   }, mc.cores=nb_cores)
   file.remove(paste0(temp.pref, '.pajek'))
