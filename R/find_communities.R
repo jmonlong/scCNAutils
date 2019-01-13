@@ -75,6 +75,9 @@ find_communities <- function(pca_o, nb_pcs=10, k=100, gamma=1, nreps=1,
         sim.mat[pw.ij[1,] + (pw.ij[2,]-1)*ncol(cl.mat)] = ari
         sim.mat[pw.ij[2,] + (pw.ij[1,]-1)*ncol(cl.mat)] = ari
         sim.mean = apply(sim.mat, 1, mean, na.rm=TRUE)
+        if(length(which.max(sim.mean))==0){
+          sim.mean = 0
+        }
         comm.rep = cl.mat[,which.max(sim.mean)]
       }
       return(list(comm=comm.rep, ari.df=ari.df))
