@@ -138,3 +138,17 @@ comm.exp = find_communities(pca.o, gamma=seq(.1,1.5,.05), nreps=20, nb_cores=4)
 comm.exp$ari.df ## Adjusted Rand Index for each gamma
 head(comm.exp$comm) ## communities for best gamma (highest average ARI).
 ```
+
+## Rebinning coverage data
+
+To compare scRNA-seq data (e.g. CNA Z-scores) with coverage data (e.g. WGS or scDNA-seq) we might want to work on the same regions/bins.
+The coverage data will most likely have a better resolution so we could merge these bins into larger bins matching a scRNA-seq analysis.
+The function *rebin_cov* does that by overlapping both sets of bins and computing a coverage on the new/larger bins as the weighted sum of the coverage in overlapping bins, with the proportion of overlap as weight.
+
+```r
+load('scrnaseq-coord-norm-bin5-z2-smooth7.RData') ## CNA Z-scores from a scRNA-seq analysis
+scrna.bins = data[, c('chr','start','end')] ## Optional: keep only coords columns
+
+## cov.df: data.frame with columns chr, start, end and then sample/cell names
+cov.new = rebin_cov(cov.df, scrna.bins)
+```

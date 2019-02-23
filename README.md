@@ -10,6 +10,7 @@ Main information below, other information in the [`docs` folder](docs), e.g.:
 - [Genes associated with cell cycle](docs/README.md#genes-associated-with-cell-cycle)
 - [Metacells](docs/README.md#metacells)
 - [Tuning the community detection](docs/README.md#tuning-the-community-detection)
+- [Rebin coverage data to compare with scRNA-seq CNA signal](docs/README.md#rebinning-coverage-data)
 
 ## Install
 

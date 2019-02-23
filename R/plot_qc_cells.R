@@ -21,6 +21,10 @@ plot_qc_cells <- function(qc_df, info_df=NULL){
   ggp.l = list()
   ggp.l$depth = ggplot(qc_df, aes(x=tot)) + geom_histogram(bins=30) + theme_bw() +
     xlab('depth') + ylab('cell')
+  ggp.l$depth.log = ggplot(qc_df, aes(x=log10(tot+1))) + geom_histogram(bins=30) + theme_bw() +
+    xlab('depth (log10[x+1])') + ylab('cell')
+  ggp.l$depth.w90 = ggplot(qc_df, aes(x=winsor(tot, uq=.9))) + geom_histogram(bins=30) + theme_bw() +
+    xlab('depth (winsorized at 90th percentile)') + ylab('cell')
   ggp.l$zeros = ggplot(qc_df, aes(x=zeros)) + geom_histogram(bins=30) + theme_bw() +
     xlab('number of 0s') + ylab('cell')
   if(any(qc_df$mito > 0)){
@@ -39,15 +43,26 @@ plot_qc_cells <- function(qc_df, info_df=NULL){
     }
     ggp.l$depth.sample = ggplot(qc_df, aes(x=tot)) + geom_histogram(bins=30) +
       theme_bw() + xlab('depth') + ylab('cell') +
-      facet_grid(sample~., scales='free')
+      facet_grid(sample~., scales='free') +
+      theme(strip.text.y=element_text(angle=0))
+    ggp.l$depth.log.sample = ggplot(qc_df, aes(x=log10(tot+1))) + geom_histogram(bins=30) + theme_bw() +
+      xlab('depth (log10[x+1])') + ylab('cell') +
+      facet_grid(sample~., scales='free') +
+      theme(strip.text.y=element_text(angle=0))
+    ggp.l$depth.w90.sample = ggplot(qc_df, aes(x=winsor(tot, uq=.9))) + geom_histogram(bins=30) + theme_bw() +
+      xlab('depth (winsorized at 90th percentile)') + ylab('cell') +
+      facet_grid(sample~., scales='free') +
+      theme(strip.text.y=element_text(angle=0))
     ggp.l$zeros.sample = ggplot(qc_df, aes(x=zeros)) + geom_histogram(bins=30) + theme_bw() +
       xlab('number of 0s') + ylab('cell') +
-      facet_grid(sample~., scales='free')
+      facet_grid(sample~., scales='free') +
+      theme(strip.text.y=element_text(angle=0))
     if(any(qc_df$mito > 0)){
       ggp.l$mito.sample = ggplot(qc_df, aes(x=mito/tot)) + geom_histogram(bins=30) +
         theme_bw() + ylab('cell') +
         xlab('proportion of mitochondrial RNA') +
-        facet_grid(sample~., scales='free')
+        facet_grid(sample~., scales='free') +
+        theme(strip.text.y=element_text(angle=0))
     }
   }
 
