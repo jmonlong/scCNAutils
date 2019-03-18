@@ -155,9 +155,10 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
     message('Converting to coords and normalizing...')
     data = convert_to_coord(data, genes_coord, chrs)
     data = norm_ge(data, nb_cores=nb_cores)
-    save(data, file=norm.file)
+    gene.info = gene_info(data, genes_coord)
+    save(data, gene.info, file=norm.file)
   }
-
+ 
   ## Bin
   if(skip.bin){
     if(need.bin){
