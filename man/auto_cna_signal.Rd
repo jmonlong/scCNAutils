@@ -10,7 +10,8 @@ auto_cna_signal(data, genes_coord, prefix = "scCNAutils_out",
   min_total_exp = 0, cells_sel = NULL, chrs = c(1:22, "X", "Y"),
   cell_cycle = NULL, bin_mean_exp = 3, rm_cv_quant = NULL,
   z_wins_th = 3, smooth_wsize = 3, cc_sd_th = 3, nb_pcs = 10,
-  comm_k = 100, viz = c("tsne", "umap", "both"), rcpp = FALSE)
+  comm_k = 100, viz = c("tsne", "umap", "both"), tsne.seed = 999,
+  rcpp = FALSE)
 }
 \arguments{
 \item{data}{a data.frame with gene expression or the path to the folder with the
@@ -59,6 +60,8 @@ not used).}
 
 \item{viz}{which method to use for visualization ('tsne', 'umap' or 'both'). Default is
 'tsne'.}
+
+\item{tsne.seed}{the seed for the tSNE.}
 
 \item{rcpp}{use Rcpp function. Default is FALSE. More memory-efficient and
 faster when running on one core.}

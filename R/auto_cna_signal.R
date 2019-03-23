@@ -26,6 +26,7 @@
 ##' @param comm_k the number of nearest neighbor for the KNN graph. Default 100.
 ##' @param viz which method to use for visualization ('tsne', 'umap' or 'both'). Default is
 ##' 'tsne'.
+##' @param tsne.seed the seed for the tSNE.
 ##' @param rcpp use Rcpp function. Default is FALSE. More memory-efficient and
 ##' faster when running on one core.
 ##' @return a data.frame with QC, community and tSNE for each cell.
@@ -38,7 +39,7 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
                             chrs=c(1:22,"X","Y"), cell_cycle=NULL, bin_mean_exp=3,
                             rm_cv_quant=NULL,
                             z_wins_th=3, smooth_wsize=3, cc_sd_th=3, nb_pcs=10,
-                            comm_k=100, viz=c('tsne','umap','both'),
+                            comm_k=100, viz=c('tsne','umap','both'), tsne.seed=999,
                             rcpp=FALSE){
   ## Cache options
   info.file = paste0(prefix, '-sampleinfo.RData')
@@ -251,7 +252,7 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
   if(viz[1] == 'tsne' | viz[1] == 'both'){
     ## tSNE
     message('Computing tSNE...')
-    tsne.df = run_tsne(pca.o, nb_pcs)
+    tsne.df = run_tsne(pca.o, nb_pcs, seed=tsne.seed)
     tsne.ggp = plot_tsne(tsne.df, qc_df=qc.df, comm_df=comm.df, info_df=info.df)
     grDevices::pdf(paste0(prefix, '-coord-norm-bin', bin_mean_exp, cv.lab, '-z', z_wins_th,
                           '-smooth', smooth_wsize, '-tsne', nb_pcs, 'PCs.pdf'), 9, 7)
