@@ -5,6 +5,7 @@
 ##' @param nb_pcs the number of PCs to use. Default 10.
 ##' @param nb_it the number of iterations. Default 1000.
 ##' @param tsne_init previous tSNE results to use as starting point. Not used is NULL (default).
+##' @param seed the seed for the random generator.
 ##' @return a data.frame with columns: cell, tsne1, tsne2
 ##' @author Jean Monlong
 ##' @export
