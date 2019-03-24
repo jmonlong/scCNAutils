@@ -4,14 +4,16 @@
 \alias{gene_info}
 \title{Gene information}
 \usage{
-gene_info(ge_df, genes_coord)
+gene_info(ge_df, genes_coord, subset_cells = 10000)
 }
 \arguments{
-\item{ge_df}{a data.frame or path to a file with gene expression
+\item{ge_df}{a data.frame with gene expression
 information across cells. E.g. after \code{norm.ge}.}
 
 \item{genes_coord}{either a file name or a data.frame with coordinates
 and gene names.}
+
+\item{subset_cells}{the maximum number of cells to use.}
 }
 \value{
 a data.frame with summary stats for each gene.

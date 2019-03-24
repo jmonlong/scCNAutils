@@ -5,7 +5,7 @@
 \title{Heatmap of the CNA scores}
 \usage{
 plot_heatmap(z_df, cells_df = NULL, nb_subsamp = 1000,
-  hc.method = "ward.D")
+  hc.method = "ward.D", z_win = 3)
 }
 \arguments{
 \item{z_df}{the data.frame with Z-scores.}
@@ -15,6 +15,8 @@ plot_heatmap(z_df, cells_df = NULL, nb_subsamp = 1000,
 \item{nb_subsamp}{the number of cells to sub-sample. Default is 1000.}
 
 \item{hc.method}{the hierarchical clustering method to order cells.}
+
+\item{z_win}{threshold to winsorized Z scores in the color scale.}
 }
 \value{
 a list of ggplot2 objects.
