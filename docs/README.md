@@ -33,19 +33,11 @@ On Abacus, the modules that worked for me were `mugqic/R_Bioconductor/3.5.0_3.7`
 
 ## Optimized version
 
-I'm converting some of the slow R function into Cpp functions. 
-It requires some compilation when installing the package and is not as multi-threaded but it is much more memory efficient.
-Using `rcpp=TRUE` in relevant functions is recommended when the data is very big, e.g. a lot of cells.
+Some of the slow R functions were converted into Cpp functions. 
+It requires some compilation when installing the package and is not as multi-threaded but it is much more memory efficient and faster.
+When the data is very big (e.g. >20K cells), we recommend using `rcpp=TRUE` in relevant functions (e.g. `auto_cna_signal` functions).
 
-For now I keep this as a separate branch so that the master branch doesn't require compilation.
-To install the *rcpp* branch:
-
-```r
-biocLite('jmonlong/scCNAutils') ## Do this first to get Bioconductor dependencies
-devtools::install_git('git://github.com/jmonlong/scCNAutils.git', branch='rcpp')
-```
-
-Note: The Rcpp version is likely faster than with multi-threaded R functions even in small dataset so maybe recommended in general.
+Note: The Rcpp version is likely faster than with multi-threaded R functions even in small dataset so might be useful in general.
 
 ## Getting genes coordinates
 
