@@ -1,5 +1,8 @@
 # scCNAutils
 
+[![Build Status](https://travis-ci.com/jmonlong/scCNAutils.svg?branch=master)](https://travis-ci.com/jmonlong/scCNAutils)
+[![codecov](https://codecov.io/gh/jmonlong/scCNAutils/branch/master/graph/badge.svg)](https://codecov.io/gh/jmonlong/scCNAutils)
+
 A cleaned up version of the functions I used to analyze copy number aberrations in single-cell data. **Still in development.**
 
 Main information below, other information in the [`docs` folder](docs), e.g.:

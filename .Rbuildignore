@@ -1,3 +1,4 @@
 ^docs$
 ^Makefile$
 ^node_modules$
+^.travis.yml$
