@@ -6,7 +6,7 @@
 ##' @param z_win threshold to winsorized Z scores in the color scale.
 ##' @return a list of ggplot2 objects.
 ##' @author Jean Monlong
-##' @external
+##' @export
 ##' @import ggplot2
 plot_heatmap <- function(z_df, cells_df=NULL, nb_subsamp=1000,
                          hc.method='ward.D', z_win=3){

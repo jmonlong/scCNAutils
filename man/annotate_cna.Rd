@@ -4,7 +4,7 @@
 \alias{annotate_cna}
 \title{Annotate CNAs with gene information}
 \usage{
-annotate_cna(cna_df, gene_info)
+annotate_cna(cna_df, gene_info, cancer_genes = NULL)
 }
 \arguments{
 \item{cna_df}{a data.frame with CNA calls. E.g. data.frames created
@@ -12,6 +12,9 @@ by \code{call_cna_*} functions.}
 
 \item{gene_info}{a data.frame with gene information created by the
 \code{gene_info} function}
+
+\item{cancer_genes}{a vector with the names of cancer genes. For an
+additional column. Use if non-NULL.}
 }
 \value{
 the input data.frame with two new columns with all/expressed genes.

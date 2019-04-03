@@ -9,12 +9,14 @@
 ##' by \code{call_cna_*} functions.
 ##' @param gene_info a data.frame with gene information created by the
 ##' \code{gene_info} function
+##' @param cancer_genes a vector with the names of cancer genes. For an
+##' additional column. Use if non-NULL.
 ##' @return the input data.frame with two new columns with all/expressed genes.
 ##' @author Jean Monlong
 ##' @export
 ##' @importFrom magrittr %>%
 ##' @importFrom rlang .data
-annotate_cna <- function(cna_df, gene_info){
+annotate_cna <- function(cna_df, gene_info, cancer_genes=NULL){
   ## Define expressed genes (see gene_info function for info columns)
   gene_info$expressed = gene_info$prop.non0 > .1 | gene_info$exp.mean > .5
 
@@ -42,6 +44,16 @@ annotate_cna <- function(cna_df, gene_info){
   cna_df$exp.genes[ol.exp$queryHits] = ol.exp$genes
   cna_df$all.genes = NA
   cna_df$all.genes[ol.all$queryHits] = ol.all$genes
+
+  ## Cancer genes if specified
+  if(!is.null(cancer_genes)){
+    ol$cancer = ol$gene %in% cancer_genes
+    ol.cancer = ol %>% dplyr::filter(.data$cancer) %>%
+      dplyr::group_by(.data$queryHits) %>%
+      dplyr::summarize(genes=paste(.data$gene, collapse=';'))
+    cna_df$cancer.genes = NA
+    cna_df$cancer.genes[ol.cancer$queryHits] = ol.cancer$genes
+  }
   
   return(cna_df)
 }
