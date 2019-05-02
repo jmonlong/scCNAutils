@@ -6,7 +6,7 @@
 ##' @export
 ##' @import ggplot2
 plot_cna <- function(cna, chrs_order=c(1:22, 'X', 'Y')){
-  CN = end = prop = start = NULL
+  CN = end = prop = start = wt.pv = NULL
   hmm.df = cna$hmm.df
   cna_df = cna$seg.df
   chrs_order = intersect(chrs_order, unique(cna_df$chr))
@@ -34,6 +34,25 @@ plot_cna <- function(cna, chrs_order=c(1:22, 'X', 'Y')){
             axis.text.x=element_blank(), legend.position='bottom',
             panel.spacing=unit(0, 'cm'), axis.ticks.y=element_blank(),
             axis.ticks.x=element_blank())
+  } else if('wt.pv' %in% colnames(cna_df)){
+    cna_df$wt.pv = ifelse(is.na(cna_df$wt.pv), 1, cna_df$wt.pv)
+    ggp$heatmap = ggplot(cna_df, aes(xmin=start, xmax=end, ymin=-.5,
+                       ymax=.5, fill=CN,
+                       alpha=winsor(-log10(wt.pv), 10))) +
+      geom_rect() + facet_grid(community~chr, scales='free', space='free') +
+      theme_bw() +
+      scale_fill_manual(values=c('steelblue','grey','indianred')) +
+      xlab('position') +
+      ylab('community') + 
+      theme(strip.text.y=element_text(angle=0), axis.text.y=element_blank(),
+            axis.text.x=element_blank(), legend.position='bottom',
+            panel.spacing=unit(0, 'cm'), axis.ticks.y=element_blank(),
+            axis.ticks.x=element_blank())
+    if(length(unique(cna_df$wt.pv))>1){
+      ggp$heatmap = ggp$heatmap +
+        scale_alpha_continuous(name='Wilcoxon test\n-log10(pv)', range=0:1,
+                               breaks=seq(0,10,2), labels=c(seq(0,8,2), '>=10'))
+    }
   } else {
     cna_df = cna_df[which(cna_df$pass.filter),]
     ggp$heatmap = ggplot(cna_df, aes(xmin=start, xmax=end, ymin=-.5, ymax=.5, fill=CN, alpha=winsor(length, 10))) +

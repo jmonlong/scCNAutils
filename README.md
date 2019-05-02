@@ -24,7 +24,7 @@ source('http://bioconductor.org/biocLite.R')
 biocLite('jmonlong/scCNAutils')
 ```
 
-See instructions about local/HPC install in the [`docs` folder](docs).
+More instructions about installing locally or on a HPC in the [`docs` folder](docs/README.md#install-on-a-hpc).
 
 ## Usage
 

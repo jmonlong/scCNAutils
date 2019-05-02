@@ -24,6 +24,32 @@ From now on, to use the package:
 library(scCNAutils)
 ```
 
+### Download problems with `biocLite`/`install_github`
+
+I sometimes encounter problems when `biocLite` or *devtools* tries to download the package on the HPC.
+Usually it's a problem with Curl or OpenSSL and it's difficult to fix on a HPC where I don't have permissions.
+In that case it's easier to **clone the repo locally and install with devtools** (`devtools::install()` from within the cloned repo). 
+
+Of note, the Bioconductor dependencies must be installed separately.
+All the dependencies are listed in the [DESCRIPTION](../DESCRIPTION) file or the [manual](scCNAutils-manual.pdf).
+
+So in bash:
+
+```sh
+cd FOLDER/WHERE/TO/CLONE/REPO
+git clone https://github.com/jmonlong/scCNAutils.git
+cd scCNAutils
+```
+
+Then in R:
+
+```r
+.libPaths('~/R/library/')
+source('http://bioconductor.org/biocLite.R')
+biocLite('GenomicRanges')
+devtools::install()
+```
+
 ### Compilation problems
 
 Some dependencies, like *RcppHMM*,  require C++ compilation and might raise installation errors if the HPC is not well configured (or uses modules).

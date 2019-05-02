@@ -14,6 +14,7 @@ annotate_cna_seg <- function(seg.df, hmm.df){
   pvs = sapply(1:nrow(seg.df), function(ii){
     seg.mean = hmm.gr$mean[which(IRanges::overlapsAny(hmm.gr, seg.gr[ii]))]
     neut.d = GenomicRanges::distance(seg.gr[ii], neutral.gr)
+    neut.d = ifelse(neut.d==0, NA, neut.d)
     cont.mean = neutral.gr$mean[utils::head(order(neut.d), length(seg.mean))]
     stats::wilcox.test(seg.mean, cont.mean)$p.value
   })
