@@ -31,6 +31,8 @@ call_cna_multisamps <- function(z_df, mc_info, trans_prob=1e-4, nb_cores=1){
     seg.df = seg.df[order(seg.df$chr, seg.df$start),]
     seg.df$community = as.character(comm)
     cn.df$community = as.character(comm)
+    ## Annotate the segments
+    seg.df = annotate_cna_seg(seg.df, cn.df)
     list(seg=seg.df, cn=cn.df)
   }, mc.cores=nb_cores)
   seg.df = do.call(rbind, lapply(hmm.o, function(e)e$seg))
