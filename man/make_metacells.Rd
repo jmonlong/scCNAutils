@@ -5,7 +5,7 @@
 \title{Make metacells}
 \usage{
 make_metacells(ge_df, comm_df, nb_metacells = 10, metacell_size = 3,
-  baseline_cells = NULL, nb_cores = 1)
+  baseline_cells = NULL, nb_cores = 1, max_baseline_comm = 3)
 }
 \arguments{
 \item{ge_df}{normalized gene expression of all cells (e.g. output from
@@ -21,6 +21,8 @@ make_metacells(ge_df, comm_df, nb_metacells = 10, metacell_size = 3,
 \item{baseline_cells}{the cells to use for baseline communities.}
 
 \item{nb_cores}{the number of processor to use.}
+
+\item{max_baseline_comm}{the maximum number of baseline communities to generate.}
 }
 \value{
 a list with
