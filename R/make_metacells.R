@@ -10,6 +10,7 @@
 ##' @param metacell_size the number of cells in a metacell.
 ##' @param baseline_cells the cells to use for baseline communities.
 ##' @param nb_cores the number of processor to use.
+##' @param max_baseline_comm the maximum number of baseline communities to generate.
 ##' @return a list with
 ##' \item{ge}{a data.frame with coordinates and gene expression for each metacell.}
 ##' \item{info}{information about which metacell correspond to which community.}
@@ -18,7 +19,7 @@
 ##' @importFrom magrittr %>%
 ##' @export
 make_metacells <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
-                           baseline_cells=NULL, nb_cores=1){
+                           baseline_cells=NULL, nb_cores=1, max_baseline_comm=3){
   cells = setdiff(colnames(ge_df), c("chr","start","end"))
   options('dplyr.show_progress'=FALSE)
   if(is.null(baseline_cells)){
@@ -34,8 +35,9 @@ make_metacells <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
   } else {
     groups.df = data.frame(cell=baseline_cells, stringsAsFactors=FALSE)
     nbm = ifelse(is.null(nb_metacells), 1, nb_metacells)
-    baseline.comm = sample.int(ceiling(length(baseline_cells)/
-                                       (2*metacell_size*nbm)),
+    baseline.comm = sample.int(min(max_baseline_comm,
+                                   ceiling(length(baseline_cells)/
+                                           (2*metacell_size*nbm))),
                                length(baseline_cells), replace=TRUE)
     groups.df$community = paste0('baseline_', baseline.comm)
     groups.df = rbind(groups.df, comm_df[, c('cell', 'community')])
@@ -58,6 +60,7 @@ make_metacells <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
   ## Merge gene expression
   ge.mc = ge_df[, c('chr', 'start', 'end')]
   ge.mc.l = parallel::mclapply(1:length(mc.o$cells.tm), function(ii){
+    ##message(ii)
     ge_df[,mc.o$cells.tm[[ii]]] %>% as.matrix %>% rowSums
   }, mc.cores=nb_cores)
   names(ge.mc.l) = mc.o$cells.info$cell
