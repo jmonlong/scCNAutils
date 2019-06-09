@@ -11,7 +11,7 @@ auto_cna_signal(data, genes_coord, prefix = "scCNAutils_out",
   cell_cycle = NULL, bin_mean_exp = 3, rm_cv_quant = NULL,
   z_wins_th = 3, smooth_wsize = 3, cc_sd_th = 3, nb_pcs = 10,
   comm_k = 100, viz = c("tsne", "umap", "both"), tsne.seed = 999,
-  rcpp = FALSE)
+  rcpp = TRUE)
 }
 \arguments{
 \item{data}{a data.frame with gene expression or the path to the folder with the
@@ -63,7 +63,7 @@ not used).}
 
 \item{tsne.seed}{the seed for the tSNE.}
 
-\item{rcpp}{use Rcpp function. Default is FALSE. More memory-efficient and
+\item{rcpp}{use Rcpp function. Default is TRUE. More memory-efficient and
 faster when running on one core.}
 }
 \value{
