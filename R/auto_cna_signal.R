@@ -27,7 +27,7 @@
 ##' @param viz which method to use for visualization ('tsne', 'umap' or 'both'). Default is
 ##' 'tsne'.
 ##' @param tsne.seed the seed for the tSNE.
-##' @param rcpp use Rcpp function. Default is FALSE. More memory-efficient and
+##' @param rcpp use Rcpp function. Default is TRUE. More memory-efficient and
 ##' faster when running on one core.
 ##' @return a data.frame with QC, community and tSNE for each cell.
 ##' @author Jean Monlong
@@ -40,7 +40,7 @@ auto_cna_signal <- function(data, genes_coord, prefix='scCNAutils_out', nb_cores
                             rm_cv_quant=NULL,
                             z_wins_th=3, smooth_wsize=3, cc_sd_th=3, nb_pcs=10,
                             comm_k=100, viz=c('tsne','umap','both'), tsne.seed=999,
-                            rcpp=FALSE){
+                            rcpp=TRUE){
   ## Cache options
   info.file = paste0(prefix, '-sampleinfo.RData')
   raw.file = paste0(prefix, '-ge.RData')

@@ -31,6 +31,8 @@
 ##' @param bin_mean_exp the desired minimum mean expression in the bin.
 ##' @param z_wins_th the threshold to winsorize Z-score. Default is 3
 ##' @param smooth_wsize the window size for smoothing. Default is 3.
+##' @param rcpp use Rcpp function. Default is TRUE. More memory-efficient and
+##' faster when running on one core.
 ##' @return a data.frame with CNAs
 ##' @author Jean Monlong
 ##' @export
@@ -39,7 +41,8 @@ auto_cna_call <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
                           baseline_cells=NULL, baseline_communities=NULL,
                           prefix='scCNAutils_out',
                           nb_cores=1, chrs=c(1:22,"X","Y"),
-                          bin_mean_exp=3, z_wins_th=3, smooth_wsize=3){
+                          bin_mean_exp=3, z_wins_th=3, smooth_wsize=3,
+                          rcpp=TRUE){
   comm_df = comm_df[which(comm_df$cell %in% colnames(ge_df)),]
   if(is.null(baseline_cells) & !is.null(baseline_communities)){
     baseline_cells = comm_df$cell[which(comm_df$community %in% baseline_communities)]
@@ -53,9 +56,9 @@ auto_cna_call <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
 
   ## Normalize and bin genes
   message('Normalizing and binning...')
-  ge_df = norm_ge(mc.o$ge, nb_cores=nb_cores)
-  ge_df = bin_genes(ge_df, bin_mean_exp, nb_cores=nb_cores)
-  ge_df = norm_ge(ge_df, nb_cores=nb_cores)
+  ge_df = norm_ge(mc.o$ge, nb_cores=nb_cores, rcpp=rcpp)
+  ge_df = bin_genes(ge_df, bin_mean_exp, nb_cores=nb_cores, rcpp=rcpp)
+  ge_df = norm_ge(ge_df, nb_cores=nb_cores, rcpp=rcpp)
 
   ## Aneuploidy graph from metacells
   message('Aneuploidy graph from metacells...')
