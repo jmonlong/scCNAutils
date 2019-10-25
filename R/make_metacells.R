@@ -2,8 +2,7 @@
 ##' with higher resolution.
 ##'
 ##' @title Make metacells
-##' @param ge_df normalized gene expression of all cells (e.g. output from
-##' \code{\link{norm_ge}}.
+##' @param ge_df gene expression of all cells
 ##' @param comm_df a data.frame with community information, output from
 ##' \code{\link{find_communities}}.
 ##' @param nb_metacells the number of metacells per comunity.
@@ -20,7 +19,8 @@
 ##' @export
 make_metacells <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
                            baseline_cells=NULL, nb_cores=1, max_baseline_comm=3){
-  cells = setdiff(colnames(ge_df), c("chr","start","end"))
+  coords.symbol = intersect(colnames(ge_df), c("chr","start","end", 'symbol'))
+  cells = setdiff(colnames(ge_df), c("chr","start","end", 'symbol'))
   options('dplyr.show_progress'=FALSE)
   if(is.null(baseline_cells)){
     baseline_cells = cells
@@ -54,11 +54,11 @@ make_metacells <- function(ge_df, comm_df, nb_metacells=10, metacell_size=3,
   if(!is.null(nb_metacells)){    
     mc.o = metacells_subsample(groups.df, nb_metacells, metacell_size)
   } else {
-    mc.o = metacells_cluster(groups.df, ge_df, nb_metacells, metacell_size, nb_cores)
+    mc.o = metacells_cluster(groups.df, ge_df, metacell_size, nb_cores)
   }
   
   ## Merge gene expression
-  ge.mc = ge_df[, c('chr', 'start', 'end')]
+  ge.mc = ge_df[, coords.symbol, drop=FALSE]
   ge.mc.l = parallel::mclapply(1:length(mc.o$cells.tm), function(ii){
     ##message(ii)
     ge_df[,mc.o$cells.tm[[ii]]] %>% as.matrix %>% rowSums

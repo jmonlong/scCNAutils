@@ -8,8 +8,7 @@ make_metacells(ge_df, comm_df, nb_metacells = 10, metacell_size = 3,
   baseline_cells = NULL, nb_cores = 1, max_baseline_comm = 3)
 }
 \arguments{
-\item{ge_df}{normalized gene expression of all cells (e.g. output from
-\code{\link{norm_ge}}.}
+\item{ge_df}{gene expression of all cells}
 
 \item{comm_df}{a data.frame with community information, output from
 \code{\link{find_communities}}.}

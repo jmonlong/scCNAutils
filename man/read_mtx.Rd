@@ -6,7 +6,7 @@
 \usage{
 read_mtx(mtx_file = "matrix.mtx", genes_file = "genes.tsv",
   barcodes_file = "barcodes.tsv", path = ".", rm_dup = TRUE,
-  genes_col = 2)
+  genes_col = 2, min_barcode_exp = 1, filter_zero_genes = TRUE)
 }
 \arguments{
 \item{mtx_file}{the path to the mtx file}
@@ -20,6 +20,10 @@ read_mtx(mtx_file = "matrix.mtx", genes_file = "genes.tsv",
 \item{rm_dup}{remove duplicated gene names? Default is TRUE.}
 
 \item{genes_col}{the column to use in genes_file. Default is 2.}
+
+\item{min_barcode_exp}{minimum total expression in barcodes/cells. Default is 1.}
+
+\item{filter_zero_genes}{filter genes with no reads in any cells? Default is TRUE.}
 }
 \value{
 a data.frame with a 'symbol' column with gene names and one

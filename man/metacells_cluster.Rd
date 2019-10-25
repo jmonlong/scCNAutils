@@ -4,16 +4,14 @@
 \alias{metacells_cluster}
 \title{Metacells by clustering within communities.}
 \usage{
-metacells_cluster(groups.df, ge_df, nb_metacells, metacell_size,
-  nb_cores = 1, hclust_method = "ward.D")
+metacells_cluster(groups.df, ge_df, metacell_size, nb_cores = 1,
+  hclust_method = "ward.D")
 }
 \arguments{
 \item{groups.df}{the filtered data.frame with community information}
 
 \item{ge_df}{normalized gene expression of all cells (e.g. output from
 \code{\link{norm_ge}}.}
-
-\item{nb_metacells}{the number of metacells per comunity.}
 
 \item{metacell_size}{the number of cells in a metacell.}
 
