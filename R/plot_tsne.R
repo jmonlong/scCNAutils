@@ -94,9 +94,9 @@ plot_tsne <- function(tsne_df, qc_df=NULL, comm_df=NULL, info_df=NULL){
         warning('Some cells in tsne_df are missing from qc_df.')
       }
     }
-    ggp.l$depth = ggplot(tsne_df, aes(tsne1, tsne2, colour=tot)) +
+    ggp.l$depth = ggplot(tsne_df, aes(tsne1, tsne2, colour=log10(tot+1))) +
       geom_point(alpha=ptalpha) + theme_bw() +
-      scale_colour_gradientn(name='depth', colors=grDevices::terrain.colors(10))
+      scale_colour_gradientn(name='depth (log10[x+1])', colors=grDevices::terrain.colors(10))
     if(any(tsne_df$mito > 0)){
       ggp.l$mito = ggplot(tsne_df, aes(tsne1, tsne2, colour=mito/tot)) +
         geom_point(alpha=ptalpha) + theme_bw() +

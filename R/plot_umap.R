@@ -94,9 +94,9 @@ plot_umap <- function(umap_df, qc_df=NULL, comm_df=NULL, info_df=NULL){
         warning('Some cells in umap_df are missing from qc_df.')
       }
     }
-    ggp.l$depth = ggplot(umap_df, aes(umap1, umap2, colour=tot)) +
+    ggp.l$depth = ggplot(umap_df, aes(umap1, umap2, colour=log10(tot+1))) +
       geom_point(alpha=ptalpha) + theme_bw() +
-      scale_colour_gradientn(name='depth', colors=grDevices::terrain.colors(10))
+      scale_colour_gradientn(name='depth (log10[x+1])', colors=grDevices::terrain.colors(10))
     if(any(umap_df$mito > 0)){
       ggp.l$mito = ggplot(umap_df, aes(umap1, umap2, colour=mito/tot)) +
         geom_point(alpha=ptalpha) + theme_bw() +
