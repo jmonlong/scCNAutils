@@ -58,7 +58,7 @@ cnaHMM <- function(ge, trans.prob=.0001, log.mu=TRUE, max.samps=200, perChr=TRUE
     }
   }
   if(perChr){
-    res = lapply(unique(ge$chr), function(chri){
+    res = lapply(unique(ge$chr[which(!is.na(ge[,4]))]), function(chri){
       runHMM(ge[which(ge$chr == chri),], var.est.total)
     })
     res = do.call(rbind, res)
