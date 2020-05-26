@@ -15,6 +15,13 @@ Main information below, other information in the [`docs` folder](docs), e.g.:
 - [Tuning the community detection](docs/README.md#tuning-the-community-detection)
 - [Rebin coverage data to compare with scRNA-seq CNA signal](docs/README.md#rebinning-coverage-data)
 
+## Citation
+
+The code from this package was written and used primarily for the following study. 
+Please cite the following if you use this package:
+
+> Couturier, Charles P., et al. *Single-Cell RNA-Seq Reveals That Glioblastoma Recapitulates Normal Brain Development.* bioRxiv 2018, doi: https://doi.org/10.1101/449439
+
 ## Install
 
 To make sure both CRAN and Bioconductor dependencies are installed, the easiest is to use the `biocLite` function from Bioconductor:
@@ -111,5 +118,4 @@ The internal workflow is as follow:
 
 - Try to use Seurat's functions (e.g. Louvain with gamma and UMAP). *For now I wrapped Python scripts to do that*.
 - Example on public cancer data.
-- PCA plots.
 - Better colors in graphs.
