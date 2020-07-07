@@ -48,7 +48,8 @@ plot_qc_cells <- function(qc_df, info_df=NULL){
     ggp.l$depth.log.sample = ggplot(qc_df, aes(x=log10(tot+1))) + geom_histogram(bins=30) + theme_bw() +
       xlab('depth (log10[x+1])') + ylab('cell') +
       facet_grid(sample~., scales='free') +
-      theme(strip.text.y=element_text(angle=0))
+      theme(strip.text.y=element_text(angle=0)) +
+      scale_x_continuous(breaks=0:10)
     ggp.l$depth.w90.sample = ggplot(qc_df, aes(x=winsor(tot, uq=.9))) + geom_histogram(bins=30) + theme_bw() +
       xlab('depth (winsorized at 90th percentile)') + ylab('cell') +
       facet_grid(sample~., scales='free') +
