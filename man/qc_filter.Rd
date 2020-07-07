@@ -4,8 +4,13 @@
 \alias{qc_filter}
 \title{Filter cells based on QC results}
 \usage{
-qc_filter(ge_df, qc_df, max_mito_prop = 0.2, min_total_exp = 0,
-  cells_sel = NULL)
+qc_filter(
+  ge_df,
+  qc_df,
+  max_mito_prop = 0.2,
+  min_total_exp = 0,
+  cells_sel = NULL
+)
 }
 \arguments{
 \item{ge_df}{the input gene expression with a 'symbol' column and then one

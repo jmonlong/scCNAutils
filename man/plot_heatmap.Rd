@@ -4,8 +4,13 @@
 \alias{plot_heatmap}
 \title{Heatmap of the CNA scores}
 \usage{
-plot_heatmap(z_df, cells_df = NULL, nb_subsamp = 1000,
-  hc.method = "ward.D", z_win = 3)
+plot_heatmap(
+  z_df,
+  cells_df = NULL,
+  nb_subsamp = 1000,
+  hc.method = "ward.D",
+  z_win = 3
+)
 }
 \arguments{
 \item{z_df}{the data.frame with Z-scores.}

@@ -4,8 +4,7 @@
 \alias{convert_to_coord}
 \title{Convert gene symbols to coordinates}
 \usage{
-convert_to_coord(ge_df, genes_coord, chrs = c(1:22, "X", "Y"),
-  rm_dup = TRUE)
+convert_to_coord(ge_df, genes_coord, chrs = c(1:22, "X", "Y"), rm_dup = TRUE)
 }
 \arguments{
 \item{ge_df}{the data.frame with gene expression and one column 'symbol'

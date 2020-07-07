@@ -4,8 +4,7 @@
 \alias{norm_ge}
 \title{Normalize gene expression}
 \usage{
-norm_ge(ge_df, method = c("tmm", "total"), nb_cores = 1,
-  rcpp = FALSE)
+norm_ge(ge_df, method = c("tmm", "total"), nb_cores = 1, rcpp = FALSE)
 }
 \arguments{
 \item{ge_df}{the input gene expression}

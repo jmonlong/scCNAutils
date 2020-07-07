@@ -4,8 +4,14 @@
 \alias{find_communities}
 \title{Community detection}
 \usage{
-find_communities(pca_o, nb_pcs = 10, k = 100, gamma = 1, nreps = 1,
-  nb_cores = 1)
+find_communities(
+  pca_o,
+  nb_pcs = 10,
+  k = 100,
+  gamma = 1,
+  nreps = 1,
+  nb_cores = 1
+)
 }
 \arguments{
 \item{pca_o}{the output of \code{\link{run_pca}}}

@@ -4,8 +4,15 @@
 \alias{make_metacells}
 \title{Make metacells}
 \usage{
-make_metacells(ge_df, comm_df, nb_metacells = 10, metacell_size = 3,
-  baseline_cells = NULL, nb_cores = 1, max_baseline_comm = 3)
+make_metacells(
+  ge_df,
+  comm_df,
+  nb_metacells = 10,
+  metacell_size = 3,
+  baseline_cells = NULL,
+  nb_cores = 1,
+  max_baseline_comm = 3
+)
 }
 \arguments{
 \item{ge_df}{gene expression of all cells}

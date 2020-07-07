@@ -12,8 +12,12 @@
 ##' @export
 define_cycling_cells <- function(qc_df, sd_th=3){
   ## Compute thresholds
-  g1s.th = stats::median(qc_df$G1.S) + sd_th*stats::mad(qc_df$G1.S)
-  g2m.th = stats::median(qc_df$G2.M) + sd_th*stats::mad(qc_df$G2.M)
+  g1s.dev = stats::mad(qc_df$G1.S)
+  g1s.dev = ifelse(g1s.dev==0, stats::sd(qc_df$G1.S), g1s.dev)
+  g1s.th = stats::median(qc_df$G1.S) + sd_th*g1s.dev
+  g2m.dev = stats::mad(qc_df$G2.M)
+  g2m.dev = ifelse(g2m.dev==0, stats::sd(qc_df$G2.M), g2m.dev)
+  g2m.th = stats::median(qc_df$G2.M) + sd_th*g2m.dev
   ## List cells below thresholds
   cells.noc = qc_df$cell[which(qc_df$G1.S<g1s.th & qc_df$G2.M<g2m.th)]
   ## Graphs

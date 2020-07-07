@@ -4,8 +4,14 @@
 \alias{cnaHMM}
 \title{Call CNA using a HMM approach}
 \usage{
-cnaHMM(ge, trans.prob = 1e-04, log.mu = TRUE, max.samps = 200,
-  perChr = TRUE, winsorize = TRUE)
+cnaHMM(
+  ge,
+  trans.prob = 1e-04,
+  log.mu = TRUE,
+  max.samps = 200,
+  perChr = TRUE,
+  winsorize = TRUE
+)
 }
 \arguments{
 \item{ge}{the input gene expression}

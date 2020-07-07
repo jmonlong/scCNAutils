@@ -4,11 +4,23 @@
 \alias{auto_cna_call}
 \title{Automated pipeline to call CNA}
 \usage{
-auto_cna_call(ge_df, comm_df, nb_metacells = 10, metacell_size = 3,
-  multisamps = TRUE, trans_prob = 0.1, baseline_cells = NULL,
-  baseline_communities = NULL, prefix = "scCNAutils_out",
-  nb_cores = 1, chrs = c(1:22, "X", "Y"), bin_mean_exp = 3,
-  z_wins_th = 3, smooth_wsize = 3, rcpp = TRUE)
+auto_cna_call(
+  ge_df,
+  comm_df,
+  nb_metacells = 10,
+  metacell_size = 3,
+  multisamps = TRUE,
+  trans_prob = 0.1,
+  baseline_cells = NULL,
+  baseline_communities = NULL,
+  prefix = "scCNAutils_out",
+  nb_cores = 1,
+  chrs = c(1:22, "X", "Y"),
+  bin_mean_exp = 3,
+  z_wins_th = 3,
+  smooth_wsize = 3,
+  rcpp = TRUE
+)
 }
 \arguments{
 \item{ge_df}{normalized gene expression of all cells (e.g. output from

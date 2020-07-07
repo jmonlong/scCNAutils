@@ -4,9 +4,16 @@
 \alias{read_mtx}
 \title{Read a trio of genes, barcodes and mtx files.}
 \usage{
-read_mtx(mtx_file = "matrix.mtx", genes_file = "genes.tsv",
-  barcodes_file = "barcodes.tsv", path = ".", rm_dup = TRUE,
-  genes_col = 2, min_barcode_exp = 1, filter_zero_genes = TRUE)
+read_mtx(
+  mtx_file = "matrix.mtx",
+  genes_file = "genes.tsv",
+  barcodes_file = "barcodes.tsv",
+  path = ".",
+  rm_dup = TRUE,
+  genes_col = 2,
+  min_barcode_exp = 1,
+  filter_zero_genes = TRUE
+)
 }
 \arguments{
 \item{mtx_file}{the path to the mtx file}

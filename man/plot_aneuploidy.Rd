@@ -4,9 +4,14 @@
 \alias{plot_aneuploidy}
 \title{Aneuploidy graph}
 \usage{
-plot_aneuploidy(ge_df, comm_df = NULL, baseline_cells = NULL,
-  baseline_communities = NULL, max_cells = 100, chrs_order = c(1:22,
-  "X", "Y"))
+plot_aneuploidy(
+  ge_df,
+  comm_df = NULL,
+  baseline_cells = NULL,
+  baseline_communities = NULL,
+  max_cells = 100,
+  chrs_order = c(1:22, "X", "Y")
+)
 }
 \arguments{
 \item{ge_df}{a data.frame with gene expression (better if binned and

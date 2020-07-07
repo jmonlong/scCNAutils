@@ -4,8 +4,13 @@
 \alias{metacells_cluster}
 \title{Metacells by clustering within communities.}
 \usage{
-metacells_cluster(groups.df, ge_df, metacell_size, nb_cores = 1,
-  hclust_method = "ward.D")
+metacells_cluster(
+  groups.df,
+  ge_df,
+  metacell_size,
+  nb_cores = 1,
+  hclust_method = "ward.D"
+)
 }
 \arguments{
 \item{groups.df}{the filtered data.frame with community information}
