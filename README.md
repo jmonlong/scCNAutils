@@ -20,7 +20,7 @@ Main information below, other information in the [`docs` folder](docs), e.g.:
 The code from this package was written and used primarily for the following study. 
 Please cite the following if you use this package:
 
-> Couturier, Charles P., et al. *Single-Cell RNA-Seq Reveals That Glioblastoma Recapitulates Normal Brain Development.* bioRxiv 2018, doi: https://doi.org/10.1101/449439
+> Couturier, C.P., Ayyadhury, S., Le, P.U. et al. *Single-cell RNA-seq reveals that glioblastoma recapitulates a normal neurodevelopmental hierarchy.* Nat Commun 11, 3406 (2020). https://doi.org/10.1038/s41467-020-17186-5
 
 ## Install
 
