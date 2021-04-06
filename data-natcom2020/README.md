@@ -15,5 +15,5 @@ OPK322	GCTGCAGCAGCTGCTG-1	OPK322.1
 ```
 
 Of note, the sample naming in the article's figures uses `BT` instead of `OPK`. 
-Also when both *B*ulk (*W*hole sample in the figures) and *S*tem-cells (GSC: glioma stem cell in the figures) were sequenced for a sample, a `B`/`S` suffix is added to the sample name here. 
+Also when both **B**ulk (**W**hole sample in the figures) and **S**tem-cells (**GSC**: glioma stem cell in the figures) were sequenced for a sample, a `B`/`S` suffix is added to the sample name here. 
 For example, `OPK402B` corresponds to `BT402-W`
