@@ -7,13 +7,8 @@ This tsv has three columns: the sample ID, the barcode of the cell, and the comm
 
 ```
 sample	barcode	community.patient
-OPK322	AAACCTGAGAAGGTTT-1	OPK322.2
-OPK363	CCCAGTTAGCTGTTCA-1	OPK363.1
-OPK402B	TCGCGTTTCCTCAACC-1	normal
-OPK322	GCTGCAGCAGCTGCTG-1	OPK322.1
+BT402_W	ATCATCTTCTTCCTTC-1	normal
+BT363_W	CATCGGGAGTCATCCA-1	BT363.1
+BT326_GSC	ACGCCGAAGCGATAGC-1	BT326.2
 ...
 ```
-
-Of note, the sample naming in the article's figures uses `BT` instead of `OPK`. 
-Also when both *B*ulk (*W*hole sample in the figures) and *S*tem-cells (GSC: glioma stem cell in the figures) were sequenced for a sample, a `B`/`S` suffix is added to the sample name here. 
-For example, `OPK402B` corresponds to `BT402-W`
