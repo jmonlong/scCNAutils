@@ -22,6 +22,8 @@ Please cite the following if you use this package:
 
 > Couturier, C.P., Ayyadhury, S., Le, P.U. et al. *Single-cell RNA-seq reveals that glioblastoma recapitulates a normal neurodevelopmental hierarchy.* Nat Commun 11, 3406 (2020). https://doi.org/10.1038/s41467-020-17186-5
 
+See the [data-natcom2020](data-natcom2020) folder for data used in this paper (list of cancer/non-cancer cells).
+
 ## Install
 
 To make sure both CRAN and Bioconductor dependencies are installed, the easiest is to use the `biocLite` function from Bioconductor:
