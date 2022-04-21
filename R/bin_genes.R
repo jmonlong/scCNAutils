@@ -50,7 +50,7 @@ bin_genes <- function(ge_df, mean_exp=3, nb_cores=1, rcpp=FALSE){
         merge(m.df[which(m.df$chr == chri),]) %>% 
         dplyr::group_by(.data$bins) %>%
           dplyr::mutate(start=min(.data$start), end=max(.data$end)) %>%
-          dplyr::ungroup(.data) %>% dplyr::mutate(bins=NULL) %>%
+          dplyr::ungroup() %>% dplyr::mutate(bins=NULL) %>%
           dplyr::group_by(.data$chr, .data$start, .data$end) %>%
           dplyr::do(mergeGenes.f(.data))
     }, mc.cores=nb_cores)
