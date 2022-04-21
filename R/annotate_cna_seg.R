@@ -14,7 +14,17 @@ annotate_cna_seg <- function(seg.df, hmm.df){
   pvs = sapply(1:nrow(seg.df), function(ii){
     seg.mean = hmm.gr$mean[which(IRanges::overlapsAny(hmm.gr, seg.gr[ii]))]
     neut.d = GenomicRanges::distance(seg.gr[ii], neutral.gr)
-    neut.d = ifelse(neut.d==0, NA, neut.d)
+    ## handle cases where there are no "neutral CN" segments in this chromomosome
+    if(all(is.na(neut.d))){
+      neut.d = rep(1, length(neutral.gr))
+    }
+    ## otherwise put them at the end of the preference list
+    neut.d = ifelse(is.na(neut.d), max(neut.d, na.rm=TRUE) + 1, neut.d)
+    ## put the segments right next to the one of interest even farther
+    ## down the list (bc not independent enough)
+    neut.d = ifelse(neut.d==0, max(neut.d, na.rm=TRUE) + 1, neut.d)
+    ## retrieve mean in neutral segments nearby, or in other chromosomes,
+    ## or in worst case right next to the segment of interest
     cont.mean = neutral.gr$mean[utils::head(order(neut.d), length(seg.mean))]
     stats::wilcox.test(seg.mean, cont.mean)$p.value
   })
