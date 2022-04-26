@@ -14,6 +14,13 @@
 read_mtx <- function(mtx_file='matrix.mtx', genes_file='genes.tsv',
                      barcodes_file='barcodes.tsv', path='.', rm_dup=TRUE,
                      genes_col=2, min_barcode_exp=1, filter_zero_genes=TRUE){
+  if(!file.exists(paste0(path, '/', mtx_file))){
+    if(file.exists(paste0(path, '/', mtx_file, '.gz'))){
+      mtx_file = paste0(mtx_file, '.gz')
+    } else {
+      stop(paste0(path, '/', mtx_file), ' not found')
+    }
+  }
   mat = Matrix::readMM(paste0(path, '/', mtx_file))
 
   ## Find genes with non-zero expression
