@@ -62,7 +62,7 @@ plot_umap <- function(umap_df, qc_df=NULL, comm_df=NULL, info_df=NULL){
     ggp.l$sample = ggplot(umap_df, aes(umap1, umap2, colour=sample)) +
       geom_point(alpha=ptalpha) + theme_bw() +
       ggrepel::geom_label_repel(aes(label=sample), data=cent) + 
-      guides(colour=FALSE)
+      guides(colour='none')
   }
 
   ## Community info
@@ -82,7 +82,7 @@ plot_umap <- function(umap_df, qc_df=NULL, comm_df=NULL, info_df=NULL){
     ggp.l$comm = ggplot(umap_df, aes(umap1, umap2, colour=community)) +
       geom_point(alpha=ptalpha) + theme_bw() +
       ggrepel::geom_label_repel(aes(label=community), data=cent) + 
-      guides(colour=FALSE)
+      guides(colour='none')
   }
 
   ## QC metrics

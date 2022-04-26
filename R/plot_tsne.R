@@ -62,7 +62,7 @@ plot_tsne <- function(tsne_df, qc_df=NULL, comm_df=NULL, info_df=NULL){
     ggp.l$sample = ggplot(tsne_df, aes(tsne1, tsne2, colour=sample)) +
       geom_point(alpha=ptalpha) + theme_bw() +
       ggrepel::geom_label_repel(aes(label=sample), data=cent) + 
-      guides(colour=FALSE)
+      guides(colour='none')
   }
 
   ## Community info
@@ -82,7 +82,7 @@ plot_tsne <- function(tsne_df, qc_df=NULL, comm_df=NULL, info_df=NULL){
     ggp.l$comm = ggplot(tsne_df, aes(tsne1, tsne2, colour=community)) +
       geom_point(alpha=ptalpha) + theme_bw() +
       ggrepel::geom_label_repel(aes(label=community), data=cent) + 
-      guides(colour=FALSE)
+      guides(colour='none')
   }
 
   ## QC metrics

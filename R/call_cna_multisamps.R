@@ -26,7 +26,7 @@ call_cna_multisamps <- function(z_df, mc_info, trans_prob=1e-4, nb_cores=1){
     cn.df$seg = rep(1:length(rle.o$lengths), rle.o$lengths)
     seg.df = dplyr::ungroup(cn.df) %>% dplyr::group_by(.data$chr, .data$CN, .data$seg) %>%
       dplyr::summarize(start=min(.data$start), end=max(.data$end),
-                       mean=mean(.data$mean), length=dplyr::n())
+                       mean=mean(.data$mean), length=dplyr::n(), .groups='drop')
     seg.df$seg = NULL
     seg.df = seg.df[order(seg.df$chr, seg.df$start),]
     seg.df$community = as.character(comm)
