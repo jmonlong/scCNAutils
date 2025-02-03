@@ -1,9 +1,8 @@
 # scCNAutils
 
-[![Build Status](https://travis-ci.com/jmonlong/scCNAutils.svg?branch=master)](https://travis-ci.com/jmonlong/scCNAutils)
 [![codecov](https://codecov.io/gh/jmonlong/scCNAutils/branch/master/graph/badge.svg)](https://codecov.io/gh/jmonlong/scCNAutils)
 
-A cleaned up version of the functions I used to analyze copy number aberrations in single-cell data. **Still in development.**
+A cleaned up version of the functions I used to analyze copy number aberrations in single-cell data. 
 
 Main information below, other information in the [`docs` folder](docs), e.g.:
 
@@ -17,10 +16,13 @@ Main information below, other information in the [`docs` folder](docs), e.g.:
 
 ## Citation
 
-The code from this package was written and used primarily for the following study. 
-Please cite the following if you use this package:
+Please cite, the protocol chapter describing the methods in Mapping Genetic Interactions:
 
-> Couturier, C.P., Ayyadhury, S., Le, P.U. et al. *Single-cell RNA-seq reveals that glioblastoma recapitulates a normal neurodevelopmental hierarchy.* Nat Commun 11, 3406 (2020). https://doi.org/10.1038/s41467-020-17186-5
+> Kuzmin E, et al. *Inferring Copy Number from Triple-Negative Breast Cancer Patient Derived Xenograft scRNAseq Data Using scCNA*. Mapping Genetic Interactions (2021). https://doi.org/10.1007/978-1-0716-1740-3_16
+
+Or the first study it was used in:
+
+> Couturier C.P., Ayyadhury S., Le P.U. et al. *Single-cell RNA-seq reveals that glioblastoma recapitulates a normal neurodevelopmental hierarchy.* Nat Commun 11, 3406 (2020). https://doi.org/10.1038/s41467-020-17186-5
 
 See the [data-natcom2020](data-natcom2020) folder for data used in this paper (list of cancer/non-cancer cells).
 
